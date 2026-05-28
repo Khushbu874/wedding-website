@@ -14,7 +14,7 @@ const Venue = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-heading text-center"
-          style={{ fontSize: '40px', color: 'var(--c-maroon)', marginBottom: '60px', letterSpacing: '4px' }}
+          style={{ fontSize: 'clamp(28px, 6vw, 40px)', color: 'var(--c-maroon)', marginBottom: 'clamp(30px, 6vw, 60px)', letterSpacing: '4px' }}
         >
           {t('venue')}
         </motion.h2>
@@ -26,7 +26,7 @@ const Venue = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="glass-panel"
-            style={{ flex: '1 1 500px', overflow: 'hidden', padding: 0, position: 'relative' }}
+            style={{ flex: '1 1 min(500px, 100%)', overflow: 'hidden', padding: 0, position: 'relative' }}
           >
             {/* Clickable overlay that acts as a link over the map */}
             <a 
@@ -40,7 +40,7 @@ const Venue = () => {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117094.01509939105!2d83.10996841285227!3d23.136894042858994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398fb6df43c49439%3A0xe54cbba1aed68615!2sAmbikapur%2C%20Chhattisgarh!5e0!3m2!1sen!2sin!4v1716301234567!5m2!1sen!2sin" 
               width="100%" 
               height="100%" 
-              style={{ border: 0, minHeight: '400px', filter: 'sepia(30%)' }} 
+              style={{ border: 0, minHeight: 'clamp(250px, 40vh, 400px)', filter: 'sepia(30%)' }} 
               allowFullScreen="" 
               loading="lazy" 
               referrerPolicy="no-referrer-when-downgrade"
@@ -52,13 +52,13 @@ const Venue = () => {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            style={{ flex: '1 1 400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+            style={{ flex: '1 1 min(400px, 100%)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
           >
             <div id="venue" style={{ marginBottom: '40px' }}>
-              <h3 className="font-heading" style={{ fontSize: '28px', color: 'var(--c-maroon)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <h3 className="font-heading" style={{ fontSize: 'clamp(20px, 5vw, 28px)', color: 'var(--c-maroon)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <MapPin size={28} /> {t('venue_title')}
               </h3>
-              <p className="font-secondary" style={{ fontSize: '18px', color: 'var(--c-text-primary)', marginBottom: '20px' }}>
+              <p className="font-secondary" style={{ fontSize: 'clamp(14px, 4vw, 18px)', color: 'var(--c-text-primary)', marginBottom: '20px' }}>
                 {t('venue_address')}
               </p>
               

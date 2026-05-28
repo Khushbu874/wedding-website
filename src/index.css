@@ -137,15 +137,93 @@ h1, h2, h3, h4, h5, h6 {
 /* Utilities */
 .section-padding { padding: 100px 20px; }
 @media (min-width: 768px) { .section-padding { padding: 120px 50px; } }
-.container { max-width: 1200px; margin: 0 auto; }
+.container { max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 20px; }
+@media (min-width: 768px) { .container { padding: 0 40px; } }
 .text-center { text-align: center; }
 
 @media (max-width: 768px) {
   .hide-on-mobile { display: none !important; }
 }
 
+/* Touch device / mobile custom cursor disable */
+@media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+  * {
+    cursor: auto !important;
+  }
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+/* Boarding Pass Responsiveness */
+.boarding-pass-wrap {
+  display: flex;
+  flex-direction: row;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fffff0;
+  border: 2px solid var(--c-gold);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: all 0.4s ease;
+  width: 100%;
+}
+.boarding-pass-main {
+  flex: 3;
+  padding: 30px;
+  border-right: 2px dashed var(--c-gold);
+  transition: all 0.4s ease;
+}
+.boarding-pass-stub {
+  flex: 1;
+  padding: 30px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #5a0000;
+  color: var(--c-gold);
+  transition: all 0.4s ease;
+}
+
+@media (max-width: 600px) {
+  .boarding-pass-wrap {
+    flex-direction: column;
+  }
+  .boarding-pass-main {
+    border-right: none;
+    border-bottom: 2px dashed var(--c-gold);
+    padding: 20px 15px;
+  }
+  .boarding-pass-stub {
+    padding: 20px 15px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+}
+
+.boarding-pass-stub-text {
+  transform: rotate(-90deg);
+  transform-origin: left bottom;
+  white-space: nowrap;
+  margin-top: auto;
+  margin-bottom: 20px;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .boarding-pass-stub-text {
+    transform: none !important;
+    transform-origin: initial !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    white-space: nowrap !important;
+  }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
+@media (max-width: 480px) { ::-webkit-scrollbar { width: 4px; } }
 ::-webkit-scrollbar-track { background: var(--c-bg-primary); transition: background 0.5s; }
 ::-webkit-scrollbar-thumb { background: var(--c-gold); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--c-maroon); }

@@ -138,49 +138,41 @@ const BoardingPass = () => {
             {/* The Boarding Pass */}
             <div 
               ref={passRef}
-              className="glass-panel"
-              style={{
-                display: 'flex',
-                borderRadius: '16px',
-                overflow: 'hidden',
-                background: '#fffff0', // Hardcoded Ivory
-                border: '2px solid var(--c-gold)',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
-              }}
+              className="boarding-pass-wrap"
             >
               {/* Left Side */}
-              <div style={{ flex: 3, padding: '30px', borderRight: '2px dashed var(--c-gold)' }}>
+              <div className="boarding-pass-main">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid var(--c-gold)', paddingBottom: '10px' }}>
-                  <h3 className="font-heading" style={{ color: '#5a0000', fontSize: '20px' }}>A & P WEDDING</h3>
+                  <h3 className="font-heading" style={{ color: '#5a0000', fontSize: 'clamp(16px, 4vw, 20px)' }}>A & P WEDDING</h3>
                   <Plane color="var(--c-gold)" />
                 </div>
                 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
                   <div>
-                    <p className="font-secondary" style={{ color: '#4a4a4a', fontSize: '12px', textTransform: 'uppercase' }}>{t('bp_passenger')}</p>
-                    <p className="font-primary" style={{ color: '#1a1a1a', fontSize: '22px', fontWeight: 'bold' }}>{name.toUpperCase()}</p>
+                    <p className="font-secondary" style={{ color: '#4a4a4a', fontSize: '10px', textTransform: 'uppercase' }}>{t('bp_passenger')}</p>
+                    <p className="font-primary" style={{ color: '#1a1a1a', fontSize: 'clamp(16px, 4vw, 22px)', fontWeight: 'bold' }}>{name.toUpperCase()}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <p className="font-secondary" style={{ color: '#4a4a4a', fontSize: '12px', textTransform: 'uppercase' }}>{t('bp_date_label')}</p>
-                    <p className="font-primary" style={{ color: '#1a1a1a', fontSize: '18px' }}>{t('bp_date_val')}</p>
+                    <p className="font-secondary" style={{ color: '#4a4a4a', fontSize: '10px', textTransform: 'uppercase' }}>{t('bp_date_label')}</p>
+                    <p className="font-primary" style={{ color: '#1a1a1a', fontSize: 'clamp(14px, 3.5vw, 18px)' }}>{t('bp_date_val')}</p>
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <p className="font-primary" style={{ fontSize: '30px', color: '#5a0000', fontWeight: 'bold' }}>{t('bp_home')}</p>
-                    <p className="font-secondary" style={{ color: '#4a4a4a' }}>{t('bp_anywhere')}</p>
+                    <p className="font-primary" style={{ fontSize: 'clamp(22px, 5vw, 30px)', color: '#5a0000', fontWeight: 'bold' }}>{t('bp_home')}</p>
+                    <p className="font-secondary" style={{ color: '#4a4a4a', fontSize: 'clamp(11px, 3.5vw, 14px)' }}>{t('bp_anywhere')}</p>
                   </div>
-                  <Plane color="var(--c-gold)" style={{ transform: 'rotate(90deg)' }} />
+                  <Plane color="var(--c-gold)" style={{ transform: 'rotate(90deg)', width: 'clamp(16px, 4vw, 24px)' }} />
                   <div style={{ textAlign: 'right' }}>
-                    <p className="font-primary" style={{ fontSize: '30px', color: '#5a0000', fontWeight: 'bold' }}>{t('bp_dest')}</p>
-                    <p className="font-secondary" style={{ color: '#4a4a4a' }}>{t('bp_dest_full')}</p>
+                    <p className="font-primary" style={{ fontSize: 'clamp(22px, 5vw, 30px)', color: '#5a0000', fontWeight: 'bold' }}>{t('bp_dest')}</p>
+                    <p className="font-secondary" style={{ color: '#4a4a4a', fontSize: 'clamp(11px, 3.5vw, 14px)' }}>{t('bp_dest_full')}</p>
                   </div>
                 </div>
               </div>
 
               {/* Right Side */}
-              <div style={{ flex: 1, padding: '30px 15px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#5a0000', color: 'var(--c-gold)' }}>
+              <div className="boarding-pass-stub">
                 <div>
                   <p className="font-secondary" style={{ fontSize: '10px', textTransform: 'uppercase', opacity: 0.8 }}>{t('bp_board_time')}</p>
                   <p className="font-primary" style={{ fontSize: '18px' }}>17:00</p>
@@ -189,7 +181,7 @@ const BoardingPass = () => {
                   <p className="font-secondary" style={{ fontSize: '10px', textTransform: 'uppercase', opacity: 0.8 }}>{t('bp_seat')}</p>
                   <p className="font-primary" style={{ fontSize: '18px' }}>VIP</p>
                 </div>
-                <div style={{ transform: 'rotate(-90deg)', transformOrigin: 'left bottom', whiteSpace: 'nowrap', marginTop: 'auto', marginBottom: '20px' }}>
+                <div className="boarding-pass-stub-text">
                   <span className="font-script" style={{ fontSize: '24px' }}>{t('couple_names')}</span>
                 </div>
               </div>

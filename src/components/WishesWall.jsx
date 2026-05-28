@@ -39,17 +39,17 @@ const WishesWall = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-script text-center"
-          style={{ fontSize: '60px', color: 'var(--c-gold)', marginBottom: '10px' }}
+          style={{ fontSize: 'clamp(36px, 8vw, 60px)', color: 'var(--c-gold)', marginBottom: '10px' }}
         >
           {t('wishes_title')}
         </motion.h2>
 
-        <p className="font-secondary text-center" style={{ color: 'var(--c-text-secondary)', marginBottom: '50px' }}>
+        <p className="font-secondary text-center" style={{ color: 'var(--c-text-secondary)', marginBottom: 'clamp(25px, 5vw, 50px)' }}>
           {t('wishes_subtitle')}
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '60px' }}>
-          <form onSubmit={handleSubmit} className="glass-panel" style={{ width: '100%', maxWidth: '600px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 'clamp(30px, 6vw, 60px)' }}>
+          <form onSubmit={handleSubmit} className="glass-panel" style={{ width: '100%', maxWidth: '600px', padding: 'clamp(15px, 4vw, 30px)', display: 'flex', flexDirection: 'column', gap: '15px' }}>
             <h3 className="font-heading" style={{ color: 'var(--c-maroon)', marginBottom: '10px' }}>{t('wishes_add')}</h3>
             <input
               type="text"
@@ -85,7 +85,7 @@ const WishesWall = () => {
           </form>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(285px, 100%), 1fr))', gap: '20px' }}>
           <AnimatePresence>
             {wishes.map((wish) => (
               <motion.div

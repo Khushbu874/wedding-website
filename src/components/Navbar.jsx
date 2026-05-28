@@ -63,7 +63,7 @@ const Navbar = () => {
           position: 'fixed',
           top: 0, left: 0, right: 0,
           zIndex: 1000,
-          padding: scrolled ? '10px 30px' : '20px 40px',
+          padding: scrolled ? '10px clamp(15px, 4vw, 30px)' : '20px clamp(20px, 5vw, 40px)',
           background: scrolled ? (theme === 'light' ? 'rgba(255,251,245,0.85)' : 'rgba(26,26,26,0.85)') : 'transparent',
           backdropFilter: scrolled ? 'blur(20px)' : 'none',
           boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.1)' : 'none',
@@ -75,7 +75,7 @@ const Navbar = () => {
         }}
       >
         {/* Logo */}
-        <div className="font-script text-gradient-gold" style={{ fontSize: '36px', cursor: 'pointer', flexShrink: 0, paddingRight: '20px' }}>
+        <div className="font-script text-gradient-gold" style={{ fontSize: 'clamp(26px, 6vw, 36px)', cursor: 'pointer', flexShrink: 0, paddingRight: '20px' }}>
           <a href="#hero" style={{ textDecoration: 'none', color: 'inherit' }}>A & P</a>
         </div>
 

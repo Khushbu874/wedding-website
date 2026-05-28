@@ -93,9 +93,7 @@ const Gallery = () => {
             width: '100%', 
             maxWidth: '900px', 
             margin: '0 auto',
-            height: '60vh',
-            minHeight: '400px',
-            maxHeight: '600px',
+            height: 'clamp(250px, 50vh, 600px)',
             display: 'flex', 
             justifyContent: 'center', 
             alignItems: 'center',
@@ -150,7 +148,7 @@ const Gallery = () => {
               className="gallery-nav-btn"
               style={{
                 position: 'absolute',
-                left: '20px',
+                left: 'clamp(10px, 3vw, 20px)',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 background: 'rgba(26,26,26,0.5)',
@@ -160,15 +158,15 @@ const Gallery = () => {
                 color: 'var(--c-gold)',
                 cursor: 'pointer',
                 zIndex: 10,
-                width: '50px',
-                height: '50px',
+                width: 'clamp(38px, 8vw, 50px)',
+                height: 'clamp(38px, 8vw, 50px)',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 transition: 'all 0.3s'
               }}
             >
-              <ChevronLeft size={30} />
+              <ChevronLeft size={24} />
             </button>
 
             {/* Right Button */}
@@ -177,7 +175,7 @@ const Gallery = () => {
               className="gallery-nav-btn"
               style={{
                 position: 'absolute',
-                right: '20px',
+                right: 'clamp(10px, 3vw, 20px)',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 background: 'rgba(26,26,26,0.5)',
@@ -187,15 +185,15 @@ const Gallery = () => {
                 color: 'var(--c-gold)',
                 cursor: 'pointer',
                 zIndex: 10,
-                width: '50px',
-                height: '50px',
+                width: 'clamp(38px, 8vw, 50px)',
+                height: 'clamp(38px, 8vw, 50px)',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 transition: 'all 0.3s'
               }}
             >
-              <ChevronRight size={30} />
+              <ChevronRight size={24} />
             </button>
 
             {/* Navigation Dots */}

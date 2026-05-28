@@ -67,7 +67,7 @@ const FinalSection = () => {
         style={{ textAlign: 'center', zIndex: 10 }}
       >
         <h2 className="font-script" style={{
-          fontSize: 'clamp(50px, 8vw, 100px)',
+          fontSize: 'clamp(36px, 8vw, 100px)',
           color: 'var(--c-gold)',
           marginBottom: '20px',
           textShadow: '0 0 20px rgba(212,175,55,0.5)'
@@ -76,12 +76,13 @@ const FinalSection = () => {
         </h2>
         
         <p className="font-secondary" style={{
-          fontSize: '20px',
+          fontSize: 'clamp(14px, 4.5vw, 20px)',
           color: '#f7e7ce',
           fontStyle: 'italic',
           maxWidth: '600px',
-          margin: '0 auto 40px',
-          lineHeight: '1.6'
+          margin: '0 auto clamp(20px, 5vh, 40px)',
+          lineHeight: '1.6',
+          padding: '0 20px'
         }}>
           {t('final_msg')}
         </p>

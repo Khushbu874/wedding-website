@@ -177,11 +177,12 @@ const EventTimeline = () => {
                   transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                   style={{
                     width: '100%',
+                    maxWidth: '520px',
                     backgroundColor: 'rgba(20, 20, 20, 0.85)',
                     backdropFilter: 'blur(15px)',
                     WebkitBackdropFilter: 'blur(15px)',
                     borderRadius: '20px',
-                    padding: '40px',
+                    padding: 'clamp(20px, 6vw, 40px)',
                     position: 'relative',
                     pointerEvents: 'auto',
                     border: `2px solid ${selectedEvent.color}`,
@@ -209,7 +210,7 @@ const EventTimeline = () => {
                     {selectedEvent.icon}
                   </motion.div>
 
-                  <motion.h3 className="font-heading text-center" style={{ color: selectedEvent.color, fontSize: '36px', marginBottom: '30px' }}>
+                  <motion.h3 className="font-heading text-center" style={{ color: selectedEvent.color, fontSize: 'clamp(24px, 6vw, 36px)', marginBottom: 'clamp(15px, 4vw, 30px)' }}>
                     {selectedEvent.title}
                   </motion.h3>
 

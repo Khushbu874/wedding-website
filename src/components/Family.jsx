@@ -32,12 +32,12 @@ const Family = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-script text-center"
-          style={{ fontSize: '60px', color: 'var(--c-maroon)', marginBottom: '60px' }}
+          style={{ fontSize: 'clamp(36px, 8vw, 60px)', color: 'var(--c-maroon)', marginBottom: 'clamp(30px, 6vw, 60px)' }}
         >
           {t('family')}
         </motion.h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: '40px' }}>
           
           {Object.entries(families).map(([key, family], idx) => (
             <motion.div
@@ -46,17 +46,17 @@ const Family = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               className="glass-panel"
-              style={{ padding: '40px', textAlign: 'center', borderTop: `4px solid ${idx === 0 ? 'var(--c-maroon)' : 'var(--c-gold)'}` }}
+              style={{ padding: 'clamp(20px, 5vw, 40px)', textAlign: 'center', borderTop: `4px solid ${idx === 0 ? 'var(--c-maroon)' : 'var(--c-gold)'}` }}
             >
-              <h3 className="font-heading" style={{ fontSize: '28px', color: 'var(--c-text-primary)', marginBottom: '30px' }}>
+              <h3 className="font-heading" style={{ fontSize: 'clamp(20px, 5vw, 28px)', color: 'var(--c-text-primary)', marginBottom: 'clamp(15px, 4vw, 30px)' }}>
                 {family.side}
               </h3>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 {family.members.map((member, index) => (
                   <div key={index}>
-                    <p className="font-primary" style={{ fontSize: '20px', color: 'var(--c-maroon)', fontWeight: 'bold' }}>{member.name}</p>
-                    <p className="font-secondary" style={{ color: 'var(--c-text-secondary)', fontStyle: 'italic' }}>{member.relation}</p>
+                    <p className="font-primary" style={{ fontSize: 'clamp(16px, 4vw, 20px)', color: 'var(--c-maroon)', fontWeight: 'bold' }}>{member.name}</p>
+                    <p className="font-secondary" style={{ color: 'var(--c-text-secondary)', fontStyle: 'italic', fontSize: 'clamp(12px, 3vw, 14px)' }}>{member.relation}</p>
                   </div>
                 ))}
               </div>

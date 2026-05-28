@@ -28,9 +28,9 @@ const RSVP = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           className="glass-panel"
-          style={{ padding: '50px', textAlign: 'center', background: 'rgba(20, 20, 20, 0.65)', backdropFilter: 'blur(12px)', border: '1px solid rgba(212,175,55,0.3)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}
+          style={{ padding: 'clamp(20px, 5vw, 50px)', textAlign: 'center', background: 'rgba(20, 20, 20, 0.65)', backdropFilter: 'blur(12px)', border: '1px solid rgba(212,175,55,0.3)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}
         >
-          <h2 className="font-heading text-gradient-gold" style={{ fontSize: '40px', marginBottom: '10px' }}>{t('rsvp')}</h2>
+          <h2 className="font-heading text-gradient-gold" style={{ fontSize: 'clamp(28px, 6vw, 40px)', marginBottom: '10px' }}>{t('rsvp')}</h2>
           <p className="font-secondary" style={{ color: '#cccccc', marginBottom: '40px', letterSpacing: '2px', fontSize: '14px' }}>
             {t('rsvp_deadline')}
           </p>
@@ -52,8 +52,8 @@ const RSVP = () => {
                 <input required type="text" style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.4)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }} />
               </div>
 
-              <div style={{ display: 'flex', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: '1 1 200px' }}>
                   <label className="font-heading" style={{ color: '#fffff0' }}>{t('form_guests')} *</label>
                   <select required style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}>
                     <option value="1">1</option>
@@ -63,7 +63,7 @@ const RSVP = () => {
                   </select>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: '1 1 200px' }}>
                   <label className="font-heading" style={{ color: '#fffff0' }}>{t('form_attendance')} *</label>
                   <select required style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}>
                     <option value="accept">{t('form_accept')}</option>

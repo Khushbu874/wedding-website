@@ -63,7 +63,7 @@ const IntroScreen = ({ onComplete }) => {
       >
         <h1 
           className="font-script text-gradient-gold" 
-          style={{ fontSize: '100px', marginBottom: '20px', lineHeight: '1.3', padding: '10px 0' }}
+          style={{ fontSize: 'clamp(52px, 12vw, 100px)', marginBottom: '10px', lineHeight: '1.3', padding: '10px 0' }}
         >
           A & P
         </h1>
@@ -71,9 +71,9 @@ const IntroScreen = ({ onComplete }) => {
           className="font-heading" 
           style={{ 
             color: '#fdf5e6', /* explicitly set to a light ivory so it shows on maroon */ 
-            letterSpacing: '5px', 
-            fontSize: '18px',
-            marginBottom: '60px' 
+            letterSpacing: 'clamp(2px, 1.2vw, 5px)', 
+            fontSize: 'clamp(13px, 4vw, 18px)',
+            marginBottom: 'clamp(25px, 6vh, 60px)' 
           }}
         >
           {t('hero_tagline')}

@@ -98,10 +98,10 @@ const Hero = () => {
           transition={{ delay: 1, duration: 1.5 }}
           className="font-heading text-gradient-gold"
           style={{ 
-            letterSpacing: '8px',
-            fontSize: '16px',
+            letterSpacing: 'clamp(3px, 1.5vw, 8px)',
+            fontSize: 'clamp(12px, 3.5vw, 16px)',
             textTransform: 'uppercase',
-            marginBottom: '30px'
+            marginBottom: 'clamp(15px, 4vh, 30px)'
           }}
         >
           {t('save_the_date')}
@@ -110,9 +110,9 @@ const Hero = () => {
         <h1 
           className="font-script text-gradient-gold"
           style={{ 
-            fontSize: 'clamp(80px, 15vw, 150px)',
+            fontSize: 'clamp(48px, 12vw, 150px)',
             lineHeight: '1.2',
-            padding: '10px 0',
+            padding: '10px 10px',
             textShadow: '0 10px 30px rgba(0,0,0,0.5)',
             marginBottom: '10px'
           }}
@@ -127,7 +127,7 @@ const Hero = () => {
           style={{
             margin: '20px auto',
             width: '2px',
-            height: '80px',
+            height: 'clamp(40px, 10vh, 80px)',
             background: 'linear-gradient(to bottom, var(--c-gold), transparent)',
             transformOrigin: 'top'
           }}
@@ -139,10 +139,11 @@ const Hero = () => {
           transition={{ delay: 2.5, duration: 1.5 }}
           className="font-secondary"
           style={{ 
-            fontSize: '28px', 
+            fontSize: 'clamp(18px, 4.5vw, 28px)', 
             color: '#fffff0',
             letterSpacing: '2px',
-            textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+            textShadow: '0 2px 10px rgba(0,0,0,0.8)',
+            padding: '0 15px'
           }}
         >
           {t('date_full')}
