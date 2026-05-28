@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import IntroScreen from './components/IntroScreen';
-import CustomCursor from './components/CustomCursor';
 import MusicPlayer from './components/MusicPlayer';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -44,7 +43,6 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
       
       {/* Global Audio Element */}
       <audio 
