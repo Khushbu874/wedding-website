@@ -49,7 +49,7 @@ function App() {
       {/* Global Audio Element */}
       <audio 
         ref={audioRef} 
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3" 
+        src="/wedding_song.mp3" 
         loop 
       />
 
