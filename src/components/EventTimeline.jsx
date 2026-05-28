@@ -68,7 +68,7 @@ const EventTimeline = () => {
 
   return (
     <section className="section-padding" style={{ 
-      background: `linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.9)), url('/royal_indian_wedding_venue_1779894764907.png') center/cover fixed`,
+      background: `linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.9)), url('${import.meta.env.BASE_URL}royal_indian_wedding_venue_1779894764907.png') center/cover fixed`,
       color: '#fffff0'
     }}>
       <div className="container">

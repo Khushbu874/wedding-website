@@ -11,21 +11,21 @@ const LoveStory = () => {
       title: t('story_1_title'),
       date: t('story_1_date'),
       description: t('story_1_desc'),
-      image: '/royal_indian_couple_first_meet_1779894730819.png'
+      image: `${import.meta.env.BASE_URL}royal_indian_couple_first_meet_1779894730819.png`
     },
     {
       id: 2,
       title: t('story_2_title'),
       date: t('story_2_date'),
       description: t('story_2_desc'),
-      image: '/royal_indian_engagement_1779894748927.png'
+      image: `${import.meta.env.BASE_URL}royal_indian_engagement_1779894748927.png`
     },
     {
       id: 3,
       title: t('story_3_title'),
       date: t('story_3_date'),
       description: t('story_3_desc'),
-      image: '/royal_indian_wedding_venue_1779894764907.png'
+      image: `${import.meta.env.BASE_URL}royal_indian_wedding_venue_1779894764907.png`
     }
   ];
 

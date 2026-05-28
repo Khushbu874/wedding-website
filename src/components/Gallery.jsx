@@ -4,9 +4,9 @@ import { useLanguage } from './LanguageContext';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const images = [
-  '/royal_indian_couple_first_meet_1779894730819.png',
-  '/royal_indian_engagement_1779894748927.png',
-  '/royal_indian_wedding_venue_1779894764907.png'
+  `${import.meta.env.BASE_URL}royal_indian_couple_first_meet_1779894730819.png`,
+  `${import.meta.env.BASE_URL}royal_indian_engagement_1779894748927.png`,
+  `${import.meta.env.BASE_URL}royal_indian_wedding_venue_1779894764907.png`
 ];
 
 const Gallery = () => {

@@ -41,7 +41,7 @@ const Hero = () => {
         style={{
           position: 'absolute',
           inset: '-10%',
-          backgroundImage: `url('/royal_indian_couple_first_meet_1779894730819.png')`,
+          backgroundImage: `url('${import.meta.env.BASE_URL}royal_indian_couple_first_meet_1779894730819.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           scale: scale

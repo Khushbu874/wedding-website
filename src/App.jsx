@@ -49,7 +49,7 @@ function App() {
       {/* Global Audio Element */}
       <audio 
         ref={audioRef} 
-        src="/wedding_song.mp3" 
+        src={`${import.meta.env.BASE_URL}wedding_song.mp3`} 
         loop 
       />
 

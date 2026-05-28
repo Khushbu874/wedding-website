@@ -14,7 +14,7 @@ const RSVP = () => {
 
   return (
     <section className="section-padding" style={{ 
-      background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('/royal_indian_engagement_1779894748927.png') center/cover fixed`, 
+      background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('${import.meta.env.BASE_URL}royal_indian_engagement_1779894748927.png') center/cover fixed`, 
       position: 'relative' 
     }}>
 
