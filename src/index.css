@@ -70,16 +70,42 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 body {
   font-family: var(--font-secondary);
   background-color: var(--c-bg-primary);
   color: var(--c-text-primary);
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
               color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#root {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+}
+
+/* Eliminate all possible subpixel rounding vertical gaps across all sections */
+section {
+  width: calc(100% + 4px) !important;
+  margin-left: -2px !important;
+  position: relative;
+  overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -137,8 +163,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Utilities */
 .section-padding { padding: 100px 20px; }
 @media (min-width: 768px) { .section-padding { padding: 120px 50px; } }
-.container { max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 20px; }
-@media (min-width: 768px) { .container { padding: 0 40px; } }
+.container { max-width: 1200px; margin: 0 auto; }
 .text-center { text-align: center; }
 
 @media (max-width: 768px) {
@@ -221,9 +246,14 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-@media (max-width: 480px) { ::-webkit-scrollbar { width: 4px; } }
-::-webkit-scrollbar-track { background: var(--c-bg-primary); transition: background 0.5s; }
-::-webkit-scrollbar-thumb { background: var(--c-gold); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--c-maroon); }
+/* Hide scrollbar globally while preserving native scrolling capability */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html, body, #root {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}

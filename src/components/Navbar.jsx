@@ -125,7 +125,7 @@ const Navbar = () => {
                 top: 0, left: 0, right: 0, bottom: 0,
                 backgroundColor: 'rgba(0,0,0,0.6)',
                 backdropFilter: 'blur(8px)',
-                zIndex: 998
+                zIndex: 1001
               }}
             />
             {/* Drawer */}
@@ -141,7 +141,7 @@ const Navbar = () => {
                 maxWidth: '85vw',
                 backgroundColor: 'var(--c-bg-primary)',
                 borderLeft: '1px solid var(--c-gold)',
-                zIndex: 999,
+                zIndex: 1002,
                 display: 'flex',
                 flexDirection: 'column',
                 padding: '40px 30px',

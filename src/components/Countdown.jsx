@@ -52,7 +52,7 @@ const Countdown = () => {
             display: 'flex',
             justifyContent: 'center',
             flexWrap: 'nowrap',
-            gap: 'clamp(5px, 2vw, 20px)'
+            gap: 'clamp(4px, 1.5vw, 20px)'
           }}>
             {timeUnits.map((unit, index) => (
               <div key={index} style={{
@@ -64,12 +64,12 @@ const Countdown = () => {
                 <div 
                   className="glass-panel-dark"
                   style={{
-                    width: 'clamp(65px, 22vw, 100px)',
-                    height: 'clamp(65px, 22vw, 100px)',
+                    width: 'clamp(52px, 18vw, 100px)',
+                    height: 'clamp(52px, 18vw, 100px)',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    fontSize: 'clamp(24px, 7vw, 40px)',
+                    fontSize: 'clamp(18px, 6vw, 40px)',
                     fontFamily: 'var(--font-heading)',
                     marginBottom: '10px',
                     boxShadow: '0 0 20px rgba(212, 175, 55, 0.2)',

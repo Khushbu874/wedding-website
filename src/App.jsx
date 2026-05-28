@@ -62,7 +62,7 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
-            style={{ position: 'relative' }}
+            style={{ position: 'relative', width: '100%', overflowX: 'hidden' }}
           >
             {/* Global Animated Background Effect */}
             <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
@@ -99,7 +99,7 @@ function App() {
               ))}
             </div>
 
-            <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ position: 'relative', zIndex: 1, width: '100%', overflowX: 'hidden' }}>
               <Navbar />
               <MusicPlayer isPlaying={isPlaying} togglePlay={togglePlay} />
               

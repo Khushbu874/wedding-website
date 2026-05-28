@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 
 const IntroScreen = ({ onComplete }) => {
   const { t } = useLanguage();
+
+  useEffect(() => {
+    // Hide body scroll and scrollbar track space during intro phase
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = originalOverflow || '';
+    };
+  }, []);
 
   return (
     <motion.div
@@ -12,7 +21,10 @@ const IntroScreen = ({ onComplete }) => {
       transition={{ duration: 1.5, ease: "easeInOut" }}
       style={{
         position: 'fixed',
-        inset: 0,
+        top: '-2px',
+        left: '-2px',
+        right: '-2px',
+        bottom: '-2px',
         backgroundColor: 'var(--c-maroon)',
         display: 'flex',
         flexDirection: 'column',
