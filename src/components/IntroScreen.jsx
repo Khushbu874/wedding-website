@@ -132,7 +132,7 @@ const IntroScreen = ({ onComplete }) => {
           position: 'absolute',
           top: '-10px',
           left: '-10px',
-          width: 'clamp(120px, 25vw, 240px)',
+          width: 'clamp(195px, 38vw, 290px)',
           zIndex: 5,
           pointerEvents: 'none'
         }}
@@ -144,7 +144,7 @@ const IntroScreen = ({ onComplete }) => {
           position: 'absolute',
           top: '-10px',
           right: '-10px',
-          width: 'clamp(120px, 25vw, 240px)',
+          width: 'clamp(195px, 38vw, 290px)',
           zIndex: 5,
           pointerEvents: 'none',
           transform: 'scaleX(-1)'
@@ -157,7 +157,7 @@ const IntroScreen = ({ onComplete }) => {
           position: 'absolute',
           bottom: '-10px',
           left: '-10px',
-          width: 'clamp(120px, 25vw, 240px)',
+          width: 'clamp(195px, 38vw, 290px)',
           zIndex: 5,
           pointerEvents: 'none',
           transform: 'scaleY(-1)'
@@ -170,7 +170,7 @@ const IntroScreen = ({ onComplete }) => {
           position: 'absolute',
           bottom: '-10px',
           right: '-10px',
-          width: 'clamp(120px, 25vw, 240px)',
+          width: 'clamp(195px, 38vw, 290px)',
           zIndex: 5,
           pointerEvents: 'none',
           transform: 'scale(-1)'
