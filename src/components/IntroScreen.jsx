@@ -77,7 +77,7 @@ const IntroScreen = ({ onComplete }) => {
           className="font-script text-gradient-gold" 
           style={{ fontSize: 'clamp(52px, 12vw, 100px)', marginBottom: '10px', lineHeight: '1.3', padding: '10px 0' }}
         >
-          A & P
+          S & S
         </h1>
         <p 
           className="font-heading" 

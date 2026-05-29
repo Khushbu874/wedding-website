@@ -143,7 +143,7 @@ const BoardingPass = () => {
               {/* Left Side */}
               <div className="boarding-pass-main">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid var(--c-gold)', paddingBottom: '10px' }}>
-                  <h3 className="font-heading" style={{ color: '#5a0000', fontSize: 'clamp(16px, 4vw, 20px)' }}>A & P WEDDING</h3>
+                  <h3 className="font-heading" style={{ color: '#5a0000', fontSize: 'clamp(16px, 4vw, 20px)' }}>S & S WEDDING</h3>
                   <Plane color="var(--c-gold)" />
                 </div>
                 

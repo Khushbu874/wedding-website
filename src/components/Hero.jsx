@@ -117,13 +117,30 @@ const Hero = () => {
             marginBottom: '10px'
           }}
         >
-          {t('groom')} & {t('bride')}
+          {t('couple_names')}
         </h1>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 1.2 }}
+          className="font-heading text-gradient-gold"
+          style={{
+            fontSize: 'clamp(14px, 4vw, 22px)',
+            letterSpacing: '5px',
+            marginTop: '15px',
+            marginBottom: '5px',
+            fontWeight: '600',
+            textShadow: '0 2px 15px rgba(0,0,0,0.6)'
+          }}
+        >
+          #ShivyamKaSangam
+        </motion.p>
         
         <motion.div
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
-          transition={{ delay: 2, duration: 1.5, ease: "anticipate" }}
+          transition={{ delay: 2.0, duration: 1.5, ease: "anticipate" }}
           style={{
             margin: '20px auto',
             width: '2px',

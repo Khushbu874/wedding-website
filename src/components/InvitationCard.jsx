@@ -63,7 +63,7 @@ const InvitationCard = () => {
                     zIndex: 21
                   }}
                 >
-                  <span className="font-script" style={{ color: 'var(--c-gold)', fontSize: 'clamp(24px, 6vw, 30px)' }}>AP</span>
+                  <span className="font-script" style={{ color: 'var(--c-gold)', fontSize: 'clamp(24px, 6vw, 30px)' }}>SS</span>
                 </motion.div>
                 
                 <p style={{ position: 'absolute', bottom: 'clamp(20px, 6vh, 40px)', color: 'var(--c-gold)', fontFamily: 'var(--font-heading)', letterSpacing: '2px', fontSize: 'clamp(11px, 3.5vw, 14px)' }}>
@@ -88,7 +88,7 @@ const InvitationCard = () => {
               backgroundColor: 'var(--c-bg-primary)',
               borderRadius: '8px',
               boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-              padding: 'clamp(20px, 6vw, 40px) 20px',
+              padding: 'clamp(25px, 6vw, 40px) 20px clamp(15px, 4vw, 30px)',
               textAlign: 'center',
               border: '2px solid var(--c-gold)',
               zIndex: 10,
@@ -98,33 +98,96 @@ const InvitationCard = () => {
               backgroundImage: 'radial-gradient(circle at center, rgba(212,175,55,0.05) 0%, transparent 70%)'
             }}
           >
+            {/* Elegant inner thin border */}
+            <div style={{
+              position: 'absolute',
+              inset: '8px',
+              border: '1px solid rgba(212, 175, 55, 0.35)',
+              borderRadius: '6px',
+              pointerEvents: 'none',
+              zIndex: 1
+            }} />
+
             {/* Traditional Border elements */}
-            <div style={{ position: 'absolute', top: '10px', left: '10px', width: '30px', height: '30px', borderTop: '2px solid var(--c-gold)', borderLeft: '2px solid var(--c-gold)' }} />
-            <div style={{ position: 'absolute', top: '10px', right: '10px', width: '30px', height: '30px', borderTop: '2px solid var(--c-gold)', borderRight: '2px solid var(--c-gold)' }} />
-            <div style={{ position: 'absolute', bottom: '10px', left: '10px', width: '30px', height: '30px', borderBottom: '2px solid var(--c-gold)', borderLeft: '2px solid var(--c-gold)' }} />
-            <div style={{ position: 'absolute', bottom: '10px', right: '10px', width: '30px', height: '30px', borderBottom: '2px solid var(--c-gold)', borderRight: '2px solid var(--c-gold)' }} />
+            <div style={{ position: 'absolute', top: '14px', left: '14px', width: '25px', height: '25px', borderTop: '2px solid var(--c-gold)', borderLeft: '2px solid var(--c-gold)', zIndex: 2 }} />
+            <div style={{ position: 'absolute', top: '14px', right: '14px', width: '25px', height: '25px', borderTop: '2px solid var(--c-gold)', borderRight: '2px solid var(--c-gold)', zIndex: 2 }} />
+            <div style={{ position: 'absolute', bottom: '14px', left: '14px', width: '25px', height: '25px', borderBottom: '2px solid var(--c-gold)', borderLeft: '2px solid var(--c-gold)', zIndex: 2 }} />
+            <div style={{ position: 'absolute', bottom: '14px', right: '14px', width: '25px', height: '25px', borderBottom: '2px solid var(--c-gold)', borderRight: '2px solid var(--c-gold)', zIndex: 2 }} />
             
-            <h3 className="font-heading" style={{ color: 'var(--c-maroon)', fontSize: 'clamp(14px, 4vw, 20px)', marginBottom: '15px', letterSpacing: '2px' }}>
+            {/* Elegant Ganesha Motif */}
+            <svg 
+              viewBox="0 0 100 100" 
+              width="clamp(40px, 9vw, 52px)" 
+              height="clamp(40px, 9vw, 52px)" 
+              style={{ margin: '0 auto 6px', display: 'block', color: 'var(--c-gold)', zIndex: 2 }}
+            >
+              {/* Crown (Mukut) */}
+              <path d="M 46 12 L 54 12 L 52 24 L 48 24 Z" fill="currentColor" />
+              <circle cx="50" cy="9" r="1.5" fill="currentColor" />
+              <path d="M 43 21 Q 50 17 57 21" fill="none" stroke="currentColor" strokeWidth="1.2" />
+              
+              {/* Ears */}
+              <path d="M 42 27 C 28 24, 28 42, 40 42" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <path d="M 58 27 C 72 24, 72 42, 60 42" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              
+              {/* Head & Trunk */}
+              <path d="M 42 29 C 42 22, 58 22, 58 29 C 58 37, 51 39, 51 47 C 51 54, 60 56, 60 63 C 60 67, 56 70, 49 70 C 43 70, 41 65, 45 60" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              
+              {/* Tusk */}
+              <path d="M 44 42 L 39 43" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              
+              {/* Tilak */}
+              <line x1="50" y1="27" x2="50" y2="35" stroke="currentColor" strokeWidth="1.8" />
+              <circle cx="50" cy="38" r="1" fill="currentColor" />
+              
+              {/* Modak */}
+              <circle cx="62" cy="58" r="2.5" fill="currentColor" />
+            </svg>
+
+            {/* Sacred Shloka */}
+            <p className="font-secondary" style={{ 
+              color: 'var(--c-gold)', 
+              fontSize: 'clamp(9px, 2.5vw, 11px)', 
+              fontStyle: 'italic', 
+              lineHeight: '1.4', 
+              margin: '0 auto 12px',
+              maxWidth: '85%',
+              whiteSpace: 'pre-line',
+              opacity: 0.9,
+              letterSpacing: '0.3px',
+              zIndex: 2
+            }}>
+              {t('invitation_shloka')}
+            </p>
+
+            <h3 className="font-heading" style={{ color: 'var(--c-maroon)', fontSize: 'clamp(12px, 3.5vw, 16px)', marginBottom: '8px', letterSpacing: '2px', zIndex: 2 }}>
               {t('together_families')}
             </h3>
             
-            <h2 className="font-script text-gradient-gold" style={{ fontSize: 'clamp(32px, 8vw, 50px)', marginBottom: '15px' }}>
+            <h2 className="font-script text-gradient-gold" style={{ fontSize: 'clamp(28px, 7vw, 42px)', marginBottom: '8px', zIndex: 2 }}>
               {t('couple_names')}
             </h2>
             
-            <p className="font-secondary" style={{ color: 'var(--c-text-primary)', fontSize: 'clamp(14px, 4vw, 18px)', marginBottom: '15px', lineHeight: '1.5' }}>
+            <p className="font-secondary" style={{ color: 'var(--c-text-primary)', fontSize: 'clamp(12px, 3.2vw, 15px)', marginBottom: '12px', lineHeight: '1.4', padding: '0 10px', zIndex: 2 }}>
               {t('joyfully_invite')}
             </p>
             
-            <div style={{ width: '50px', height: '1px', backgroundColor: 'var(--c-gold)', margin: '0 auto 15px' }} />
+            <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--c-gold)', margin: '0 auto 12px', zIndex: 2 }} />
             
-            <p className="font-heading" style={{ color: 'var(--c-maroon)', fontSize: 'clamp(12px, 3.5vw, 16px)', letterSpacing: '2px', whiteSpace: 'pre-line' }}>
+            <p className="font-heading" style={{ color: 'var(--c-maroon)', fontSize: 'clamp(11px, 3vw, 14px)', letterSpacing: '1.5px', whiteSpace: 'pre-line', zIndex: 2 }}>
               {t('date_time')}
             </p>
             
-            <p className="font-secondary" style={{ marginTop: '15px', color: 'var(--c-text-secondary)', fontStyle: 'italic', fontSize: 'clamp(12px, 3.5vw, 14px)' }}>
+            <p className="font-secondary" style={{ marginTop: '10px', color: 'var(--c-text-secondary)', fontStyle: 'italic', fontSize: 'clamp(11px, 3vw, 13px)', zIndex: 2 }}>
               {t('palace_location')}
             </p>
+
+            {/* Bottom Ornamental Flourish */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', margin: 'clamp(10px, 3vh, 20px) auto 8px', width: '55%', zIndex: 2 }}>
+              <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, var(--c-gold))' }} />
+              <span style={{ color: 'var(--c-gold)', fontSize: '9px', letterSpacing: '1.5px' }}>✦ ⚜ ✦</span>
+              <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, transparent, var(--c-gold))' }} />
+            </div>
 
             {isOpen && (
               <button 
@@ -133,15 +196,19 @@ const InvitationCard = () => {
                   setIsOpen(false);
                 }}
                 style={{
-                  marginTop: 'auto',
                   background: 'none',
                   border: 'none',
                   color: 'var(--c-gold)',
                   fontFamily: 'var(--font-heading)',
-                  fontSize: '12px',
+                  fontSize: '11px',
                   cursor: 'pointer',
-                  letterSpacing: '1px'
+                  letterSpacing: '1.5px',
+                  transition: 'all 0.3s ease',
+                  opacity: 0.85,
+                  zIndex: 3
                 }}
+                onMouseOver={(e) => e.target.style.opacity = '1'}
+                onMouseOut={(e) => e.target.style.opacity = '0.85'}
               >
                 {t('close_invitation')}
               </button>

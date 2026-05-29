@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 const Countdown = () => {
   const { t } = useLanguage();
   
-  // Target date: Nov 24, 2026
-  const targetDate = new Date('2026-11-24T00:00:00').getTime();
+  // Target date: July 1, 2026
+  const targetDate = new Date('2026-07-01T00:00:00').getTime();
   
   const [timeLeft, setTimeLeft] = useState({
     days: 0,

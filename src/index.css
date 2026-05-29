@@ -229,3 +229,19 @@ html, body, #root {
   -ms-overflow-style: none !important;  /* IE and Edge */
   scrollbar-width: none !important;  /* Firefox */
 }
+
+/* Responsive grid for Awaiting to Welcome section */
+.awaiting-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 8px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+@media (min-width: 640px) {
+  .awaiting-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 15px;
+  }
+}

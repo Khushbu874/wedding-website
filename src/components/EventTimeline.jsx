@@ -2,147 +2,376 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
-import { Sun, Palette, Music, Heart, GlassWater, X, MapPin, Clock, Calendar } from 'lucide-react';
+import { Sun, Music, Heart, GlassWater, X, MapPin, Clock, Calendar, Smile, Sparkles, Flame, Palette, ChevronRight } from 'lucide-react';
 
 const EventTimeline = () => {
   const { t } = useLanguage();
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [hoveredEventId, setHoveredEventId] = useState(null);
 
-  const events = [
+  const eventDays = [
     {
-      id: 'haldi',
-      title: t('event_haldi'),
-      icon: <Sun size={32} />,
-      color: '#fde047', // bright yellow
-      date: t('date_nov22'),
-      time: t('time_10am'),
-      venue: t('venue_haldi'),
-      dressCode: t('dress_haldi'),
-      description: t('desc_haldi')
+      id: 'day1',
+      date: t('date_june30'),
+      dayName: t('day_1_title'),
+      color: 'var(--c-gold)',
+      hasPlaque: true,
+      events: [
+        {
+          id: 'welcome',
+          title: t('event_welcome'),
+          time: t('time_9_30am'),
+          icon: <Smile size={16} />,
+          venue: t('venue_welcome'),
+          dressCode: t('dress_welcome'),
+          description: t('desc_welcome'),
+          color: '#fbbf24',
+          date: t('date_june30')
+        },
+        {
+          id: 'carnival',
+          title: t('event_carnival'),
+          time: t('time_10am'),
+          icon: <Sparkles size={16} />,
+          venue: t('venue_carnival'),
+          dressCode: t('dress_carnival'),
+          description: t('desc_carnival'),
+          color: '#3b82f6',
+          date: t('date_june30')
+        },
+        {
+          id: 'sangeet',
+          title: t('event_sangeet'),
+          time: t('time_8pm'),
+          icon: <Music size={16} />,
+          venue: t('venue_sangeet'),
+          dressCode: t('dress_sangeet'),
+          description: t('desc_sangeet'),
+          color: '#a855f7',
+          date: t('date_june30')
+        }
+      ]
     },
     {
-      id: 'mehendi',
-      title: t('event_mehendi'),
-      icon: <Palette size={32} />,
-      color: '#4ade80', // bright green
-      date: t('date_nov22'),
-      time: t('time_4pm'),
-      venue: t('venue_mehendi'),
-      dressCode: t('dress_mehendi'),
-      description: t('desc_mehendi')
-    },
-    {
-      id: 'sangeet',
-      title: t('event_sangeet'),
-      icon: <Music size={32} />,
-      color: '#c084fc', // bright purple
-      date: t('date_nov23'),
-      time: t('time_7pm'),
-      venue: t('venue_sangeet'),
-      dressCode: t('dress_sangeet'),
-      description: t('desc_sangeet')
-    },
-    {
-      id: 'wedding',
-      title: t('event_wedding'),
-      icon: <Heart size={32} />,
-      color: '#f87171', // bright red
-      date: t('date_nov24'),
-      time: t('time_5pm'),
-      venue: t('venue_wedding'),
-      dressCode: t('dress_wedding'),
-      description: t('desc_wedding')
-    },
-    {
-      id: 'reception',
-      title: t('event_reception'),
-      icon: <GlassWater size={32} />,
-      color: '#e2e8f0', // bright silver/ivory
-      date: t('date_nov25'),
-      time: t('time_8pm'),
-      venue: t('venue_reception'),
-      dressCode: t('dress_reception'),
-      description: t('desc_reception')
+      id: 'day2',
+      date: t('date_july1'),
+      dayName: t('day_2_title'),
+      color: 'var(--c-maroon)',
+      hasPlaque: false,
+      events: [
+        {
+          id: 'bhaat',
+          title: t('event_bhaat'),
+          time: t('time_10am'),
+          icon: <Sun size={16} />,
+          venue: t('venue_bhaat'),
+          dressCode: t('dress_bhaat'),
+          description: t('desc_bhaat'),
+          color: '#fbbf24',
+          date: t('date_july1')
+        },
+        {
+          id: 'barat',
+          title: t('event_barat'),
+          time: t('time_5pm'),
+          icon: <Flame size={16} />,
+          venue: t('venue_barat'),
+          dressCode: t('dress_barat'),
+          description: t('desc_barat'),
+          color: '#f97316',
+          date: t('date_july1')
+        },
+        {
+          id: 'reception',
+          title: t('event_reception'),
+          time: t('time_8pm'),
+          icon: <GlassWater size={16} />,
+          venue: t('venue_reception'),
+          dressCode: t('dress_reception'),
+          description: t('desc_reception'),
+          color: '#cbd5e1',
+          date: t('date_july1')
+        },
+        {
+          id: 'varmala',
+          title: t('event_varmala'),
+          time: t('time_9pm'),
+          icon: <Heart size={16} />,
+          venue: t('venue_varmala'),
+          dressCode: t('dress_varmala'),
+          description: t('desc_varmala'),
+          color: '#ef4444',
+          date: t('date_july1')
+        },
+        {
+          id: 'phere',
+          title: t('event_phere'),
+          time: t('time_phere'),
+          icon: <Flame size={16} />,
+          venue: t('venue_phere'),
+          dressCode: t('dress_phere'),
+          description: t('desc_phere'),
+          color: '#ea580c',
+          date: t('date_july1')
+        }
+      ]
     }
   ];
 
   return (
     <section className="section-padding" style={{ 
-      background: `linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.9)), url('${import.meta.env.BASE_URL}royal_indian_wedding_venue_1779894764907.png') center/cover fixed`,
+      background: `linear-gradient(rgba(17, 17, 17, 0.9), rgba(17, 17, 17, 0.97)), url('${import.meta.env.BASE_URL}royal_indian_wedding_venue_1779894764907.png') center/cover fixed`,
       color: '#fffff0'
     }}>
-      <div className="container">
+      <div className="container" style={{ maxWidth: '1200px' }}>
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-heading text-center text-gradient-gold"
-          style={{ fontSize: '40px', marginBottom: '60px', letterSpacing: '4px' }}
+          style={{ fontSize: 'clamp(32px, 8vw, 45px)', marginBottom: '50px', letterSpacing: '4px' }}
         >
           {t('events')}
         </motion.h2>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '30px' }}>
-          {events.map((event, index) => (
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(450px, 100%), 1fr))', 
+          gap: '40px',
+          justifyContent: 'center',
+          alignItems: 'stretch' // Stretches card heights to match symmetrically
+        }}>
+          {eventDays.map((day, dayIdx) => (
             <motion.div
-              key={event.id}
+              key={day.id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -10, boxShadow: '0 15px 30px rgba(0,0,0,0.1)' }}
-              onClick={() => setSelectedEvent(event)}
+              transition={{ duration: 0.8, delay: dayIdx * 0.2 }}
+              className="glass-panel"
               style={{
-                width: '100%',
-                maxWidth: '280px',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(212, 175, 55, 0.3)',
-                borderRadius: '16px',
-                padding: '30px 20px',
-                textAlign: 'center',
+                backgroundColor: 'rgba(18, 18, 18, 0.85)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                border: '1.5px solid rgba(212, 175, 55, 0.35)',
+                borderRadius: '28px',
+                padding: 'clamp(25px, 4vw, 40px)',
+                boxShadow: '0 25px 50px rgba(0,0,0,0.65)',
+                display: 'flex',
+                flexDirection: 'column',
                 position: 'relative',
-                overflow: 'hidden',
-                border: `1px solid rgba(212, 175, 55, 0.5)`,
-                boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
-                cursor: 'pointer'
+                overflow: 'hidden'
               }}
             >
-              {/* Top Accent Line */}
-              <div style={{
-                position: 'absolute',
-                top: 0, left: 0, right: 0,
-                height: '6px',
-                backgroundColor: event.color
-              }} />
+              {/* Luxury Corner Ornaments */}
+              <div style={{ position: 'absolute', top: '15px', left: '15px', color: 'var(--c-gold)', opacity: 0.4, fontSize: '10px' }}>✦</div>
+              <div style={{ position: 'absolute', top: '15px', right: '15px', color: 'var(--c-gold)', opacity: 0.4, fontSize: '10px' }}>✦</div>
+              <div style={{ position: 'absolute', bottom: '15px', left: '15px', color: 'var(--c-gold)', opacity: 0.4, fontSize: '10px' }}>✦</div>
+              <div style={{ position: 'absolute', bottom: '15px', right: '15px', color: 'var(--c-gold)', opacity: 0.4, fontSize: '10px' }}>✦</div>
 
-              <motion.div style={{
-                width: '70px', height: '70px', margin: '0 auto 20px', borderRadius: '50%',
-                backgroundColor: `${event.color}11`, color: event.color, display: 'flex', justifyContent: 'center', alignItems: 'center'
+              {/* Card Header */}
+              <div style={{ 
+                borderBottom: '1px solid rgba(212, 175, 55, 0.2)', 
+                paddingBottom: '20px', 
+                marginBottom: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '15px'
               }}>
-                {event.icon}
-              </motion.div>
-
-              <motion.h3 className="font-heading" style={{ color: event.color, fontSize: '24px', marginBottom: '15px' }}>
-                {event.title}
-              </motion.h3>
-              
-              <div style={{ marginBottom: '10px' }}>
-                <p className="font-primary" style={{ fontWeight: '600', color: '#fffff0' }}>{event.date}</p>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(212, 175, 55, 0.08)',
+                  border: '1.5px solid var(--c-gold)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'var(--c-gold)',
+                  flexShrink: 0,
+                  boxShadow: '0 0 15px rgba(212, 175, 55, 0.15)'
+                }}>
+                  <Calendar size={24} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className="font-heading text-gradient-gold" style={{ fontSize: 'clamp(22px, 4vw, 28px)', margin: '0' }}>
+                    {day.date}
+                  </h3>
+                  <p className="font-secondary" style={{ color: 'var(--c-gold)', fontSize: '12px', margin: '5px 0 0 0', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 'bold' }}>
+                    {day.dayName}
+                  </p>
+                  {/* Ornate Divider under header */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
+                    <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, rgba(212,175,55,0.4))' }}></div>
+                    <span style={{ color: 'var(--c-gold)', fontSize: '8px', opacity: 0.8 }}>✦ ⚜ ✦</span>
+                    <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, transparent, rgba(212,175,55,0.4))' }}></div>
+                  </div>
+                </div>
               </div>
 
-              <div style={{ width: '30px', height: '1px', backgroundColor: 'var(--c-gold)', margin: '15px auto' }} />
+              {/* Card Events Program List (Roadmap lines removed completely) */}
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: '20px',
+                marginBottom: day.hasPlaque ? '30px' : '0'
+              }}>
+                {day.events.map((event) => {
+                  const isHovered = hoveredEventId === event.id;
 
-              <p className="font-secondary" style={{ color: 'var(--c-gold)', fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                {t('click_details')}
-              </p>
+                  return (
+                    <motion.div
+                      key={event.id}
+                      onClick={() => setSelectedEvent(event)}
+                      onHoverStart={() => setHoveredEventId(event.id)}
+                      onHoverEnd={() => setHoveredEventId(null)}
+                      whileHover={{ y: -5, scale: 1.015 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                      style={{
+                        backgroundColor: isHovered ? 'rgba(212, 175, 55, 0.05)' : 'rgba(25, 25, 25, 0.55)',
+                        border: isHovered ? '1.5px solid rgba(212, 175, 55, 0.5)' : '1.5px solid rgba(212, 175, 55, 0.2)',
+                        borderRadius: '20px',
+                        padding: '18px 20px',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        boxShadow: isHovered 
+                          ? '0 12px 25px rgba(212, 175, 55, 0.15)' 
+                          : '0 6px 18px rgba(0,0,0,0.3)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        backgroundImage: 'radial-gradient(circle at top right, rgba(212,175,55,0.03) 0%, transparent 60%)'
+                      }}
+                    >
+                      {/* Top header inside ceremony card */}
+                      <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'center',
+                        marginBottom: '14px',
+                        borderBottom: '1px solid rgba(212, 175, 55, 0.1)',
+                        paddingBottom: '10px'
+                      }}>
+                        {/* Time in elegant gold serif */}
+                        <span className="font-heading text-gradient-gold" style={{ 
+                          fontSize: '18px', 
+                          fontWeight: '600', 
+                          letterSpacing: '1px' 
+                        }}>
+                          {event.time}
+                        </span>
+                        
+                        {/* Ceremony Icon Circle */}
+                        <motion.div 
+                          animate={{
+                            scale: isHovered ? 1.15 : 1,
+                            backgroundColor: isHovered ? `${event.color}22` : 'rgba(212, 175, 55, 0.06)'
+                          }}
+                          style={{
+                            width: '32px',
+                            height: '32px',
+                            borderRadius: '50%',
+                            border: `1px solid ${event.color}aa`,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            color: event.color,
+                            flexShrink: 0
+                          }}
+                        >
+                          {event.icon}
+                        </motion.div>
+                      </div>
+
+                      {/* Content */}
+                      <h4 className="font-heading" style={{ 
+                        fontSize: '20px', 
+                        color: '#fffff0', 
+                        margin: '0 0 12px 0', 
+                        letterSpacing: '1px',
+                        textTransform: 'uppercase'
+                      }}>
+                        {event.title}
+                      </h4>
+
+                      {/* Left border accent replaces roadmap flow line */}
+                      <div style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: '6px', 
+                        fontSize: '13px', 
+                        color: '#cccccc',
+                        borderLeft: `2.5px solid ${event.color}`,
+                        paddingLeft: '14px',
+                        marginBottom: '15px'
+                      }}>
+                        <p style={{ margin: '0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <MapPin size={14} color="var(--c-gold)" style={{ flexShrink: 0 }} /> {event.venue}
+                        </p>
+                        <p style={{ margin: '0', display: 'flex', alignItems: 'center', gap: '8px', fontStyle: 'italic', opacity: 0.85 }}>
+                          <Palette size={14} color="var(--c-gold)" style={{ flexShrink: 0 }} /> {t('dress_code')}: {event.dressCode}
+                        </p>
+                      </div>
+
+                      {/* Footer indicators */}
+                      <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'center',
+                        borderTop: '1px solid rgba(255,255,255,0.03)',
+                        paddingTop: '10px'
+                      }}>
+                        <span style={{ fontSize: '10px', color: '#888', fontStyle: 'italic' }}>
+                          Click to explore details
+                        </span>
+                        
+                        <motion.span 
+                          animate={{ x: isHovered ? 4 : 0 }}
+                          style={{ 
+                            fontSize: '10px', 
+                            color: 'var(--c-gold)', 
+                            letterSpacing: '1.2px', 
+                            textTransform: 'uppercase', 
+                            fontWeight: 'bold',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                        >
+                          {t('click_details')} <ChevronRight size={10} style={{ flexShrink: 0, marginTop: '-1px' }} />
+                        </motion.span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Bottom balanced plaque for June 30th card */}
+              {day.hasPlaque && (
+                <div style={{
+                  marginTop: 'auto', // Pushes this plaque strictly to the bottom
+                  padding: '24px 20px',
+                  borderRadius: '20px',
+                  border: '1.5px dashed rgba(212, 175, 55, 0.3)',
+                  backgroundColor: 'rgba(212, 175, 55, 0.04)',
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+                }}>
+                  <span style={{ color: 'var(--c-gold)', fontSize: '20px', textShadow: '0 0 5px var(--c-gold)' }}>❦</span>
+                  <p className="font-secondary" style={{ color: '#f7e7ce', fontStyle: 'italic', fontSize: '13px', margin: '0', lineHeight: '1.6' }}>
+                    "{t('quote_timeline')}"
+                  </p>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Modal / Flip Card View */}
+      {/* Modal / details overlay */}
       {createPortal(
         <AnimatePresence>
           {selectedEvent && (
@@ -155,8 +384,9 @@ const EventTimeline = () => {
                 style={{
                   position: 'fixed',
                   inset: 0,
-                  backgroundColor: 'rgba(0,0,0,0.8)',
-                  backdropFilter: 'blur(5px)',
+                  backgroundColor: 'rgba(0,0,0,0.85)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
                   zIndex: 9999
                 }}
               />
@@ -178,66 +408,69 @@ const EventTimeline = () => {
                   style={{
                     width: '100%',
                     maxWidth: '520px',
-                    backgroundColor: 'rgba(20, 20, 20, 0.85)',
-                    backdropFilter: 'blur(15px)',
-                    WebkitBackdropFilter: 'blur(15px)',
-                    borderRadius: '20px',
-                    padding: 'clamp(20px, 6vw, 40px)',
+                    backgroundColor: 'rgba(20, 20, 20, 0.9)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    borderRadius: '24px',
+                    padding: 'clamp(25px, 6vw, 40px)',
                     position: 'relative',
                     pointerEvents: 'auto',
                     border: `2px solid ${selectedEvent.color}`,
-                    boxShadow: `0 20px 50px rgba(0,0,0,0.5)`
+                    boxShadow: `0 20px 50px rgba(0,0,0,0.7)`
                   }}
                 >
                   <button
                     onClick={() => setSelectedEvent(null)}
                     style={{
                       position: 'absolute', top: '20px', right: '20px',
-                      background: 'rgba(0,0,0,0.1)', border: 'none',
-                      borderRadius: '50%', width: '30px', height: '30px',
+                      background: 'rgba(255,255,255,0.05)', border: 'none',
+                      borderRadius: '50%', width: '32px', height: '32px',
                       display: 'flex', justifyContent: 'center', alignItems: 'center',
-                      cursor: 'pointer', color: '#fffff0'
+                      cursor: 'pointer', color: '#fffff0',
+                      transition: 'all 0.2s'
                     }}
+                    onMouseOver={(e) => e.target.style.backgroundColor = 'rgba(255,255,255,0.15)'}
+                    onMouseOut={(e) => e.target.style.backgroundColor = 'rgba(255,255,255,0.05)'}
                   >
                     <X size={18} />
                   </button>
 
                   <motion.div style={{
-                    width: '80px', height: '80px', margin: '0 auto 20px', borderRadius: '50%',
+                    width: '70px', height: '70px', margin: '0 auto 20px', borderRadius: '50%',
                     backgroundColor: `${selectedEvent.color}22`, color: selectedEvent.color,
-                    display: 'flex', justifyContent: 'center', alignItems: 'center'
+                    display: 'flex', justifyContent: 'center', alignItems: 'center',
+                    border: `1.5px solid ${selectedEvent.color}55`
                   }}>
-                    {selectedEvent.icon}
+                    {React.cloneElement(selectedEvent.icon, { size: 32 })}
                   </motion.div>
 
-                  <motion.h3 className="font-heading text-center" style={{ color: selectedEvent.color, fontSize: 'clamp(24px, 6vw, 36px)', marginBottom: 'clamp(15px, 4vw, 30px)' }}>
+                  <motion.h3 className="font-heading text-center" style={{ color: selectedEvent.color, fontSize: 'clamp(22px, 6vw, 32px)', marginBottom: 'clamp(15px, 4vw, 25px)' }}>
                     {selectedEvent.title}
                   </motion.h3>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                       <Calendar color="var(--c-gold)" size={20} />
-                      <span className="font-primary" style={{ fontSize: '18px', color: '#fffff0' }}>{selectedEvent.date}</span>
+                      <span className="font-primary" style={{ fontSize: '16px', color: '#fffff0' }}>{selectedEvent.date}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                       <Clock color="var(--c-gold)" size={20} />
-                      <span className="font-primary" style={{ fontSize: '18px', color: '#fffff0' }}>{selectedEvent.time}</span>
+                      <span className="font-primary" style={{ fontSize: '16px', color: '#fffff0' }}>{selectedEvent.time}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                       <MapPin color="var(--c-gold)" size={20} />
-                      <span className="font-primary" style={{ fontSize: '18px', color: '#fffff0' }}>{selectedEvent.venue}</span>
+                      <span className="font-primary" style={{ fontSize: '16px', color: '#fffff0' }}>{selectedEvent.venue}</span>
                     </div>
                   </div>
 
-                  <div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '12px', borderLeft: `4px solid ${selectedEvent.color}` }}>
-                    <p className="font-secondary" style={{ color: '#fffff0', lineHeight: '1.6', fontSize: '16px', marginBottom: '15px' }}>
+                  <div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '16px', borderLeft: `4px solid ${selectedEvent.color}` }}>
+                    <p className="font-secondary" style={{ color: '#fffff0', lineHeight: '1.6', fontSize: '15px', marginBottom: '15px' }}>
                       {selectedEvent.description}
                     </p>
-                    <p className="font-secondary" style={{ color: '#cccccc', fontStyle: 'italic', fontSize: '14px' }}>
+                    <p className="font-secondary" style={{ color: '#cccccc', fontStyle: 'italic', fontSize: '13px' }}>
                       <strong>{t('dress_code')}:</strong> {selectedEvent.dressCode}
                     </p>
                   </div>
-
                 </motion.div>
               </div>
             </>

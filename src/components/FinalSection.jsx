@@ -87,6 +87,15 @@ const FinalSection = () => {
           {t('final_msg')}
         </p>
 
+        <p className="font-heading text-gradient-gold" style={{
+          fontSize: 'clamp(18px, 5vw, 26px)',
+          letterSpacing: '3px',
+          marginBottom: 'clamp(20px, 4vh, 40px)',
+          fontWeight: '600'
+        }}>
+          #ShivyamKaSangam
+        </p>
+
         <div style={{
           width: '80px',
           height: '80px',
@@ -98,7 +107,7 @@ const FinalSection = () => {
           alignItems: 'center',
           backgroundColor: 'rgba(212, 175, 55, 0.1)'
         }}>
-          <span className="font-script text-gradient-gold" style={{ fontSize: '30px' }}>AP</span>
+          <span className="font-script text-gradient-gold" style={{ fontSize: '30px' }}>SS</span>
         </div>
       </motion.div>
 

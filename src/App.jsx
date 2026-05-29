@@ -104,13 +104,13 @@ function App() {
               <div id="hero"><Hero /></div>
               <InvitationCard />
               <Countdown />
-              <div id="story"><LoveStory /></div>
               <div id="events"><EventTimeline /></div>
               <div id="gallery"><Gallery /></div>
               <Family />
               <Venue />
               <BoardingPass />
               <WishesWall />
+              <div id="story"><LoveStory /></div>
               <div id="rsvp"><RSVP /></div>
               <FinalSection />
             </div>

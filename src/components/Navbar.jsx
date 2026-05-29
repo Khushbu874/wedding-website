@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
   
   // Countdown Logic
-  const targetDate = new Date('2026-11-24T00:00:00').getTime();
+  const targetDate = new Date('2026-07-01T00:00:00').getTime();
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
 
   useEffect(() => {
@@ -44,12 +44,12 @@ const Navbar = () => {
   }, []);
 
   const menuItems = [
-    { label: t('our_story'), href: '#story' },
     { label: t('events'), href: '#events' },
     { label: t('venue'), href: '#venue' },
     { label: t('gallery'), href: '#gallery' },
     { label: t('boarding_pass'), href: '#boarding-pass' },
     { label: t('wishes'), href: '#wishes' },
+    { label: t('our_story'), href: '#story' },
     { label: t('rsvp'), href: '#rsvp' },
   ];
 
@@ -76,7 +76,7 @@ const Navbar = () => {
       >
         {/* Logo */}
         <div className="font-script text-gradient-gold" style={{ fontSize: 'clamp(26px, 6vw, 36px)', cursor: 'pointer', flexShrink: 0, paddingRight: '20px' }}>
-          <a href="#hero" style={{ textDecoration: 'none', color: 'inherit' }}>A & P</a>
+          <a href="#hero" style={{ textDecoration: 'none', color: 'inherit' }}>S & S</a>
         </div>
 
         <div style={{ flex: 1 }}></div>
@@ -157,7 +157,7 @@ const Navbar = () => {
                 <X size={32} />
               </button>
 
-              <h2 className="font-script text-gradient-gold" style={{ fontSize: '40px', marginBottom: '30px', marginTop: '20px' }}>A & P</h2>
+              <h2 className="font-script text-gradient-gold" style={{ fontSize: '40px', marginBottom: '30px', marginTop: '20px' }}>S & S</h2>
 
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
