@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import floralCorner from '../assets/floral_corner.png';
+import ssLogo from '../assets/S&S.png';
 
 const IntroScreen = ({ onComplete }) => {
   const { t } = useLanguage();
@@ -263,18 +264,18 @@ const IntroScreen = ({ onComplete }) => {
           <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, transparent, var(--c-gold))' }} />
         </div>
 
-        {/* Couple Initials */}
-        <h1 
-          className="font-script text-gradient-gold" 
-          style={{ 
-            fontSize: 'clamp(58px, 14vw, 110px)', 
-            lineHeight: '1.1', 
-            padding: '5px 0',
-            margin: 0
+        {/* Couple Initials Logo */}
+        <img 
+          src={ssLogo} 
+          alt="Shivangi & Satyam Logo" 
+          style={{
+            width: 'clamp(180px, 45vw, 290px)',
+            height: 'auto',
+            objectFit: 'contain',
+            margin: '5px 0 10px',
+            filter: 'drop-shadow(0 0 15px rgba(212, 175, 55, 0.45))'
           }}
-        >
-          S & S
-        </h1>
+        />
 
         {/* Elegant Separator */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', margin: '5px 0 10px', width: '160px' }}>

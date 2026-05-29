@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Plane, Download, Share2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { useLanguage } from './LanguageContext';
+import ssLogo from '../assets/S&S.png';
 
 const BoardingPass = () => {
   const { t } = useLanguage();
@@ -143,7 +144,10 @@ const BoardingPass = () => {
               {/* Left Side */}
               <div className="boarding-pass-main">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid var(--c-gold)', paddingBottom: '10px' }}>
-                  <h3 className="font-heading" style={{ color: '#5a0000', fontSize: 'clamp(16px, 4vw, 20px)' }}>S & S WEDDING</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <img src={ssLogo} alt="S&S Logo" style={{ height: '24px', width: 'auto', objectFit: 'contain' }} />
+                    <span className="font-heading" style={{ color: '#5a0000', fontSize: 'clamp(14px, 3.5vw, 18px)', fontWeight: 'bold', letterSpacing: '1px' }}>WEDDING</span>
+                  </div>
                   <Plane color="var(--c-gold)" />
                 </div>
                 

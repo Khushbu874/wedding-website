@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import { useTheme } from './ThemeContext';
 import { Menu, X, Moon, Sun, Globe } from 'lucide-react';
+import ssLogo from '../assets/S&S.png';
 
 const Navbar = () => {
   const { t, language, toggleLanguage } = useLanguage();
@@ -75,8 +76,10 @@ const Navbar = () => {
         }}
       >
         {/* Logo */}
-        <div className="font-script text-gradient-gold" style={{ fontSize: 'clamp(26px, 6vw, 36px)', cursor: 'pointer', flexShrink: 0, paddingRight: '20px' }}>
-          <a href="#hero" style={{ textDecoration: 'none', color: 'inherit' }}>S & S</a>
+        <div style={{ cursor: 'pointer', flexShrink: 0, paddingRight: '20px', display: 'flex', alignItems: 'center' }}>
+          <a href="#hero" style={{ display: 'flex', alignItems: 'center' }}>
+            <img src={ssLogo} alt="S&S Logo" style={{ height: 'clamp(32px, 8vw, 42px)', width: 'auto', objectFit: 'contain' }} />
+          </a>
         </div>
 
         <div style={{ flex: 1 }}></div>
@@ -157,7 +160,9 @@ const Navbar = () => {
                 <X size={32} />
               </button>
 
-              <h2 className="font-script text-gradient-gold" style={{ fontSize: '40px', marginBottom: '30px', marginTop: '20px' }}>S & S</h2>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px', marginTop: '20px' }}>
+                <img src={ssLogo} alt="S&S Logo" style={{ height: '55px', width: 'auto', objectFit: 'contain' }} />
+              </div>
 
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
