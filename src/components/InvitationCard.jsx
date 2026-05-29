@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
+import floralCorner from '../assets/floral_corner.png';
 
 const InvitationCard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -98,21 +99,58 @@ const InvitationCard = () => {
               backgroundImage: 'radial-gradient(circle at center, rgba(212,175,55,0.05) 0%, transparent 70%)'
             }}
           >
-            {/* Elegant inner thin border */}
+            {/* Elegant inner thin arch border */}
             <div style={{
               position: 'absolute',
               inset: '8px',
-              border: '1px solid rgba(212, 175, 55, 0.35)',
-              borderRadius: '6px',
+              border: '2px solid rgba(212, 175, 55, 0.7)',
+              borderTopLeftRadius: '250px 250px',
+              borderTopRightRadius: '250px 250px',
+              borderBottomLeftRadius: '10px',
+              borderBottomRightRadius: '10px',
+              pointerEvents: 'none',
+              zIndex: 1
+            }} />
+            
+            {/* Second inner thin arch border for layered luxury look */}
+            <div style={{
+              position: 'absolute',
+              inset: '13px',
+              border: '1.5px dashed rgba(212, 175, 55, 0.45)',
+              borderTopLeftRadius: '240px 240px',
+              borderTopRightRadius: '240px 240px',
+              borderBottomLeftRadius: '6px',
+              borderBottomRightRadius: '6px',
               pointerEvents: 'none',
               zIndex: 1
             }} />
 
-            {/* Traditional Border elements */}
-            <div style={{ position: 'absolute', top: '14px', left: '14px', width: '25px', height: '25px', borderTop: '2px solid var(--c-gold)', borderLeft: '2px solid var(--c-gold)', zIndex: 2 }} />
-            <div style={{ position: 'absolute', top: '14px', right: '14px', width: '25px', height: '25px', borderTop: '2px solid var(--c-gold)', borderRight: '2px solid var(--c-gold)', zIndex: 2 }} />
-            <div style={{ position: 'absolute', bottom: '14px', left: '14px', width: '25px', height: '25px', borderBottom: '2px solid var(--c-gold)', borderLeft: '2px solid var(--c-gold)', zIndex: 2 }} />
-            <div style={{ position: 'absolute', bottom: '14px', right: '14px', width: '25px', height: '25px', borderBottom: '2px solid var(--c-gold)', borderRight: '2px solid var(--c-gold)', zIndex: 2 }} />
+            {/* Corner Floral Arrangements - Top-Left and Bottom-Right (Exactly matching user request & second image) */}
+            <img 
+              src={floralCorner} 
+              alt="" 
+              style={{
+                position: 'absolute',
+                top: '2px',
+                left: '2px',
+                width: 'clamp(95px, 25vw, 155px)',
+                pointerEvents: 'none',
+                zIndex: 3
+              }}
+            />
+            <img 
+              src={floralCorner} 
+              alt="" 
+              style={{
+                position: 'absolute',
+                bottom: '2px',
+                right: '2px',
+                width: 'clamp(95px, 25vw, 155px)',
+                pointerEvents: 'none',
+                zIndex: 3,
+                transform: 'rotate(180deg)'
+              }}
+            />
             
             {/* Elegant Ganesha Motif */}
             <svg 

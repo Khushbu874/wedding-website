@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
+import floralCorner from '../assets/floral_corner.png';
 
 const IntroScreen = ({ onComplete }) => {
   const { t } = useLanguage();
@@ -34,6 +35,77 @@ const IntroScreen = ({ onComplete }) => {
         overflow: 'hidden'
       }}
     >
+      {/* Royal Arch/Border Frame for IntroScreen */}
+      <div style={{
+        position: 'absolute',
+        inset: 'clamp(15px, 4vw, 30px)',
+        border: '2px solid rgba(212, 175, 55, 0.6)',
+        borderRadius: '20px',
+        pointerEvents: 'none',
+        zIndex: 4
+      }} />
+      <div style={{
+        position: 'absolute',
+        inset: 'clamp(20px, 4.5vw, 36px)',
+        border: '1px dashed rgba(212, 175, 55, 0.4)',
+        borderRadius: '16px',
+        pointerEvents: 'none',
+        zIndex: 4
+      }} />
+
+      {/* Elegant watercolor corner flowers (transparent background) */}
+      <img 
+        src={floralCorner} 
+        alt="" 
+        style={{
+          position: 'absolute',
+          top: '-10px',
+          left: '-10px',
+          width: 'clamp(120px, 25vw, 240px)',
+          zIndex: 5,
+          pointerEvents: 'none'
+        }}
+      />
+      <img 
+        src={floralCorner} 
+        alt="" 
+        style={{
+          position: 'absolute',
+          top: '-10px',
+          right: '-10px',
+          width: 'clamp(120px, 25vw, 240px)',
+          zIndex: 5,
+          pointerEvents: 'none',
+          transform: 'scaleX(-1)'
+        }}
+      />
+      <img 
+        src={floralCorner} 
+        alt="" 
+        style={{
+          position: 'absolute',
+          bottom: '-10px',
+          left: '-10px',
+          width: 'clamp(120px, 25vw, 240px)',
+          zIndex: 5,
+          pointerEvents: 'none',
+          transform: 'scaleY(-1)'
+        }}
+      />
+      <img 
+        src={floralCorner} 
+        alt="" 
+        style={{
+          position: 'absolute',
+          bottom: '-10px',
+          right: '-10px',
+          width: 'clamp(120px, 25vw, 240px)',
+          zIndex: 5,
+          pointerEvents: 'none',
+          transform: 'scale(-1)'
+        }}
+      />
+
       {/* Floating particles background effect */}
       <div style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, pointerEvents: 'none' }}>
         {[...Array(20)].map((_, i) => (

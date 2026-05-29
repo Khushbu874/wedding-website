@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
+import floralCorner from '../assets/floral_corner.png';
 
 const RSVP = () => {
   const { t } = useLanguage();
@@ -18,9 +19,32 @@ const RSVP = () => {
       position: 'relative' 
     }}>
 
-      {/* Decorative corners */}
-      <div style={{ position: 'absolute', top: '20px', left: '20px', width: '100px', height: '100px', borderTop: '2px solid var(--c-gold)', borderLeft: '2px solid var(--c-gold)', opacity: 0.5 }} />
-      <div style={{ position: 'absolute', bottom: '20px', right: '20px', width: '100px', height: '100px', borderBottom: '2px solid var(--c-gold)', borderRight: '2px solid var(--c-gold)', opacity: 0.5 }} />
+      {/* Decorative floral corners (watercolor rose bouquets) */}
+      <img 
+        src={floralCorner} 
+        alt="" 
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: 'clamp(100px, 20vw, 180px)',
+          pointerEvents: 'none',
+          opacity: 0.85
+        }}
+      />
+      <img 
+        src={floralCorner} 
+        alt="" 
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: 'clamp(100px, 20vw, 180px)',
+          pointerEvents: 'none',
+          opacity: 0.85,
+          transform: 'rotate(180deg)'
+        }}
+      />
 
       <div className="container" style={{ maxWidth: '700px' }}>
         <motion.div
