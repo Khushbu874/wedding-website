@@ -54,6 +54,32 @@ const Navbar = () => {
     { label: t('rsvp'), href: '#rsvp' },
   ];
 
+  const handleScrollTo = (e, id) => {
+    e.preventDefault();
+    setIsOpen(false);
+    const element = document.getElementById(id.replace('#', ''));
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }, 100);
+    }
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    setIsOpen(false);
+    const element = document.getElementById('hero');
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <>
       <motion.nav
@@ -77,7 +103,7 @@ const Navbar = () => {
       >
         {/* Logo */}
         <div style={{ cursor: 'pointer', flexShrink: 0, paddingRight: '20px', display: 'flex', alignItems: 'center' }}>
-          <a href="#hero" style={{ display: 'flex', alignItems: 'center' }}>
+          <a href="#hero" onClick={handleLogoClick} style={{ display: 'flex', alignItems: 'center' }}>
             <img src={ssLogo} alt="S&S Logo" style={{ height: 'clamp(32px, 8vw, 42px)', width: 'auto', objectFit: 'contain' }} />
           </a>
         </div>
@@ -170,7 +196,7 @@ const Navbar = () => {
                   <motion.a
                     key={index}
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => handleScrollTo(e, item.href)}
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + (0.05 * index) }}

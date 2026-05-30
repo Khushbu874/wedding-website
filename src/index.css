@@ -68,7 +68,6 @@
 }
 
 html {
-  scroll-behavior: smooth !important;
   overflow-x: hidden !important;
   width: 100% !important;
   max-width: 100% !important;
