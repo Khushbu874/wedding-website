@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const LanguageContext = createContext();
 
@@ -8,6 +8,15 @@ export const LanguageProvider = ({ children }) => {
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === 'en' ? 'hi' : 'en'));
   };
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    if (language === 'hi') {
+      document.body.classList.add('lang-hi');
+    } else {
+      document.body.classList.remove('lang-hi');
+    }
+  }, [language]);
 
   const t = (key) => {
     const translations = {
@@ -54,6 +63,14 @@ export const LanguageProvider = ({ children }) => {
         story_3_title: "Engagement",
         story_3_date: "January 2025",
         story_3_desc: "Officially joining our families with joy and traditions.",
+        story_groom_title: "Satyam",
+        story_groom_subtitle: "The Groom",
+        story_bride_title: "Shivangi",
+        story_bride_subtitle: "The Bride",
+        story_wedding_title: "Shubh Vivah",
+        story_wedding_date: "July 1, 2026",
+        story_wedding_desc: "The day we become one forever.",
+        story_continued: "To be continued...",
 
         // Events
         event_welcome: "Welcome Reception",
@@ -168,7 +185,7 @@ export const LanguageProvider = ({ children }) => {
         ],
 
         // RSVP
-        rsvp_deadline: "KINDLY RESPOND BY JUNE 1, 2026",
+        rsvp_deadline: "KINDLY RESPOND BY JUNE 10, 2026",
         rsvp_thanks: "Thank You!",
         rsvp_received: "We have received your response.",
         form_name: "Full Name",
@@ -285,6 +302,14 @@ export const LanguageProvider = ({ children }) => {
         story_3_title: "सगाई",
         story_3_date: "जनवरी २०२५",
         story_3_desc: "खुशी और परंपराओं के साथ आधिकारिक तौर पर हमारे परिवारों को जोड़ना।",
+        story_groom_title: "सत्यम",
+        story_groom_subtitle: "दूल्हा",
+        story_bride_title: "शिवांगी",
+        story_bride_subtitle: "दुल्हन",
+        story_wedding_title: "शुभ विवाह",
+        story_wedding_date: "१ जुलाई, २०२६",
+        story_wedding_desc: "वह दिन जब हम हमेशा के लिए एक हो जाएंगे।",
+        story_continued: "जारी रहेगा...",
 
         // Events
         event_welcome: "स्वागत समारोह (Welcome)",
@@ -478,7 +503,7 @@ export const LanguageProvider = ({ children }) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

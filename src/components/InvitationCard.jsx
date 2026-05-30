@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import floralCorner from '../assets/floral_corner.png';
+import ssLogo from '../assets/S&S.png';
 
 const InvitationCard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +65,16 @@ const InvitationCard = () => {
                     zIndex: 21
                   }}
                 >
-                  <span className="font-script" style={{ color: 'var(--c-gold)', fontSize: 'clamp(24px, 6vw, 30px)' }}>SS</span>
+                  <img 
+                    src={ssLogo} 
+                    alt="S&S Logo" 
+                    style={{
+                      width: '65%',
+                      height: '65%',
+                      objectFit: 'contain',
+                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.35))'
+                    }}
+                  />
                 </motion.div>
                 
                 <p style={{ position: 'absolute', bottom: 'clamp(20px, 6vh, 40px)', color: 'var(--c-gold)', fontFamily: 'var(--font-heading)', letterSpacing: '2px', fontSize: 'clamp(11px, 3.5vw, 14px)' }}>

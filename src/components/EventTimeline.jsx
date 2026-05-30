@@ -4,6 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import { Sun, Music, Heart, GlassWater, X, MapPin, Clock, Calendar, Smile, Sparkles, Flame, Palette, ChevronRight } from 'lucide-react';
 
+import welcomeImg from '../assets/Welcom Reception.png';
+import carnivalImg from '../assets/Carnival.png';
+import sangeetImg from '../assets/Sangeet.png';
+import bhaatImg from '../assets/Gor.png';
+import baratImg from '../assets/Nikashi Baarat.png';
+import receptionImg from '../assets/Reception.png';
+import varmalaImg from '../assets/Varmala.png';
+import phereImg from '../assets/Phere.png';
+
 const EventTimeline = () => {
   const { t } = useLanguage();
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -21,7 +30,7 @@ const EventTimeline = () => {
           id: 'welcome',
           title: t('event_welcome'),
           time: t('time_9_30am'),
-          icon: <Smile size={16} />,
+          icon: welcomeImg,
           venue: t('venue_welcome'),
           dressCode: t('dress_welcome'),
           description: t('desc_welcome'),
@@ -32,7 +41,7 @@ const EventTimeline = () => {
           id: 'carnival',
           title: t('event_carnival'),
           time: t('time_10am'),
-          icon: <Sparkles size={16} />,
+          icon: carnivalImg,
           venue: t('venue_carnival'),
           dressCode: t('dress_carnival'),
           description: t('desc_carnival'),
@@ -43,7 +52,7 @@ const EventTimeline = () => {
           id: 'sangeet',
           title: t('event_sangeet'),
           time: t('time_8pm'),
-          icon: <Music size={16} />,
+          icon: sangeetImg,
           venue: t('venue_sangeet'),
           dressCode: t('dress_sangeet'),
           description: t('desc_sangeet'),
@@ -63,7 +72,7 @@ const EventTimeline = () => {
           id: 'bhaat',
           title: t('event_bhaat'),
           time: t('time_10am'),
-          icon: <Sun size={16} />,
+          icon: bhaatImg,
           venue: t('venue_bhaat'),
           dressCode: t('dress_bhaat'),
           description: t('desc_bhaat'),
@@ -74,7 +83,7 @@ const EventTimeline = () => {
           id: 'barat',
           title: t('event_barat'),
           time: t('time_5pm'),
-          icon: <Flame size={16} />,
+          icon: baratImg,
           venue: t('venue_barat'),
           dressCode: t('dress_barat'),
           description: t('desc_barat'),
@@ -85,7 +94,7 @@ const EventTimeline = () => {
           id: 'reception',
           title: t('event_reception'),
           time: t('time_8pm'),
-          icon: <GlassWater size={16} />,
+          icon: receptionImg,
           venue: t('venue_reception'),
           dressCode: t('dress_reception'),
           description: t('desc_reception'),
@@ -96,7 +105,7 @@ const EventTimeline = () => {
           id: 'varmala',
           title: t('event_varmala'),
           time: t('time_9pm'),
-          icon: <Heart size={16} />,
+          icon: varmalaImg,
           venue: t('venue_varmala'),
           dressCode: t('dress_varmala'),
           description: t('desc_varmala'),
@@ -107,7 +116,7 @@ const EventTimeline = () => {
           id: 'phere',
           title: t('event_phere'),
           time: t('time_phere'),
-          icon: <Flame size={16} />,
+          icon: phereImg,
           venue: t('venue_phere'),
           dressCode: t('dress_phere'),
           description: t('desc_phere'),
@@ -259,7 +268,6 @@ const EventTimeline = () => {
                           {event.time}
                         </span>
                         
-                        {/* Ceremony Icon Circle */}
                         <motion.div 
                           animate={{
                             scale: isHovered ? 1.15 : 1,
@@ -273,11 +281,20 @@ const EventTimeline = () => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            color: event.color,
+                            overflow: 'hidden',
                             flexShrink: 0
                           }}
                         >
-                          {event.icon}
+                          <img 
+                            src={event.icon} 
+                            alt={event.title} 
+                            style={{ 
+                              width: '100%', 
+                              height: '100%', 
+                              borderRadius: '50%', 
+                              objectFit: 'cover' 
+                            }} 
+                          />
                         </motion.div>
                       </div>
 
@@ -437,11 +454,21 @@ const EventTimeline = () => {
 
                   <motion.div style={{
                     width: '70px', height: '70px', margin: '0 auto 20px', borderRadius: '50%',
-                    backgroundColor: `${selectedEvent.color}22`, color: selectedEvent.color,
+                    backgroundColor: `${selectedEvent.color}22`,
                     display: 'flex', justifyContent: 'center', alignItems: 'center',
-                    border: `1.5px solid ${selectedEvent.color}55`
+                    border: `1.5px solid ${selectedEvent.color}55`,
+                    overflow: 'hidden'
                   }}>
-                    {React.cloneElement(selectedEvent.icon, { size: 32 })}
+                    <img 
+                      src={selectedEvent.icon} 
+                      alt={selectedEvent.title} 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        borderRadius: '50%', 
+                        objectFit: 'cover' 
+                      }} 
+                    />
                   </motion.div>
 
                   <motion.h3 className="font-heading text-center" style={{ color: selectedEvent.color, fontSize: 'clamp(22px, 6vw, 32px)', marginBottom: 'clamp(15px, 4vw, 25px)' }}>

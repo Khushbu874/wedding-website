@@ -68,12 +68,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth !important;
   overflow-x: hidden !important;
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -86,6 +87,7 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
   transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
               color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -244,4 +246,31 @@ html, body, #root {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px 15px;
   }
+}
+
+/* ================= HINDI TYPOGRAPHY OVERRIDES ================= */
+.lang-hi {
+  --font-primary: 'Rozha One', serif;
+  --font-heading: 'Rozha One', serif;
+  --font-script: 'Yatra One', cursive;
+}
+
+/* Eliminate diacritic and matra clipping in Hindi globally */
+.lang-hi h1, 
+.lang-hi h2, 
+.lang-hi h3, 
+.lang-hi h4, 
+.lang-hi h5, 
+.lang-hi h6,
+.lang-hi .font-heading,
+.lang-hi .font-script {
+  line-height: 1.45 !important;
+  padding-top: 0.08em;
+  padding-bottom: 0.08em;
+}
+
+/* Adjust font weights for Rozha One and Yatra One to keep them crisp and premium */
+.lang-hi h1, .lang-hi h2 {
+  font-weight: 500;
+  letter-spacing: 0px !important; /* Devanagari display fonts don't use letter-spacing */
 }

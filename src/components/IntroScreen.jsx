@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import floralCorner from '../assets/floral_corner.png';
 import ssLogo from '../assets/S&S.png';
 
 const IntroScreen = ({ onComplete }) => {
-  const { t } = useLanguage();
+  const { t, setLanguage } = useLanguage();
+  const [showLangPopup, setShowLangPopup] = useState(false);
 
   useEffect(() => {
     // Hide body scroll and scrollbar track space during intro phase
@@ -125,55 +126,43 @@ const IntroScreen = ({ onComplete }) => {
         </svg>
       </motion.div>
 
-      {/* Elegant watercolor corner flowers (transparent background) */}
+      {/* Elegant watercolor corner flowers (transparent background, fully responsive) */}
       <img 
         src={floralCorner} 
         alt="" 
+        className="intro-flower"
         style={{
-          position: 'absolute',
           top: '-10px',
-          left: '-10px',
-          width: 'clamp(195px, 38vw, 290px)',
-          zIndex: 5,
-          pointerEvents: 'none'
+          left: '-10px'
         }}
       />
       <img 
         src={floralCorner} 
         alt="" 
+        className="intro-flower"
         style={{
-          position: 'absolute',
           top: '-10px',
           right: '-10px',
-          width: 'clamp(195px, 38vw, 290px)',
-          zIndex: 5,
-          pointerEvents: 'none',
           transform: 'scaleX(-1)'
         }}
       />
       <img 
         src={floralCorner} 
         alt="" 
+        className="intro-flower"
         style={{
-          position: 'absolute',
           bottom: '-10px',
           left: '-10px',
-          width: 'clamp(195px, 38vw, 290px)',
-          zIndex: 5,
-          pointerEvents: 'none',
           transform: 'scaleY(-1)'
         }}
       />
       <img 
         src={floralCorner} 
         alt="" 
+        className="intro-flower"
         style={{
-          position: 'absolute',
           bottom: '-10px',
           right: '-10px',
-          width: 'clamp(195px, 38vw, 290px)',
-          zIndex: 5,
-          pointerEvents: 'none',
           transform: 'scale(-1)'
         }}
       />
@@ -312,15 +301,7 @@ const IntroScreen = ({ onComplete }) => {
         </p>
 
         {/* Wedding Date & Location */}
-        <div style={{ 
-          borderTop: '1px solid rgba(212, 175, 55, 0.3)', 
-          borderBottom: '1px solid rgba(212, 175, 55, 0.3)', 
-          padding: '10px 20px', 
-          marginBottom: 'clamp(30px, 6vh, 50px)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '3px'
-        }}>
+        <div className="date-location-block">
           <p className="font-heading" style={{ color: '#fffff0', fontSize: 'clamp(11px, 3vw, 14px)', letterSpacing: '2.5px', textTransform: 'uppercase' }}>
             {t('date_full')}
           </p>
@@ -330,24 +311,10 @@ const IntroScreen = ({ onComplete }) => {
         </div>
 
         <motion.button
+          className="open-invitation-btn"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={onComplete}
-          style={{
-            padding: '16px 45px',
-            backgroundColor: 'transparent',
-            border: '2px solid var(--c-gold)',
-            color: 'var(--c-gold)',
-            fontFamily: 'var(--font-heading)',
-            fontSize: '15px',
-            letterSpacing: '3px',
-            borderRadius: '30px',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            boxShadow: '0 0 25px rgba(212, 175, 55, 0.35)',
-            textTransform: 'uppercase',
-            fontWeight: '600'
-          }}
+          onClick={() => setShowLangPopup(true)}
           onMouseOver={(e) => {
             e.target.style.backgroundColor = 'var(--c-gold)';
             e.target.style.color = '#5a0000';
@@ -361,7 +328,157 @@ const IntroScreen = ({ onComplete }) => {
         >
           {t('open_invitation')}
         </motion.button>
+      <style>{`
+        .intro-flower {
+          position: absolute;
+          z-index: 5;
+          pointer-events: none;
+          width: clamp(195px, 38vw, 290px);
+          transition: all 0.3s ease;
+        }
+        .open-invitation-btn {
+          padding: 16px 45px;
+          background-color: transparent;
+          border: 2px solid var(--c-gold);
+          color: var(--c-gold);
+          font-family: var(--font-heading);
+          font-size: 15px;
+          letter-spacing: 3px;
+          border-radius: 30px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+        .date-location-block {
+          border-top: 1px solid rgba(212, 175, 55, 0.3);
+          border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+          padding: 10px 20px;
+          margin-bottom: clamp(30px, 6vh, 50px);
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          transition: all 0.3s ease;
+        }
+        @media (max-width: 480px) {
+          .open-invitation-btn {
+            padding: 10px 28px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+          }
+          .date-location-block {
+            margin-bottom: clamp(15px, 3vh, 25px);
+            padding: 8px 15px;
+          }
+        }
+      `}</style>
       </motion.div>
+
+      {/* Language Selection Popup Modal overlay */}
+      <AnimatePresence>
+        {showLangPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 100,
+              padding: '20px'
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+              className="glass-panel"
+              style={{
+                padding: 'clamp(20px, 5vw, 40px)',
+                background: 'rgba(30, 0, 0, 0.95)',
+                border: '2px solid var(--c-gold)',
+                boxShadow: '0 0 50px rgba(212, 175, 55, 0.35)',
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '20px',
+                maxWidth: '420px',
+                width: '100%',
+                borderRadius: '16px',
+                position: 'relative'
+              }}
+            >
+              {/* Gold Ornament icon */}
+              <div style={{ color: 'var(--c-gold)', fontSize: '24px' }}>⚜</div>
+              
+              <h3 className="font-heading text-gradient-gold" style={{ fontSize: 'clamp(20px, 5vw, 24px)', letterSpacing: '2px', fontWeight: '500' }}>
+                CHOOSE LANGUAGE
+              </h3>
+              <h3 className="font-heading text-gradient-gold" style={{ fontSize: 'clamp(18px, 4.5vw, 22px)', fontFamily: "'Rozha One', serif", letterSpacing: '0px' }}>
+                भाषा चुनें
+              </h3>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '100%', marginTop: '10px' }}>
+                <motion.button
+                  className="open-invitation-btn"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => {
+                    setLanguage('en');
+                    onComplete();
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.backgroundColor = 'var(--c-gold)';
+                    e.target.style.color = '#5a0000';
+                    e.target.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.6)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = 'transparent';
+                    e.target.style.color = 'var(--c-gold)';
+                    e.target.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
+                  }}
+                  style={{ width: '100%' }}
+                >
+                  ENGLISH
+                </motion.button>
+
+                <motion.button
+                  className="open-invitation-btn"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => {
+                    setLanguage('hi');
+                    onComplete();
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.backgroundColor = 'var(--c-gold)';
+                    e.target.style.color = '#5a0000';
+                    e.target.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.6)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = 'transparent';
+                    e.target.style.color = 'var(--c-gold)';
+                    e.target.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
+                  }}
+                  style={{ fontFamily: "'Rozha One', serif", fontSize: '16px', letterSpacing: '1px', width: '100%' }}
+                >
+                  हिंदी
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

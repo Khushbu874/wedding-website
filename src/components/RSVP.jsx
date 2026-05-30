@@ -1,15 +1,65 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
-import floralCorner from '../assets/floral_corner.png';
+import { SCRIPT_URL } from '../config';
 
 const RSVP = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Controlled form states
+  const [fullName, setFullName] = useState('');
+  const [guests, setGuests] = useState('1');
+  const [attendance, setAttendance] = useState('accept');
+  const [foodPreference, setFoodPreference] = useState('veg');
+  const [message, setMessage] = useState('');
+
+  const isConfigured = SCRIPT_URL && SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_WEB_APP_URL';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!fullName.trim() || isSubmitting) return;
+
+    setIsSubmitting(true);
+
+    const payload = {
+      action: 'rsvp',
+      fullName: fullName.trim(),
+      guests,
+      attendance,
+      foodPreference,
+      message: message.trim()
+    };
+
+    if (isConfigured) {
+      try {
+        // POST to Google Sheet Apps Script using text/plain to avoid preflight CORS blockers
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        });
+      } catch (error) {
+        console.error("Failed to submit RSVP to Google Sheet:", error);
+      }
+    } else {
+      console.log("Simulating RSVP submission locally:", payload);
+    }
+
     setSubmitted(true);
+    setIsSubmitting(false);
+
+    // Reset fields
+    setFullName('');
+    setGuests('1');
+    setAttendance('accept');
+    setFoodPreference('veg');
+    setMessage('');
+
     setTimeout(() => setSubmitted(false), 5000);
   };
 
@@ -18,33 +68,6 @@ const RSVP = () => {
       background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('${import.meta.env.BASE_URL}royal_indian_engagement_1779894748927.png') center/cover fixed`, 
       position: 'relative' 
     }}>
-
-      {/* Decorative floral corners (watercolor rose bouquets) */}
-      <img 
-        src={floralCorner} 
-        alt="" 
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: 'clamp(100px, 20vw, 180px)',
-          pointerEvents: 'none',
-          opacity: 0.85
-        }}
-      />
-      <img 
-        src={floralCorner} 
-        alt="" 
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          width: 'clamp(100px, 20vw, 180px)',
-          pointerEvents: 'none',
-          opacity: 0.85,
-          transform: 'rotate(180deg)'
-        }}
-      />
 
       <div className="container" style={{ maxWidth: '700px' }}>
         <motion.div
@@ -73,13 +96,24 @@ const RSVP = () => {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label className="font-heading" style={{ color: '#fffff0' }}>{t('form_name')} *</label>
-                <input required type="text" style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.4)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }} />
+                <input 
+                  required 
+                  type="text" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.4)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }} 
+                />
               </div>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: '1 1 200px' }}>
                   <label className="font-heading" style={{ color: '#fffff0' }}>{t('form_guests')} *</label>
-                  <select required style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}>
+                  <select 
+                    required 
+                    value={guests}
+                    onChange={(e) => setGuests(e.target.value)}
+                    style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}
+                  >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -89,7 +123,12 @@ const RSVP = () => {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: '1 1 200px' }}>
                   <label className="font-heading" style={{ color: '#fffff0' }}>{t('form_attendance')} *</label>
-                  <select required style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}>
+                  <select 
+                    required 
+                    value={attendance}
+                    onChange={(e) => setAttendance(e.target.value)}
+                    style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}
+                  >
                     <option value="accept">{t('form_accept')}</option>
                     <option value="decline">{t('form_decline')}</option>
                   </select>
@@ -98,7 +137,11 @@ const RSVP = () => {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label className="font-heading" style={{ color: '#fffff0' }}>{t('form_food')}</label>
-                <select style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}>
+                <select 
+                  value={foodPreference}
+                  onChange={(e) => setFoodPreference(e.target.value)}
+                  style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.8)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}
+                >
                   <option value="veg">{t('form_veg')}</option>
                   <option value="non-veg">{t('form_nonveg')}</option>
                   <option value="vegan">{t('form_vegan')}</option>
@@ -107,11 +150,17 @@ const RSVP = () => {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label className="font-heading" style={{ color: '#fffff0' }}>{t('form_message')}</label>
-                <textarea rows="3" style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.4)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }}></textarea>
+                <textarea 
+                  rows="3" 
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  style={{ padding: '15px', borderRadius: '4px', border: '1px solid var(--c-gold)', background: 'rgba(0,0,0,0.4)', color: '#fffff0', fontFamily: 'var(--font-secondary)' }} 
+                />
               </div>
 
               <button
                 type="submit"
+                disabled={isSubmitting}
                 style={{
                   marginTop: '10px',
                   padding: '18px',
@@ -123,10 +172,11 @@ const RSVP = () => {
                   fontSize: '16px',
                   letterSpacing: '2px',
                   cursor: 'pointer',
-                  transition: 'background-color 0.3s'
+                  transition: 'background-color 0.3s, opacity 0.3s',
+                  opacity: isSubmitting ? 0.7 : 1
                 }}
               >
-                {t('form_submit')}
+                {isSubmitting ? (language === 'hi' ? 'भेज रहे हैं...' : 'Sending RSVP...') : t('form_submit')}
               </button>
 
             </form>

@@ -20,6 +20,13 @@ const Hero = () => {
     delay: Math.random() * 5
   }));
 
+  const handleScrollDown = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section 
       style={{
@@ -47,7 +54,7 @@ const Hero = () => {
           scale: scale
         }}
       />
-
+ 
       {/* Cinematic dark overlay */}
       <div style={{
         position: 'absolute',
@@ -55,7 +62,7 @@ const Hero = () => {
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 50%, rgba(10,10,10,1) 100%)',
         zIndex: 1
       }} />
-
+ 
       {/* Floating Gold Particles */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 2, overflow: 'hidden' }}>
         {particles.map(p => (
@@ -85,7 +92,7 @@ const Hero = () => {
           />
         ))}
       </div>
-
+ 
       <motion.div 
         style={{ zIndex: 10, textAlign: 'center', opacity, y: yText }}
         initial={{ opacity: 0, scale: 0.8 }}
@@ -149,7 +156,7 @@ const Hero = () => {
             transformOrigin: 'top'
           }}
         />
-
+ 
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -166,16 +173,24 @@ const Hero = () => {
           {t('date_full')}
         </motion.p>
       </motion.div>
-
+ 
       {/* Scroll indicator */}
       <motion.div
-        animate={{ y: [0, 15, 0], opacity: [0.3, 1, 0.3] }}
-        transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+        onClick={handleScrollDown}
+        whileHover={{ scale: 1.25, color: '#fffff0' }}
+        animate={{ y: [0, 12, 0], opacity: [0.4, 1, 0.4] }}
+        transition={{ 
+          y: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' },
+          opacity: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' },
+          scale: { duration: 0.2 }
+        }}
         style={{
           position: 'absolute',
           bottom: '50px',
           color: 'var(--c-gold)',
-          zIndex: 10
+          zIndex: 10,
+          cursor: 'pointer',
+          filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))'
         }}
       >
         <ChevronDown size={40} />

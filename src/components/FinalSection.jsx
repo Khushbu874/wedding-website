@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
+import logo from '../assets/S&S.png';
 
 const FinalSection = () => {
   const { t } = useLanguage();
@@ -96,19 +97,20 @@ const FinalSection = () => {
           #ShivyamKaSangam
         </p>
 
-        <div style={{
-          width: '80px',
-          height: '80px',
-          margin: '0 auto',
-          borderRadius: '50%',
-          border: '2px solid var(--c-gold)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(212, 175, 55, 0.1)'
-        }}>
-          <span className="font-script text-gradient-gold" style={{ fontSize: '30px' }}>SS</span>
-        </div>
+        <motion.img 
+          src={logo} 
+          alt="Shivangi & Satyam Logo" 
+          whileHover={{ scale: 1.08 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+          style={{
+            width: '100px',
+            height: '100px',
+            objectFit: 'contain',
+            margin: '0 auto',
+            filter: 'drop-shadow(0 0 12px rgba(212, 175, 55, 0.5))',
+            cursor: 'pointer'
+          }} 
+        />
       </motion.div>
 
       <style>{`
