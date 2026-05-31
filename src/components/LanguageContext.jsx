@@ -42,16 +42,17 @@ export const LanguageProvider = ({ children }) => {
         hours: "Hours",
         minutes: "Minutes",
         seconds: "Seconds",
-        date_full: "1st July, 2026",
+        date_full: "Wednesday, 1st July, 2026",
+        keep_scrolling: "Keep Scrolling",
         
         // Invitation Card
         tap_open: "TAP TO OPEN",
         invitation_shloka: "॥ श्री गणेशाय नमः ॥\nवक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥",
         together_families: "TOGETHER WITH THEIR FAMILIES",
         joyfully_invite: "Joyfully invite you to share in their happiness as they unite in marriage.",
-        date_time: "WEDNESDAY, JULY 1, 2026\nAT FIVE O'CLOCK IN THE EVENING",
+        date_time: "WEDNESDAY, JULY 1, 2026",
         palace_location: "Rosebay Resort, Raipur, Chhattisgarh",
-        close_invitation: "CLOSE INVITATION",
+        scroll_down: "SCROLL DOWN",
 
         // Love Story
         story_1_title: "First Meet",
@@ -73,11 +74,11 @@ export const LanguageProvider = ({ children }) => {
         story_continued: "To be continued...",
 
         // Events
-        event_welcome: "Welcome Reception",
+        event_welcome: "Welcome",
         event_carnival: "Vibrant Carnival",
         event_sangeet: "Sangeet Gala",
-        event_bhaat: "Bhaat, Mayra & Gor",
-        event_barat: "Nikashi & Barat",
+        event_bhaat: "Mayara & Gor",
+        event_barat: "Nikasi & Barat",
         event_reception: "Grand Reception",
         event_varmala: "Sacred Varmala",
         event_phere: "Holy Phere",
@@ -136,11 +137,11 @@ export const LanguageProvider = ({ children }) => {
         bride_family_title: "Shivangi's Family",
         groom_family_title: "Satyam's Family",
         
-        bride_gparents: "Shrimati Trimurti Devi & Late Omprakash Madiniya ji",
-        bride_parents: "Shrimati Prachi & Shri Bajrang Jindal ji",
-        bride_couple_1: "Shrimati Kaushalya & Shri Ashok Jindal ji",
-        bride_couple_2: "Shrimati Anuradha & Shri Subhash Jindal ji",
-        bride_couple_3: "Shrimati Sunita & Shri Rajesh Jindal ji",
+        bride_gparents: "Shrimati Murti Devi & Late Omprakash Madiniya",
+        bride_parents: "Shrimati Prachi & Late Bajrang Jindal",
+        bride_couple_1: "Shrimati Kaushalya & Shri Ashok Jindal",
+        bride_couple_2: "Shrimati Anuradha & Shri Subhash Jindal",
+        bride_couple_3: "Shrimati Sunita & Shri Rajesh Jindal",
         
         groom_gparents: "Late Shrimati Sharbati Devi & Late Tarachand Agrawal ji",
         groom_parents: "Shrimati Kaushal & Shri Laxmi Narayan Agrawal ji",
@@ -150,16 +151,18 @@ export const LanguageProvider = ({ children }) => {
         groom_couple_4: "Shrimati Sarita & Shri Ashok Agrawal ji",
         relation_awaiting: "Awaiting to Welcome",
         bride_awaiting: [
+          "Usha & Pawan Agrawal ji",
           "Sweety & Deepak Jindal",
           "Aasha & Ravi Jindal",
           "Ritu & Jitendra Jindal",
-          "Usha & Pawan Agrawal",
+          "Aashi & Prince Jindal",
           "Payal & Saurabh Agrawal",
           "Pooja & Shubham",
           "Neha & Vipin",
           "Khushbu & Pulkit",
           "Sakshi & Navodit",
           "Ekta & Ayush",
+          "Muskan",
           "Saubhagya",
           "Vikash",
           "Gaurav"
@@ -281,16 +284,17 @@ export const LanguageProvider = ({ children }) => {
         hours: "घंटे",
         minutes: "मिनट",
         seconds: "सेकंड",
-        date_full: "१ जुलाई, २०२६",
+        date_full: "बुधवार, १ जुलाई, २०२६",
+        keep_scrolling: "नीचे स्क्रॉल करें",
         
         // Invitation Card
         tap_open: "खोलने के लिए टैप करें",
         invitation_shloka: "॥ श्री गणेशाय नमः ॥\nवक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥",
         together_families: "अपने परिवारों के साथ",
         joyfully_invite: "आपको उनके विवाह के पावन अवसर पर शामिल होने और खुशियां बांटने के लिए सहर्ष आमंत्रित करते हैं।",
-        date_time: "बुधवार, १ जुलाई, २०२६\nशाम ५ बजे",
+        date_time: "बुधवार, १ जुलाई, २०२६\nशाम ५ बजे से",
         palace_location: "रोज़बे रिज़ॉर्ट, रायपुर, छत्तीसगढ़",
-        close_invitation: "निमंत्रण बंद करें",
+        scroll_down: "नीचे स्क्रॉल करें",
 
         // Love Story
         story_1_title: "पहली मुलाकात",
@@ -312,10 +316,10 @@ export const LanguageProvider = ({ children }) => {
         story_continued: "जारी रहेगा...",
 
         // Events
-        event_welcome: "स्वागत समारोह (Welcome)",
+        event_welcome: "स्वागत (Welcome)",
         event_carnival: "कार्निवल उत्सव (Carnival)",
         event_sangeet: "संगीत संध्या (Sangeet)",
-        event_bhaat: "भात, मायरा और गोर",
+        event_bhaat: "मायरा और गोर",
         event_barat: "निकासी और बारात",
         event_reception: "शाही रिसेप्शन (Reception)",
         event_varmala: "वरमाला समारोह",
@@ -375,11 +379,11 @@ export const LanguageProvider = ({ children }) => {
         bride_family_title: "शिवांगी का परिवार",
         groom_family_title: "सत्यम का परिवार",
         
-        bride_gparents: "श्रीमती त्रिमूर्ति देवी एवं स्व. ओमप्रकाश मदीनिया जी",
-        bride_parents: "श्रीमती प्राची एवं श्री बजरंग जिंदल जी",
-        bride_couple_1: "श्रीमती कौशल्या एवं श्री अशोक जिंदल जी",
-        bride_couple_2: "श्रीमती अनुराधा एवं श्री सुभाष जिंदल जी",
-        bride_couple_3: "श्रीमती सुनीता एवं श्री राजेश जिंदल जी",
+        bride_gparents: "श्रीमती मूर्ति देवी एवं स्व. ओमप्रकाश मदीनिया",
+        bride_parents: "श्रीमती प्राची एवं स्व. बजरंग जिंदल",
+        bride_couple_1: "श्रीमती कौशल्या एवं श्री अशोक जिंदल",
+        bride_couple_2: "श्रीमती अनुराधा एवं श्री सुभाष जिंदल",
+        bride_couple_3: "श्रीमती सुनीता एवं श्री राजेश जिंदल",
         
         groom_gparents: "स्व. श्रीमती शर्बती देवी एवं स्व. ताराचंद अग्रवाल जी",
         groom_parents: "श्रीमती कौशल एवं श्री लक्ष्मी नारायण अग्रवाल जी",
@@ -389,16 +393,18 @@ export const LanguageProvider = ({ children }) => {
         groom_couple_4: "श्रीमती सरिता एवं श्री अशोक अग्रवाल जी",
         relation_awaiting: "स्वागताकांक्षी",
         bride_awaiting: [
+          "ऊषा एवं पवन अग्रवाल जी",
           "स्वीटी एवं दीपक जिंदल",
           "आशा एवं रवि जिंदल",
           "रितु एवं जितेन्द्र जिंदल",
-          "ऊषा एवं पवन अग्रवाल",
+          "आशी एवं प्रिंस जिंदल",
           "पायल एवं सौरभ अग्रवाल",
           "पूजा एवं शुभम",
           "नेहा एवं विपिन",
           "खुशबू एवं पुलकित",
           "साक्षी एवं नवोदित",
           "एकता एवं आयुष",
+          "मुस्कान",
           "सौभाग्य",
           "विकास",
           "गौरव"

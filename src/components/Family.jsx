@@ -2,344 +2,634 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 
+// Import personalized cartoon avatars generated for this wedding
+import avatarGrandparents from '../assets/avatar_grandparents.png';
+import avatarParentsBride from '../assets/avatar_parents_bride.png';
+import avatarParentsGroom from '../assets/avatar_parents_groom.png';
+import avatarAuntUncle from '../assets/avatar_aunt_uncle.png';
+import avatarCousinCouple from '../assets/avatar_cousin_couple.png';
+import avatarSingleMale from '../assets/avatar_single_male.png';
+import avatarSingleFemale from '../assets/avatar_single_female.png';
+
 const Family = () => {
   const { t } = useLanguage();
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [activeTab, setActiveTab] = useState('bride'); // Shivangi's Family (bride) is first and default
+  const [displayTab, setDisplayTab] = useState('bride'); // Tab currently being displayed in grid
+  const [isFlipped, setIsFlipped] = useState(false); // Controls the 90deg rotation state
+  const [isFlipping, setIsFlipping] = useState(false); // Keeps 3D rendering context active for the whole duration
 
   const families = {
     bride: {
       side: t('bride_family_title'),
       members: [
-        { name: t('bride_gparents'), relation: t('relation_grandparents') },
-        { name: t('bride_parents'), relation: t('relation_parents') },
-        { name: t('bride_couple_1'), relation: t('relation_aunt_uncle') },
-        { name: t('bride_couple_2'), relation: t('relation_aunt_uncle') },
-        { name: t('bride_couple_3'), relation: t('relation_aunt_uncle') }
+        { name: t('bride_gparents'), relation: t('relation_grandparents'), relKey: 'grandparents' },
+        { name: t('bride_parents'), relation: t('relation_parents'), relKey: 'parents' },
+        { name: t('bride_couple_1'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
+        { name: t('bride_couple_2'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
+        { name: t('bride_couple_3'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' }
       ]
     },
     groom: {
       side: t('groom_family_title'),
       members: [
-        { name: t('groom_gparents'), relation: t('relation_grandparents') },
-        { name: t('groom_parents'), relation: t('relation_parents') },
-        { name: t('groom_couple_1'), relation: t('relation_aunt_uncle') },
-        { name: t('groom_couple_2'), relation: t('relation_aunt_uncle') },
-        { name: t('groom_couple_3'), relation: t('relation_bua_fufa') },
-        { name: t('groom_couple_4'), relation: t('relation_aunt_uncle') }
+        { name: t('groom_gparents'), relation: t('relation_grandparents'), relKey: 'grandparents' },
+        { name: t('groom_parents'), relation: t('relation_parents'), relKey: 'parents' },
+        { name: t('groom_couple_1'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
+        { name: t('groom_couple_2'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
+        { name: t('groom_couple_3'), relation: t('relation_bua_fufa'), relKey: 'bua_fufa' },
+        { name: t('groom_couple_4'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' }
       ]
     }
   };
 
-  const renderFamilyContent = (family, key) => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', position: 'relative', zIndex: 2 }}>
-        
-        {/* Stuck/Fixed Header Title */}
-        <div style={{ 
-          flexShrink: 0, 
-          paddingBottom: '15px', 
-          borderBottom: '1px solid rgba(212, 175, 55, 0.18)', 
-          marginBottom: '20px', 
-          textAlign: 'center',
-          position: 'relative',
-          zIndex: 10
-        }}>
-          <h3 className="font-heading" style={{ fontSize: 'clamp(20px, 5vw, 28px)', color: 'var(--c-text-primary)', margin: 0 }}>
-            {family.side}
-          </h3>
-        </div>
+  // Dynamically returns cartoon avatars matching relation, gender, and name
+  const getFamilyAvatar = (relKey, name) => {
+    const isCouple = name.includes('&') || name.includes('एवं');
 
-        {/* Scrollable Content Body Area */}
-        <div style={{ 
-          flex: 1, 
-          overflowY: 'auto', 
-          paddingRight: '4px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '30px'
-        }}>
-          {/* Members List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {family.members.map((member, index) => (
-              <div key={index} style={{ 
-                padding: '12px 15px', 
-                borderRadius: '14px',
-                backgroundColor: 'rgba(212, 175, 55, 0.02)',
-                border: '1px solid rgba(212, 175, 55, 0.08)',
-                transition: 'all 0.3s ease',
-                textAlign: 'center'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(212, 175, 55, 0.05)';
-                e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.2)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(212, 175, 55, 0.02)';
-                e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.08)';
-              }}
-              >
-                <span className="font-heading" style={{ 
-                  fontSize: '11px', 
-                  color: 'var(--c-gold)', 
-                  letterSpacing: '1.5px', 
-                  textTransform: 'uppercase', 
-                  display: 'block', 
-                  marginBottom: '6px',
-                  fontWeight: '600'
-                }}>
-                  ✦ {member.relation} ✦
-                </span>
-                <p className="font-primary" style={{ 
-                  fontSize: 'clamp(14px, 2.5vw, 17px)', 
-                  color: 'var(--c-maroon)', 
-                  fontWeight: '700', 
-                  margin: '0', 
-                  lineHeight: '1.4',
-                  letterSpacing: '0.3px'
-                }}>
-                  {(() => {
-                    const name = member.name;
-                    let parts = [];
-                    let connector = '';
-                    if (name.includes(' & ')) {
-                      parts = name.split(' & ');
-                      connector = '&';
-                    } else if (name.includes(' एवं ')) {
-                      parts = name.split(' एवं ');
-                      connector = 'एवं';
-                    }
+    if (relKey === 'grandparents') {
+      return avatarGrandparents;
+    }
 
-                    if (parts.length === 2) {
-                      const isHindi = connector === 'एवं';
-                      return (
-                        <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                          <span style={{ display: 'block', textWrap: 'balance' }}>{parts[0]}</span>
-                          <span 
-                            className={isHindi ? "font-secondary" : "font-script"} 
-                            style={{ 
-                              display: 'block', 
-                              fontSize: isHindi ? 'clamp(14px, 2.5vw, 17px)' : 'clamp(22px, 3.8vw, 26px)', 
-                              color: 'var(--c-gold)', 
-                              margin: isHindi ? '2px 0' : '-6px 0 -4px 0',
-                              fontWeight: isHindi ? '600' : '400',
-                              fontStyle: isHindi ? 'italic' : 'normal',
-                              opacity: 0.9,
-                              textTransform: 'none'
-                            }}
-                          >
-                            {connector}
-                          </span>
-                          <span style={{ display: 'block', textWrap: 'balance' }}>{parts[1]}</span>
-                        </span>
-                      );
-                    }
-                    return name;
-                  })()}
-                </p>
-              </div>
-            ))}
-          </div>
+    if (relKey === 'parents') {
+      return displayTab === 'bride' ? avatarParentsBride : avatarParentsGroom;
+    }
 
-          {/* Awaiting to Welcome Section */}
-          <div style={{ 
-            padding: '20px 15px', 
-            borderRadius: '16px', 
-            backgroundColor: 'rgba(212, 175, 55, 0.01)', 
-            border: '1.5px dashed rgba(212, 175, 55, 0.22)',
-            textAlign: 'center',
-            boxShadow: 'inset 0 0 12px rgba(212, 175, 55, 0.02)',
-            marginBottom: '5px'
-          }}>
-            <span className="font-heading" style={{ 
-              fontSize: '11px', 
-              color: 'var(--c-gold)', 
-              letterSpacing: '2.5px', 
-              textTransform: 'uppercase', 
+    if (relKey === 'cousin_couple' || (isCouple && relKey === 'awaiting')) {
+      return avatarCousinCouple;
+    }
+
+    if (relKey === 'cousin_single' || (!isCouple && relKey === 'awaiting')) {
+      const cleanName = name.toLowerCase().trim();
+      const isFemale = cleanName.includes('muskan') || 
+                       cleanName.includes('मुस्कान');
+      return isFemale ? avatarSingleFemale : avatarSingleMale;
+    }
+
+    if (isCouple) {
+      return avatarAuntUncle;
+    }
+
+    const cleanName = name.toLowerCase().trim();
+    const isFemale = cleanName.includes('muskan') || 
+                     cleanName.includes('मुस्कान');
+    return isFemale ? avatarSingleFemale : avatarSingleMale;
+  };
+
+  // Formats names by breaking couples with beautiful, customized connectors
+  const renderName = (name) => {
+    let parts = [];
+    let connector = '';
+    if (name.includes(' & ')) {
+      parts = name.split(' & ');
+      connector = '&';
+    } else if (name.includes(' एवं ')) {
+      parts = name.split(' एवं ');
+      connector = 'एवं';
+    }
+
+    if (parts.length === 2) {
+      const isHindi = connector === 'एवं';
+      return (
+        <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <span style={{ display: 'block', textWrap: 'balance' }}>{parts[0]}</span>
+          <span 
+            className={isHindi ? "font-secondary" : "font-script"} 
+            style={{ 
               display: 'block', 
-              marginBottom: '15px',
-              fontWeight: '700'
-            }}>
-              ✦ {t('relation_awaiting')} ✦
-            </span>
-            <div className="awaiting-grid">
-              {t(key === 'bride' ? 'bride_awaiting' : 'groom_awaiting').map((name, index) => {
-                let parts = [];
-                let connector = '';
-                if (name.includes(' & ')) {
-                  parts = name.split(' & ');
-                  connector = '&';
-                } else if (name.includes(' एवं ')) {
-                  parts = name.split(' एवं ');
-                  connector = 'एवं';
-                }
+              fontSize: isHindi ? 'clamp(13px, 2.5vw, 16px)' : 'clamp(20px, 3.8vw, 24px)', 
+              color: 'var(--c-gold)', 
+              margin: isHindi ? '2px 0' : '-6px 0 -4px 0',
+              fontWeight: isHindi ? '600' : '400',
+              fontStyle: isHindi ? 'italic' : 'normal',
+              opacity: 0.9,
+              textTransform: 'none'
+            }}
+          >
+            {connector}
+          </span>
+          <span style={{ display: 'block', textWrap: 'balance' }}>{parts[1]}</span>
+        </span>
+      );
+    }
+    return name;
+  };
 
-                return (
-                  <div 
-                    key={index} 
-                    style={{ 
-                      fontSize: 'clamp(11px, 2vw, 13px)', 
-                      color: 'var(--c-maroon)', 
-                      fontWeight: '600',
-                      fontFamily: 'var(--font-primary)',
-                      lineHeight: '1.4',
-                      textAlign: 'center',
-                      padding: '6px 8px',
-                      borderRadius: '8px',
-                      backgroundColor: 'rgba(212, 175, 55, 0.03)',
-                      border: '1px solid rgba(212, 175, 55, 0.06)',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      minHeight: '38px',
-                      textWrap: 'balance'
-                    }}
-                  >
-                    {parts.length === 2 ? (
-                      <span>
-                        {parts[0]} <span 
-                          className={connector === 'एवं' ? "font-secondary" : "font-script"} 
-                          style={{ 
-                            color: 'var(--c-gold)', 
-                            fontSize: connector === 'एवं' ? '11px' : '16px',
-                            fontWeight: 'bold',
-                            fontStyle: connector === 'एवं' ? 'italic' : 'normal',
-                            display: 'inline-block',
-                            margin: '0 2px'
-                          }}
-                        >
-                          {connector}
-                        </span> {parts[1]}
-                      </span>
-                    ) : (
-                      name
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  const handleTabChange = (tab) => {
+    if (tab === activeTab || isFlipping) return;
+
+    setActiveTab(tab);
+    setIsFlipped(true);
+    setIsFlipping(true);
+
+    // Swap content at the 90 degree perpendicular point (350ms)
+    setTimeout(() => {
+      setDisplayTab(tab);
+      setIsFlipped(false);
+    }, 350);
+
+    // Completely end the 3D transform context at the end of the return transition (350ms + 420ms = 770ms)
+    // This removes perspective and transform-style from the DOM, restoring perfect crystal clear subpixel font-rendering!
+    setTimeout(() => {
+      setIsFlipping(false);
+    }, 770);
   };
 
   return (
-    <section className="section-padding" style={{ backgroundColor: 'var(--c-bg-primary)', overflow: 'hidden' }}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <section 
+      className="section-padding" 
+      style={{ 
+        background: 'var(--c-bg-primary)', 
+        overflow: 'hidden',
+        position: 'relative',
+        paddingTop: 'clamp(60px, 8vh, 100px)',
+        paddingBottom: 'clamp(60px, 8vh, 100px)'
+      }}
+    >
+      {/* Decorative Radial Background Lights */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 'clamp(300px, 60vw, 600px)',
+        height: 'clamp(300px, 60vw, 600px)',
+        background: activeTab === 'groom' 
+          ? 'radial-gradient(circle, rgba(212,175,55,0.06) 0%, rgba(0,0,0,0) 70%)'
+          : 'radial-gradient(circle, rgba(90,0,0,0.06) 0%, rgba(0,0,0,0) 70%)',
+        pointerEvents: 'none',
+        zIndex: 1,
+        transition: 'background 0.8s ease'
+      }} />
+
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 2 }}>
+        
+        {/* Title */}
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-script text-center"
-          style={{ fontSize: 'clamp(36px, 8vw, 60px)', color: 'var(--c-maroon)', marginBottom: '10px' }}
+          style={{ fontSize: 'clamp(38px, 8vw, 64px)', color: 'var(--c-maroon)', marginBottom: '5px' }}
         >
           {t('family')}
         </motion.h2>
 
-        {/* Pulse Indication to Flip */}
-        <motion.div
-          animate={{ scale: [1, 1.03, 1] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          onClick={() => setIsFlipped(!isFlipped)}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '10px 22px',
-            backgroundColor: 'rgba(212, 175, 55, 0.1)',
-            border: '1.5px solid var(--c-gold)',
-            color: 'var(--c-gold)',
-            borderRadius: '30px',
-            cursor: 'pointer',
-            marginBottom: '35px',
-            fontFamily: 'var(--font-heading)',
-            fontSize: '11px',
-            letterSpacing: '1.5px',
-            fontWeight: '600',
-            boxShadow: '0 4px 15px rgba(212,175,55,0.15)',
-            zIndex: 10
-          }}
-        >
-          <span>🔄</span> {isFlipped ? "VIEW SHIVANGI'S FAMILY (BRIDE) • CLICK TO FLIP" : "VIEW SATYAM'S FAMILY (GROOM) • CLICK TO FLIP"}
-        </motion.div>
+        {/* Elegant Gold Divider */}
+        <div style={{ 
+          height: '2px', 
+          width: '80px', 
+          background: 'linear-gradient(90deg, transparent, var(--c-gold), transparent)', 
+          marginBottom: '35px'
+        }} />
 
-        {/* Outer 3D Perspective Card Wrapper */}
-        <div 
-          onClick={() => setIsFlipped(!isFlipped)}
-          style={{
-            perspective: '1500px',
-            width: '100%',
-            maxWidth: '560px',
-            height: 'clamp(820px, 95vh, 980px)',
-            cursor: 'pointer',
-            position: 'relative',
-            zIndex: 5
-          }}
-        >
-          {/* Card Inner Wrapper that Flips */}
-          <div 
-            style={{
-              position: 'relative',
-              width: '100%',
-              height: '100%',
-              transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-              transformStyle: 'preserve-3d',
-              transform: isFlipped ? 'rotateY(180deg)' : 'none'
-            }}
+        {/* Premium Capsule Tab Selector (Shivangi's Family on Left and Active First) */}
+        <div className="tab-container">
+          <button 
+            className={`tab-btn ${activeTab === 'bride' ? 'active bride' : ''}`}
+            onClick={() => handleTabChange('bride')}
           >
-            {/* FRONT SIDE (Bride's Family) */}
-            <div 
-              className="glass-panel"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                transform: 'rotateY(0deg) translateZ(0.5px)',
-                WebkitTransform: 'rotateY(0deg) translateZ(0.5px)',
-                padding: 'clamp(20px, 5vw, 40px)', 
-                textAlign: 'center', 
-                borderTop: '4px solid var(--c-maroon)',
-                background: 'var(--glass-bg)',
-                boxShadow: 'var(--glass-shadow)',
-                borderRadius: '16px',
-                overflow: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased'
-              }}
-            >
-              {renderFamilyContent(families.bride, 'bride')}
+            {t('bride_family_title')}
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'groom' ? 'active groom' : ''}`}
+            onClick={() => handleTabChange('groom')}
+          >
+            {t('groom_family_title')}
+          </button>
+        </div>
+
+        {/* 3D Flip Perspective Container wrapping both grids */}
+        <div className={`flip-container ${isFlipping ? 'active-perspective' : ''}`}>
+          <div className={`flip-inner ${isFlipped ? 'flipped' : ''} ${isFlipping ? 'flipping' : ''}`}>
+            
+            {/* Family Member Cards Grid */}
+            <div className="family-grid">
+              {families[displayTab].members.map((member, index) => (
+                <motion.div 
+                  key={`${displayTab}-${index}`}
+                  initial={{ opacity: 0, y: 35 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.04, duration: 0.5 }}
+                  className="family-card"
+                >
+                  <div className="card-glass-shine" />
+                  
+                  {/* Gold-Rimmed Double Circle Avatar Container */}
+                  <div className="avatar-double-ring">
+                    <div className="avatar-inner-circle">
+                      <img 
+                        src={getFamilyAvatar(member.relKey, member.name)} 
+                        alt={member.name}
+                        className="avatar-img"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Relation Label */}
+                  <span className="family-relation-badge">
+                    ✦ {member.relation} ✦
+                  </span>
+                  
+                  {/* Serif Name Layout */}
+                  <p className="family-member-name font-primary">
+                    {renderName(member.name)}
+                  </p>
+                </motion.div>
+              ))}
             </div>
 
-            {/* BACK SIDE (Groom's Family) */}
-            <div 
-              className="glass-panel"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg) translateZ(0.5px)',
-                WebkitTransform: 'rotateY(180deg) translateZ(0.5px)',
-                padding: 'clamp(20px, 5vw, 40px)', 
-                textAlign: 'center', 
-                borderTop: '4px solid var(--c-gold)',
-                background: 'var(--glass-bg)',
-                boxShadow: 'var(--glass-shadow)',
-                borderRadius: '16px',
-                overflow: 'hidden',
-                WebkitFontSmoothing: 'subpixel-antialiased'
-              }}
-            >
-              {renderFamilyContent(families.groom, 'groom')}
+            {/* Awaiting to Welcome Secondary Section */}
+            <div style={{ textAlign: 'center', marginTop: '70px', marginBottom: '30px', width: '100%' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
+                <div style={{ height: '1px', width: '60px', background: 'linear-gradient(90deg, transparent, var(--c-gold))' }} />
+                <h4 className="font-heading" style={{ fontSize: 'clamp(18px, 4vw, 24px)', letterSpacing: '2px', margin: 0, color: 'var(--c-gold)', fontWeight: '600' }}>
+                  ✦ {t('relation_awaiting')} ✦
+                </h4>
+                <div style={{ height: '1px', width: '60px', background: 'linear-gradient(90deg, var(--c-gold), transparent)' }} />
+              </div>
+            </div>
+
+            {/* Cousins Awaiting Welcoming Mini Cards Grid */}
+            <div className="awaiting-grid">
+              {t(displayTab === 'bride' ? 'bride_awaiting' : 'groom_awaiting').map((name, index) => {
+                const isCouple = name.includes('&') || name.includes('एवं');
+                const avatar = getFamilyAvatar(isCouple ? 'cousin_couple' : 'cousin_single', name);
+                
+                return (
+                  <motion.div 
+                    key={`${displayTab}-awaiting-${index}`}
+                    initial={{ opacity: 0, scale: 0.9, y: 15 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: index * 0.03, duration: 0.4 }}
+                    className="awaiting-card"
+                  >
+                    <div className="card-glass-shine" />
+                    
+                    {/* Secondary Awaiting Avatar Circle */}
+                    <div className="awaiting-avatar-ring">
+                      <div className="awaiting-avatar-inner">
+                        <img 
+                          src={avatar} 
+                          alt={name}
+                          className="awaiting-avatar-img"
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Cousin Name */}
+                    <p className="awaiting-name">
+                      {renderName(name)}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
 
           </div>
         </div>
+
       </div>
+
+      {/* Dynamic Local Stylesheet */}
+      <style>{`
+        .flip-container {
+          width: 100%;
+        }
+
+        .flip-container.active-perspective {
+          perspective: 2000px;
+        }
+
+        .flip-inner {
+          width: 100%;
+          transform: rotateY(0deg);
+          transition: transform 0.35s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        }
+
+        .flip-inner.flipping {
+          transform-style: preserve-3d;
+        }
+
+        .flip-inner.flipped {
+          transform: rotateY(90deg) scale(0.96);
+          transition: transform 0.35s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        }
+
+        /* Spring ease-out effect when returning to normal 0deg orientation */
+        .flip-inner:not(.flipped) {
+          transition: transform 0.42s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .tab-container {
+          display: inline-flex;
+          background: rgba(26, 26, 26, 0.85);
+          border: 1px solid rgba(212, 175, 55, 0.25);
+          border-radius: 50px;
+          padding: 6px;
+          gap: 4px;
+          margin-bottom: 40px;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+          z-index: 10;
+          position: relative;
+        }
+
+        [data-theme='light'] .tab-container {
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          box-shadow: 0 8px 30px rgba(90, 0, 0, 0.06);
+        }
+
+        .tab-btn {
+          padding: 10px 28px;
+          border-radius: 40px;
+          border: none;
+          background: transparent;
+          color: var(--c-text-secondary);
+          font-family: var(--font-heading);
+          font-size: clamp(12px, 2.5vw, 14px);
+          font-weight: 600;
+          letter-spacing: 1px;
+          cursor: pointer;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          outline: none;
+        }
+
+        .tab-btn:hover {
+          color: var(--c-gold);
+        }
+
+        .tab-btn.active.groom {
+          background: var(--c-maroon, #5a0000);
+          color: #ffffff;
+          box-shadow: 0 4px 15px rgba(90, 0, 0, 0.4);
+        }
+
+        .tab-btn.active.bride {
+          background: var(--c-maroon, #5a0000);
+          color: #ffffff;
+          box-shadow: 0 4px 15px rgba(90, 0, 0, 0.4);
+        }
+
+        .family-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 16px;
+        }
+
+        @media (min-width: 768px) {
+          .family-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .family-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+          }
+        }
+
+        .family-card {
+          position: relative;
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
+          box-shadow: var(--glass-shadow);
+          border-radius: 20px;
+          padding: 24px 16px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          text-align: center;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+          cursor: default;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-rendering: optimizeLegibility;
+        }
+
+        .family-card:hover {
+          transform: translateY(-8px);
+          border-color: var(--c-gold);
+          box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15), var(--glass-shadow);
+        }
+
+        .card-glass-shine {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%);
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .avatar-double-ring {
+          width: 90px;
+          height: 90px;
+          border-radius: 50%;
+          border: 1px solid var(--c-gold);
+          padding: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0) 70%);
+          margin-bottom: 16px;
+          transition: all 0.4s ease;
+        }
+
+        .avatar-inner-circle {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 1.5px solid var(--c-gold);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: radial-gradient(circle, rgba(90, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
+          box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+          transition: all 0.4s ease;
+          overflow: hidden;
+        }
+
+        [data-theme='light'] .avatar-inner-circle {
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(212, 175, 55, 0.12) 100%);
+        }
+
+        .avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 50%;
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .family-card:hover .avatar-double-ring {
+          border-color: var(--c-gold-light);
+          transform: scale(1.05);
+          box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .family-card:hover .avatar-inner-circle {
+          border-color: var(--c-gold-light);
+          box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .family-card:hover .avatar-img {
+          transform: scale(1.12) rotate(1deg);
+        }
+
+        .family-relation-badge {
+          font-family: var(--font-heading);
+          font-size: clamp(9px, 2vw, 11px);
+          color: var(--c-gold);
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          font-weight: 600;
+          margin-bottom: 12px;
+          display: block;
+        }
+
+        .family-member-name {
+          font-family: var(--font-primary);
+          font-size: clamp(13px, 2.3vw, 16px);
+          color: var(--c-maroon);
+          font-weight: 700;
+          margin: 0;
+          line-height: 1.4;
+          letter-spacing: 0.3px;
+          z-index: 2;
+        }
+
+        [data-theme='dark'] .family-member-name {
+          color: var(--c-text-primary);
+        }
+
+        .awaiting-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 16px;
+        }
+
+        @media (min-width: 600px) {
+          .awaiting-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+          }
+        }
+
+        @media (min-width: 900px) {
+          .awaiting-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .awaiting-grid {
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+          }
+        }
+
+        .awaiting-card {
+          position: relative;
+          background: var(--glass-bg);
+          border: 1px solid rgba(212, 175, 55, 0.15);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+          border-radius: 16px;
+          padding: 16px 12px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          overflow: hidden;
+          transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+          min-height: 130px;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          text-rendering: optimizeLegibility;
+        }
+
+        .awaiting-card:hover {
+          transform: translateY(-5px);
+          border-color: var(--c-gold);
+          box-shadow: 0 10px 25px rgba(212, 175, 55, 0.12);
+        }
+
+        .awaiting-avatar-ring {
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          border: 1px solid rgba(212, 175, 55, 0.45);
+          padding: 2px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0) 70%);
+          margin-bottom: 8px;
+          transition: all 0.3s ease;
+        }
+
+        .awaiting-avatar-inner {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 1px solid rgba(212, 175, 55, 0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(26, 26, 26, 0.3);
+          overflow: hidden;
+        }
+
+        [data-theme='light'] .awaiting-avatar-inner {
+          background: rgba(255, 255, 255, 0.85);
+        }
+
+        .awaiting-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 50%;
+          transition: transform 0.3s ease;
+        }
+
+        .awaiting-card:hover .awaiting-avatar-ring {
+          border-color: var(--c-gold);
+          transform: scale(1.08);
+        }
+
+        .awaiting-card:hover .awaiting-avatar-img {
+          transform: scale(1.1);
+        }
+
+        .awaiting-name {
+          font-family: var(--font-primary);
+          font-size: clamp(12px, 2vw, 13.5px);
+          color: var(--c-maroon);
+          font-weight: 600;
+          margin: 0;
+          line-height: 1.35;
+        }
+
+        [data-theme='dark'] .awaiting-name {
+          color: var(--c-text-primary);
+        }
+      `}</style>
     </section>
   );
 };

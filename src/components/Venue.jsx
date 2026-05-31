@@ -7,7 +7,7 @@ const Venue = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="section-padding" style={{ backgroundColor: 'var(--c-bg-secondary)', filter: 'brightness(0.94)' }}>
+    <section className="section-padding" style={{ backgroundColor: 'var(--c-bg-secondary)', filter: 'brightness(0.94)', paddingBottom: '0px' }}>
       <div className="container">
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
@@ -86,51 +86,6 @@ const Venue = () => {
               </motion.a>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '15px' }}>
-              <div className="glass-panel" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <Plane size={30} color="var(--c-gold)" style={{ flexShrink: 0 }} />
-                <div>
-                  <h4 className="font-heading" style={{ fontSize: '16px', color: 'var(--c-maroon)', marginBottom: '5px' }}>{t('travel_air')}</h4>
-                  <p className="font-secondary" style={{ fontSize: '14px', color: 'var(--c-text-secondary)', marginBottom: '5px' }}>
-                    {t('nearest_airport')}
-                  </p>
-                  <a href="https://www.google.com/maps/dir/?api=1&origin=Swami+Vivekananda+Airport,+Raipur&destination=Rosebay+Resort,+Raipur" target="_blank" rel="noreferrer" style={{ fontSize: '12px', color: 'var(--c-maroon)', textDecoration: 'underline', fontFamily: 'var(--font-heading)' }}>{t('get_route_air')}</a>
-                </div>
-              </div>
-              <div className="glass-panel" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <Train size={30} color="var(--c-gold)" style={{ flexShrink: 0 }} />
-                <div>
-                  <h4 className="font-heading" style={{ fontSize: '16px', color: 'var(--c-maroon)', marginBottom: '5px' }}>{t('travel_train')}</h4>
-                  <p className="font-secondary" style={{ fontSize: '14px', color: 'var(--c-text-secondary)', marginBottom: '5px' }}>
-                    {t('nearest_station')}
-                  </p>
-                  <a href="https://www.google.com/maps/dir/?api=1&origin=Raipur+Junction+Railway+Station&destination=Rosebay+Resort,+Raipur" target="_blank" rel="noreferrer" style={{ fontSize: '12px', color: 'var(--c-maroon)', textDecoration: 'underline', fontFamily: 'var(--font-heading)' }}>{t('get_route_train')}</a>
-                </div>
-              </div>
-              <div className="glass-panel" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <Hotel size={30} color="var(--c-gold)" style={{ flexShrink: 0 }} />
-                <div>
-                  <h4 className="font-heading" style={{ fontSize: '16px', color: 'var(--c-maroon)', marginBottom: '5px' }}>{t('accommodation')}</h4>
-                  <p className="font-secondary" style={{ fontSize: '14px', color: 'var(--c-text-secondary)' }}>
-                    {t('acc_details')}
-                  </p>
-                </div>
-              </div>
-              <div className="glass-panel" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px', border: '1.5px solid rgba(212, 175, 55, 0.3)' }}>
-                <Phone size={30} color="var(--c-gold)" style={{ flexShrink: 0 }} />
-                <div style={{ width: '100%' }}>
-                  <h4 className="font-heading" style={{ fontSize: '16px', color: 'var(--c-maroon)', marginBottom: '8px' }}>{t('emergency_contacts')}</h4>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px 20px' }}>
-                    <p className="font-secondary" style={{ fontSize: '14px', color: 'var(--c-text-primary)', margin: 0 }}>
-                      <strong style={{ color: 'var(--c-gold)' }}>Dr. Pradeep Agrawal:</strong> <a href="tel:9826846253" style={{ color: 'var(--c-maroon)', fontWeight: 'bold', textDecoration: 'none', marginLeft: '5px' }}>9826846253</a>
-                    </p>
-                    <p className="font-secondary" style={{ fontSize: '14px', color: 'var(--c-text-primary)', margin: 0 }}>
-                      <strong style={{ color: 'var(--c-gold)' }}>Navodit Agrawal:</strong> <a href="tel:9826445554" style={{ color: 'var(--c-maroon)', fontWeight: 'bold', textDecoration: 'none', marginLeft: '5px' }}>9826445554</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </div>
       </div>

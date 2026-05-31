@@ -51,7 +51,7 @@ const Navbar = () => {
     { label: t('boarding_pass'), href: '#boarding-pass' },
     { label: t('wishes'), href: '#wishes' },
     { label: t('our_story'), href: '#story' },
-    { label: t('rsvp'), href: '#rsvp' },
+    { label: t('emergency_contacts'), href: '#contacts' },
   ];
 
   const handleScrollTo = (e, id) => {

@@ -10,10 +10,9 @@ import Gallery from './components/Gallery';
 import BoardingPass from './components/BoardingPass';
 import WishesWall from './components/WishesWall';
 import Family from './components/Family';
-import RSVP from './components/RSVP';
+import EmergencyContacts from './components/EmergencyContacts';
 import Venue from './components/Venue';
 import FinalSection from './components/FinalSection';
-import Countdown from './components/Countdown';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -103,7 +102,6 @@ function App() {
               
               <div id="hero"><Hero /></div>
               <InvitationCard />
-              <Countdown />
               <div id="events"><EventTimeline /></div>
               <div id="gallery"><Gallery /></div>
               <Family />
@@ -111,7 +109,7 @@ function App() {
               <BoardingPass />
               <WishesWall />
               <div id="story"><LoveStory /></div>
-              <div id="rsvp"><RSVP /></div>
+              <div id="contacts"><EmergencyContacts /></div>
               <FinalSection />
             </div>
           </motion.div>

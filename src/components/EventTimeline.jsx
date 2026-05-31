@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
-import { Sun, Music, Heart, GlassWater, X, MapPin, Clock, Calendar, Smile, Sparkles, Flame, Palette, ChevronRight } from 'lucide-react';
+import { Sun, Music, Heart, GlassWater, X, Clock, Calendar, Smile, Sparkles, Flame, ChevronRight } from 'lucide-react';
 
 import welcomeImg from '../assets/Welcom Reception.png';
 import carnivalImg from '../assets/Carnival.png';
@@ -129,16 +129,20 @@ const EventTimeline = () => {
 
   return (
     <section className="section-padding" style={{ 
-      background: `linear-gradient(rgba(17, 17, 17, 0.9), rgba(17, 17, 17, 0.97)), url('${import.meta.env.BASE_URL}royal_indian_wedding_venue_1779894764907.png') center/cover fixed`,
-      color: '#fffff0'
+      backgroundColor: 'var(--c-bg-secondary)', 
+      filter: 'brightness(0.94)',
+      color: 'var(--c-text-primary)',
+      position: 'relative',
+      overflow: 'hidden',
+      paddingBottom: 'clamp(40px, 6vw, 60px)'
     }}>
       <div className="container" style={{ maxWidth: '1200px' }}>
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-heading text-center text-gradient-gold"
-          style={{ fontSize: 'clamp(32px, 8vw, 45px)', marginBottom: '50px', letterSpacing: '4px' }}
+          className="font-heading text-center"
+          style={{ fontSize: 'clamp(32px, 8vw, 45px)', color: 'var(--c-maroon)', marginBottom: '50px', letterSpacing: '4px' }}
         >
           {t('events')}
         </motion.h2>
@@ -159,13 +163,13 @@ const EventTimeline = () => {
               transition={{ duration: 0.8, delay: dayIdx * 0.2 }}
               className="glass-panel"
               style={{
-                backgroundColor: 'rgba(18, 18, 18, 0.85)',
+                backgroundColor: 'rgba(255, 255, 255, 0.75)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 border: '1.5px solid rgba(212, 175, 55, 0.35)',
                 borderRadius: '28px',
                 padding: 'clamp(25px, 4vw, 40px)',
-                boxShadow: '0 25px 50px rgba(0,0,0,0.65)',
+                boxShadow: '0 20px 45px rgba(90, 0, 0, 0.04)',
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',
@@ -203,7 +207,7 @@ const EventTimeline = () => {
                   <Calendar size={24} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <h3 className="font-heading text-gradient-gold" style={{ fontSize: 'clamp(22px, 4vw, 28px)', margin: '0' }}>
+                  <h3 className="font-heading" style={{ fontSize: 'clamp(22px, 4vw, 28px)', color: 'var(--c-maroon)', margin: '0', fontWeight: 'bold' }}>
                     {day.date}
                   </h3>
                   <p className="font-secondary" style={{ color: 'var(--c-gold)', fontSize: '12px', margin: '5px 0 0 0', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 'bold' }}>
@@ -237,15 +241,15 @@ const EventTimeline = () => {
                       whileHover={{ y: -5, scale: 1.015 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                       style={{
-                        backgroundColor: isHovered ? 'rgba(212, 175, 55, 0.05)' : 'rgba(25, 25, 25, 0.55)',
-                        border: isHovered ? '1.5px solid rgba(212, 175, 55, 0.5)' : '1.5px solid rgba(212, 175, 55, 0.2)',
+                        backgroundColor: isHovered ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.7)',
+                        border: isHovered ? '1.5px solid rgba(212, 175, 55, 0.5)' : '1.5px solid rgba(212, 175, 55, 0.18)',
                         borderRadius: '20px',
                         padding: '18px 20px',
                         cursor: 'pointer',
                         position: 'relative',
                         boxShadow: isHovered 
-                          ? '0 12px 25px rgba(212, 175, 55, 0.15)' 
-                          : '0 6px 18px rgba(0,0,0,0.3)',
+                          ? '0 12px 25px rgba(212, 175, 55, 0.1)' 
+                          : '0 4px 15px rgba(90, 0, 0, 0.02)',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         backgroundImage: 'radial-gradient(circle at top right, rgba(212,175,55,0.03) 0%, transparent 60%)'
                       }}
@@ -260,10 +264,11 @@ const EventTimeline = () => {
                         paddingBottom: '10px'
                       }}>
                         {/* Time in elegant gold serif */}
-                        <span className="font-heading text-gradient-gold" style={{ 
+                        <span className="font-heading" style={{ 
                           fontSize: '18px', 
-                          fontWeight: '600', 
-                          letterSpacing: '1px' 
+                          fontWeight: '700', 
+                          letterSpacing: '1px',
+                          color: 'var(--c-maroon)'
                         }}>
                           {event.time}
                         </span>
@@ -301,39 +306,21 @@ const EventTimeline = () => {
                       {/* Content */}
                       <h4 className="font-heading" style={{ 
                         fontSize: '20px', 
-                        color: '#fffff0', 
+                        color: 'var(--c-maroon)', 
                         margin: '0 0 12px 0', 
                         letterSpacing: '1px',
-                        textTransform: 'uppercase'
+                        textTransform: 'uppercase',
+                        fontWeight: 'bold'
                       }}>
                         {event.title}
                       </h4>
-
-                      {/* Left border accent replaces roadmap flow line */}
-                      <div style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: '6px', 
-                        fontSize: '13px', 
-                        color: '#cccccc',
-                        borderLeft: `2.5px solid ${event.color}`,
-                        paddingLeft: '14px',
-                        marginBottom: '15px'
-                      }}>
-                        <p style={{ margin: '0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <MapPin size={14} color="var(--c-gold)" style={{ flexShrink: 0 }} /> {event.venue}
-                        </p>
-                        <p style={{ margin: '0', display: 'flex', alignItems: 'center', gap: '8px', fontStyle: 'italic', opacity: 0.85 }}>
-                          <Palette size={14} color="var(--c-gold)" style={{ flexShrink: 0 }} /> {t('dress_code')}: {event.dressCode}
-                        </p>
-                      </div>
 
                       {/* Footer indicators */}
                       <div style={{ 
                         display: 'flex', 
                         justifyContent: 'space-between', 
                         alignItems: 'center',
-                        borderTop: '1px solid rgba(255,255,255,0.03)',
+                        borderTop: '1px solid rgba(0,0,0,0.03)',
                         paddingTop: '10px'
                       }}>
                         <span style={{ fontSize: '10px', color: '#888', fontStyle: 'italic' }}>
@@ -378,7 +365,7 @@ const EventTimeline = () => {
                   boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
                 }}>
                   <span style={{ color: 'var(--c-gold)', fontSize: '20px', textShadow: '0 0 5px var(--c-gold)' }}>❦</span>
-                  <p className="font-secondary" style={{ color: '#f7e7ce', fontStyle: 'italic', fontSize: '13px', margin: '0', lineHeight: '1.6' }}>
+                  <p className="font-secondary" style={{ color: 'var(--c-text-primary)', fontStyle: 'italic', fontSize: '13px', margin: '0', lineHeight: '1.6' }}>
                     "{t('quote_timeline')}"
                   </p>
                 </div>
@@ -484,18 +471,11 @@ const EventTimeline = () => {
                       <Clock color="var(--c-gold)" size={20} />
                       <span className="font-primary" style={{ fontSize: '16px', color: '#fffff0' }}>{selectedEvent.time}</span>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                      <MapPin color="var(--c-gold)" size={20} />
-                      <span className="font-primary" style={{ fontSize: '16px', color: '#fffff0' }}>{selectedEvent.venue}</span>
-                    </div>
                   </div>
 
                   <div style={{ padding: '20px', backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '16px', borderLeft: `4px solid ${selectedEvent.color}` }}>
-                    <p className="font-secondary" style={{ color: '#fffff0', lineHeight: '1.6', fontSize: '15px', marginBottom: '15px' }}>
+                    <p className="font-secondary" style={{ color: '#fffff0', lineHeight: '1.6', fontSize: '15px', margin: '0' }}>
                       {selectedEvent.description}
-                    </p>
-                    <p className="font-secondary" style={{ color: '#cccccc', fontStyle: 'italic', fontSize: '13px' }}>
-                      <strong>{t('dress_code')}:</strong> {selectedEvent.dressCode}
                     </p>
                   </div>
                 </motion.div>

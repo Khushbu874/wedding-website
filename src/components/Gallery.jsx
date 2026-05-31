@@ -132,19 +132,26 @@ const Gallery = () => {
   };
 
   return (
-    <section className="section-padding" style={{ backgroundColor: 'var(--c-soft-black)', position: 'relative', overflow: 'hidden' }}>
+    <section className="section-padding" style={{ backgroundColor: '#eae2d5', position: 'relative', overflow: 'hidden', paddingTop: 'clamp(40px, 6vw, 60px)' }}>
 
       {/* Decorative background mandalas */}
-      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '40%', height: '40%', opacity: 0.05, backgroundImage: 'radial-gradient(var(--c-gold) 1px, transparent 1px)', backgroundSize: '20px 20px', borderRadius: '50%' }} />
-      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '40%', height: '40%', opacity: 0.05, backgroundImage: 'radial-gradient(var(--c-gold) 1px, transparent 1px)', backgroundSize: '20px 20px', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '40%', height: '40%', opacity: 0.08, backgroundImage: 'radial-gradient(var(--c-gold) 1px, transparent 1px)', backgroundSize: '20px 20px', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '40%', height: '40%', opacity: 0.08, backgroundImage: 'radial-gradient(var(--c-gold) 1px, transparent 1px)', backgroundSize: '20px 20px', borderRadius: '50%' }} />
+
+      {/* Elegant Gold Divider */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', width: '80%', maxWidth: '400px', margin: '0 auto clamp(25px, 5vh, 45px) auto', position: 'relative', zIndex: 10 }}>
+        <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, rgba(212, 175, 55, 0.6))' }} />
+        <span style={{ color: 'var(--c-gold)', fontSize: '14px', letterSpacing: '2px' }}>✦ ⚜ ✦</span>
+        <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, transparent, rgba(212, 175, 55, 0.6))' }} />
+      </div>
 
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-script text-center"
-          style={{ fontSize: '60px', color: 'var(--c-gold)', marginBottom: '40px' }}
+          className="font-heading text-center"
+          style={{ fontSize: 'clamp(28px, 6vw, 40px)', color: 'var(--c-maroon)', marginBottom: '40px', letterSpacing: '4px', textTransform: 'uppercase' }}
         >
           {t('memories')}
         </motion.h2>
@@ -386,8 +393,8 @@ const Gallery = () => {
           width: 100%;
           height: 100%;
           border-radius: 16px;
-          border: 2px solid rgba(212, 175, 55, 0.35);
-          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+          border: 2.5px solid rgba(212, 175, 55, 0.45);
+          box-shadow: 0 15px 35px rgba(90, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08);
           overflow: hidden;
           transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
                       border-color 0.4s ease,
@@ -412,7 +419,7 @@ const Gallery = () => {
         .carousel-3d-card:hover .carousel-card-inner {
           transform: scale(1.1) translateZ(25px); /* push slightly forward and zoom safely */
           border-color: var(--c-gold);
-          box-shadow: 0 0 25px rgba(212, 175, 55, 0.65), 0 20px 45px rgba(0, 0, 0, 0.85);
+          box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), 0 15px 40px rgba(90, 0, 0, 0.25);
         }
 
         .carousel-3d-card:hover .carousel-card-overlay {
@@ -431,12 +438,12 @@ const Gallery = () => {
 
         .left-fade {
           left: -2px;
-          background: linear-gradient(to right, var(--c-soft-black) 20%, rgba(17, 17, 17, 0.6) 50%, transparent 100%);
+          background: linear-gradient(to right, #eae2d5 20%, rgba(234, 226, 213, 0.6) 50%, transparent 100%);
         }
 
         .right-fade {
           right: -2px;
-          background: linear-gradient(to left, var(--c-soft-black) 20%, rgba(17, 17, 17, 0.6) 50%, transparent 100%);
+          background: linear-gradient(to left, #eae2d5 20%, rgba(234, 226, 213, 0.6) 50%, transparent 100%);
         }
 
         /* Interactive Arrow controls */
@@ -445,18 +452,19 @@ const Gallery = () => {
           top: 50%;
           transform: translateY(-50%);
           z-index: 10;
-          background: rgba(26, 26, 26, 0.6);
+          background: rgba(255, 255, 255, 0.75);
           backdrop-filter: blur(5px);
           -webkit-backdrop-filter: blur(5px);
-          border: 1px solid rgba(212, 175, 55, 0.5);
+          border: 1.5px solid rgba(212, 175, 55, 0.4);
           border-radius: 50%;
-          color: var(--c-gold);
+          color: var(--c-maroon);
           cursor: pointer;
           width: 48px;
           height: 48px;
           display: flex;
           justify-content: center;
           align-items: center;
+          box-shadow: 0 4px 15px rgba(90, 0, 0, 0.08);
           transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 

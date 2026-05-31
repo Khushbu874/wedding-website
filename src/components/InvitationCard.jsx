@@ -9,7 +9,15 @@ const InvitationCard = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="section-padding" style={{ background: 'var(--c-bg-primary)', overflow: 'hidden' }}>
+    <section 
+      className="section-padding" 
+      style={{ 
+        background: 'var(--c-bg-primary)', 
+        overflow: 'hidden',
+        position: 'relative'
+      }}
+    >
+
       <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
         
         <div style={{ position: 'relative', width: '100%', maxWidth: '500px', height: 'clamp(480px, 80vh, 600px)', perspective: '1500px' }}>
@@ -241,7 +249,13 @@ const InvitationCard = () => {
               <button 
                 onClick={(e) => {
                   e.stopPropagation();
-                  setIsOpen(false);
+                  // Smoothly scroll to the next section
+                  const nextSection = document.getElementById('story') || document.getElementById('timeline') || document.querySelector('section:nth-of-type(3)');
+                  if (nextSection) {
+                    nextSection.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' });
+                  }
                 }}
                 style={{
                   background: 'none',
@@ -250,15 +264,27 @@ const InvitationCard = () => {
                   fontFamily: 'var(--font-heading)',
                   fontSize: '11px',
                   cursor: 'pointer',
-                  letterSpacing: '1.5px',
+                  letterSpacing: '2px',
                   transition: 'all 0.3s ease',
                   opacity: 0.85,
-                  zIndex: 3
+                  zIndex: 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '8px',
+                  margin: '0 auto'
                 }}
-                onMouseOver={(e) => e.target.style.opacity = '1'}
-                onMouseOut={(e) => e.target.style.opacity = '0.85'}
+                onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
+                onMouseOut={(e) => e.currentTarget.style.opacity = '0.85'}
               >
-                {t('close_invitation')}
+                <span>{t('scroll_down')}</span>
+                <motion.span 
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                  style={{ fontSize: '14px', display: 'inline-block', fontWeight: 'bold' }}
+                >
+                  ↓
+                </motion.span>
               </button>
             )}
           </motion.div>

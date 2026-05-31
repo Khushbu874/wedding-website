@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import { ChevronDown } from 'lucide-react';
@@ -9,6 +9,63 @@ const Hero = () => {
   const opacity = useTransform(scrollY, [0, 600], [1, 0]);
   const scale = useTransform(scrollY, [0, 600], [1, 1.1]);
   const yText = useTransform(scrollY, [0, 600], [0, 150]);
+
+  // Target date: July 1, 2026
+  const targetDate = new Date('2026-07-01T00:00:00').getTime();
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  const timeUnits = [
+    { label: t('days'), value: timeLeft.days },
+    { label: t('hours'), value: timeLeft.hours },
+    { label: t('minutes'), value: timeLeft.minutes },
+    { label: t('seconds'), value: timeLeft.seconds }
+  ];
+
+  const renderPremiumDate = (text) => {
+    // English digits regex
+    const digitRegex = /([0-9]+)/g;
+    const parts = text.split(digitRegex);
+    return parts.map((part, index) => {
+      if (digitRegex.test(part)) {
+        return (
+          <span 
+            key={index} 
+            style={{ 
+              fontFamily: "'Outfit', sans-serif",
+              fontWeight: '600',
+              padding: '0 1px',
+              display: 'inline-block'
+            }}
+          >
+            {part}
+          </span>
+        );
+      }
+      return part;
+    });
+  };
 
   // Generate some random floating particles
   const particles = Array.from({ length: 15 }).map((_, i) => ({
@@ -135,7 +192,7 @@ const Hero = () => {
           style={{
             fontSize: 'clamp(14px, 4vw, 22px)',
             letterSpacing: '5px',
-            marginTop: '15px',
+            marginTop: '10px',
             marginBottom: '5px',
             fontWeight: '600',
             textShadow: '0 2px 15px rgba(0,0,0,0.6)'
@@ -149,9 +206,9 @@ const Hero = () => {
           animate={{ scaleY: 1 }}
           transition={{ delay: 2.0, duration: 1.5, ease: "anticipate" }}
           style={{
-            margin: '20px auto',
+            margin: '12px auto',
             width: '2px',
-            height: 'clamp(40px, 10vh, 80px)',
+            height: 'clamp(20px, 5vh, 45px)',
             background: 'linear-gradient(to bottom, var(--c-gold), transparent)',
             transformOrigin: 'top'
           }}
@@ -163,37 +220,120 @@ const Hero = () => {
           transition={{ delay: 2.5, duration: 1.5 }}
           className="font-secondary"
           style={{ 
-            fontSize: 'clamp(18px, 4.5vw, 28px)', 
+            fontSize: 'clamp(22px, 5.5vw, 36px)', 
+            fontWeight: '600',
             color: '#fffff0',
             letterSpacing: '2px',
             textShadow: '0 2px 10px rgba(0,0,0,0.8)',
-            padding: '0 15px'
+            padding: '0 15px',
+            marginBottom: 'clamp(15px, 3vh, 25px)'
           }}
         >
-          {t('date_full')}
+          {renderPremiumDate(t('date_full'))}
         </motion.p>
-      </motion.div>
- 
-      {/* Scroll indicator */}
-      <motion.div
-        onClick={handleScrollDown}
-        whileHover={{ scale: 1.25, color: '#fffff0' }}
-        animate={{ y: [0, 12, 0], opacity: [0.4, 1, 0.4] }}
-        transition={{ 
-          y: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' },
-          opacity: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' },
-          scale: { duration: 0.2 }
-        }}
-        style={{
-          position: 'absolute',
-          bottom: '50px',
-          color: 'var(--c-gold)',
-          zIndex: 10,
-          cursor: 'pointer',
-          filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))'
-        }}
-      >
-        <ChevronDown size={40} />
+
+        {/* Premium Gold/Glass Countdown */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3.0, duration: 1.5 }}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'nowrap',
+            gap: 'clamp(8px, 2.5vw, 20px)',
+            margin: '0 auto',
+            padding: '0 10px'
+          }}
+        >
+          {timeUnits.map((unit, index) => (
+            <div key={index} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <div 
+                style={{
+                  width: 'clamp(55px, 13vw, 80px)',
+                  height: 'clamp(55px, 13vw, 80px)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: 'clamp(18px, 5.5vw, 32px)',
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: '600',
+                  color: 'var(--c-gold)',
+                  backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(212, 175, 55, 0.45)',
+                  borderRadius: '12px',
+                  marginBottom: '8px',
+                  boxShadow: '0 4px 20px rgba(212, 175, 55, 0.15), inset 0 0 12px rgba(212, 175, 55, 0.1)'
+                }}
+              >
+                <motion.span
+                  key={unit.value}
+                  initial={{ y: -8, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  style={{ display: 'inline-block' }}
+                >
+                  {unit.value < 10 ? `0${unit.value}` : unit.value}
+                </motion.span>
+              </div>
+              <span style={{ 
+                fontFamily: 'var(--font-heading)', 
+                letterSpacing: 'clamp(1px, 0.3vw, 2px)', 
+                fontSize: 'clamp(8px, 2.5vw, 11px)',
+                textTransform: 'uppercase',
+                color: 'rgba(255, 255, 240, 0.75)'
+              }}>
+                {unit.label}
+              </span>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Scroll indicator moved inside the main content container for perfect responsive alignment */}
+        <motion.div
+          onClick={handleScrollDown}
+          whileHover={{ scale: 1.05 }}
+          style={{
+            marginTop: 'clamp(20px, 4vh, 35px)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '8px',
+            color: 'var(--c-gold)',
+            cursor: 'pointer',
+            filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))'
+          }}
+        >
+          <motion.span
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
+            style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(9px, 2.5vw, 11px)',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'var(--c-gold-light)',
+              fontWeight: '500'
+            }}
+          >
+            {t('keep_scrolling')}
+          </motion.span>
+          <motion.div
+            animate={{ y: [0, 8, 0], opacity: [0.4, 1, 0.4] }}
+            transition={{ 
+              y: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' },
+              opacity: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' }
+            }}
+          >
+            <ChevronDown size={30} style={{ color: 'var(--c-gold)' }} />
+          </motion.div>
+        </motion.div>
       </motion.div>
     </section>
   );

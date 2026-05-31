@@ -38,7 +38,7 @@ const LoveStory = () => {
     <section 
       className="section-padding" 
       style={{ 
-        backgroundColor: 'var(--c-bg-primary)',
+        background: 'var(--c-bg-primary)',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
