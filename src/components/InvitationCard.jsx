@@ -250,11 +250,11 @@ const InvitationCard = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   // Smoothly scroll to the next section
-                  const nextSection = document.getElementById('story') || document.getElementById('timeline') || document.querySelector('section:nth-of-type(3)');
+                  const nextSection = document.getElementById('events');
                   if (nextSection) {
-                    nextSection.scrollIntoView({ behavior: 'smooth' });
+                    nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   } else {
-                    window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' });
+                    window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
                   }
                 }}
                 style={{

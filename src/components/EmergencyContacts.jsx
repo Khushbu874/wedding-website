@@ -8,14 +8,14 @@ const EmergencyContacts = () => {
 
   const contactsList = [
     {
-      name: "Dr. Pradeep Agrawal",
-      phone: "9826846253",
-      role: t('groom_family_title') || "Groom's Family Liaison"
-    },
-    {
       name: "Navodit Agrawal",
       phone: "9826445554",
       role: t('bride_family_title') || "Bride's Family Liaison"
+    },
+    {
+      name: "Dr. Pradeep Agrawal",
+      phone: "9826846253",
+      role: t('groom_family_title') || "Groom's Family Liaison"
     }
   ];
 

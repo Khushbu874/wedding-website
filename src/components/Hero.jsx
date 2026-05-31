@@ -105,9 +105,9 @@ const Hero = () => {
         style={{
           position: 'absolute',
           inset: '-10%',
-          backgroundImage: `url('${import.meta.env.BASE_URL}royal_indian_couple_first_meet_1779894730819.png')`,
+          backgroundImage: `url('${new URL('../assets/real/IMG_7675.WEBP', import.meta.url).href}')`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center 35%', /* shifted up so face aligns with Save the date */
           scale: scale
         }}
       />

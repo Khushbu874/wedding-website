@@ -3,19 +3,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
+// Load the actual images present in src/assets/real/ (use these exact filenames)
+// Keep only the images the user requested (removed cards 11,12,13,15,16)
+// Use all usable images from src/assets/real (JPEG/WebP)
 const images = [
-  `${import.meta.env.BASE_URL}royal_indian_couple_first_meet_1779894730819.png`,
-  `${import.meta.env.BASE_URL}royal_indian_engagement_1779894748927.png`,
-  `${import.meta.env.BASE_URL}royal_indian_wedding_venue_1779894764907.png`,
-  `${import.meta.env.BASE_URL}assets/couple_portrait.png`,
-  `${import.meta.env.BASE_URL}assets/first_meeting.png`,
-  `${import.meta.env.BASE_URL}assets/courtship_walk.png`,
-  `${import.meta.env.BASE_URL}assets/engagement_ring.png`,
-  `${import.meta.env.BASE_URL}assets/mehndi_hands.png`,
-  `${import.meta.env.BASE_URL}assets/ceremony_venue.png`,
-  `${import.meta.env.BASE_URL}assets/reception_venue.png`,
-  `${import.meta.env.BASE_URL}assets/stage_wedding.png`,
-  `${import.meta.env.BASE_URL}assets/party_venue.png`
+  new URL('../assets/real/IMG_7189.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_7193.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_7196.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_7197.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_7285.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_7468.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_7484.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_7520.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_8082.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_8084.JPG.jpeg', import.meta.url).href,
+  new URL('../assets/real/IMG_6317.jpg', import.meta.url).href,
+  new URL('../assets/real/IMG_6755.jpg', import.meta.url).href,
+  new URL('../assets/real/IMG_7173.jpg', import.meta.url).href,
+  new URL('../assets/real/IMG_7931.jpg', import.meta.url).href,
+  new URL('../assets/real/IMG_7947.jpg', import.meta.url).href,
+  new URL('../assets/real/IMG_7675.WEBP', import.meta.url).href
 ];
 
 const Gallery = () => {
@@ -356,17 +363,17 @@ const Gallery = () => {
         .carousel-3d-container {
           position: relative;
           width: 100%;
-          height: 400px;
+          height: 560px; /* increased height to make cards taller and more prominent */
           display: flex;
           justify-content: center;
           align-items: center;
           perspective: 950px; /* tight perspective makes 3D curvature dramatic and realistic */
           overflow: visible;
           
-          /* Refined card & cylinder configurations for a perfect half-circle containing 7-8 cards */
-          --card-width: 155px;
-          --card-height: 250px;
-          --cylinder-radius: 410px;
+          /* Increased gap: larger cylinder radius and slightly larger cards for better spacing */
+          --card-width: 240px;
+          --card-height: 380px; /* increased card height */
+          --cylinder-radius: 460px; /* slightly increased radius to add more gap between cards */
         }
 
         .carousel-3d-ring {
@@ -481,7 +488,9 @@ const Gallery = () => {
         /* Responsive Breakpoints matching ratios for perfect curved layouts */
         @media (max-width: 1200px) {
           .carousel-3d-container {
-            --cylinder-radius: 380px;
+            --cylinder-radius: 500px;
+            --card-width: 200px;
+            --card-height: 300px;
           }
           .left-btn { left: 2%; }
           .right-btn { right: 2%; }
@@ -489,11 +498,11 @@ const Gallery = () => {
 
         @media (max-width: 1024px) {
           .carousel-3d-container {
-            height: 390px;
+            height: 440px;
             perspective: 900px;
-            --card-width: 150px;
-            --card-height: 240px;
-            --cylinder-radius: 360px;
+            --card-width: 170px;
+            --card-height: 260px;
+            --cylinder-radius: 460px;
           }
           .carousel-edge-fade {
             width: 20%;
@@ -505,11 +514,11 @@ const Gallery = () => {
 
         @media (max-width: 768px) {
           .carousel-3d-container {
-            height: 360px;
+            height: 380px;
             perspective: 800px;
             --card-width: 140px;
             --card-height: 220px;
-            --cylinder-radius: 320px;
+            --cylinder-radius: 400px;
           }
           .carousel-edge-fade {
             width: 15%;
@@ -521,11 +530,11 @@ const Gallery = () => {
 
         @media (max-width: 480px) {
           .carousel-3d-container {
-            height: 330px;
-            perspective: 750px;
-            --card-width: 125px;
-            --card-height: 200px;
-            --cylinder-radius: 280px;
+            height: 300px;
+            perspective: 720px;
+            --card-width: 120px;
+            --card-height: 190px;
+            --cylinder-radius: 320px;
           }
           .carousel-edge-fade {
             width: 12%;
