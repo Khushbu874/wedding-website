@@ -39,20 +39,31 @@ const Gallery = () => {
   // High performance auto-rotation using requestAnimationFrame
   useEffect(() => {
     let animationFrameId;
+    const lastTimeRef = { value: null };
+    const rotationSpeedDegPerSec = 7.2; // degrees per second (smooth speed)
 
-    const animate = () => {
+    const animate = (time) => {
+      if (lastTimeRef.value == null) lastTimeRef.value = time;
+      const deltaMs = time - lastTimeRef.value;
+      lastTimeRef.value = time;
+
       if (!isHoveredRef.current && !isFullScreen && !isTransitioningRef.current) {
-        // Slow, luxurious rotation speed
-        rotationRef.current -= 0.12;
+        // Use time-based rotation for consistent smoothness
+        const deltaSec = Math.max(0, deltaMs) / 1000;
+        rotationRef.current -= rotationSpeedDegPerSec * deltaSec;
         if (ringRef.current) {
+          // apply transform using requestAnimationFrame-driven updates
           ringRef.current.style.transform = `rotateY(${rotationRef.current}deg)`;
         }
       }
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
-    return () => cancelAnimationFrame(animationFrameId);
+    animationFrameId = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
   }, [isFullScreen]);
 
   // Fullscreen Navigation
