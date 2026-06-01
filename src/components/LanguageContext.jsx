@@ -143,7 +143,7 @@ export const LanguageProvider = ({ children }) => {
         bride_family_title: "Shivangi's Family",
         groom_family_title: "Satyam's Family",
         
-        bride_gparents: "Shrimati Murti Devi & Late Shri Omprakash Madiniya ji",
+        bride_gparents: "Shrimati Murti Devi & Late Shri Omprakash Madiniya",
         bride_parents: "Shrimati Prachi & Late Shri Bajrang Jindal",
         bride_couple_1: "Shrimati Kaushalya & Shri Ashok Jindal",
         bride_couple_2: "Shrimati Anuradha & Shri Subhash Jindal",
