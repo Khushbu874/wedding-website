@@ -108,10 +108,10 @@ const FinalSection = () => {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.5 }}
-        style={{ textAlign: 'center', zIndex: 10 }}
+        style={{ textAlign: 'center', zIndex: 10, width: '100%', maxWidth: '800px', padding: '0 24px' }}
       >
         <h2 className="font-script" style={{
-          fontSize: 'clamp(36px, 8vw, 100px)',
+          fontSize: 'clamp(44px, 10vw, 76px)',
           color: 'var(--c-gold)',
           marginBottom: '20px',
           textShadow: '0 0 20px rgba(212,175,55,0.5)'
@@ -120,11 +120,11 @@ const FinalSection = () => {
         </h2>
         
         <p className="font-secondary" style={{
-          fontSize: 'clamp(14px, 4.5vw, 20px)',
+          fontSize: 'clamp(15px, 4.2vw, 18px)',
           color: '#f7e7ce',
           fontStyle: 'italic',
-          maxWidth: '600px',
-          margin: '0 auto clamp(20px, 5vh, 40px)',
+          maxWidth: '650px',
+          margin: '0 auto 35px',
           lineHeight: '1.6',
           padding: '0 20px'
         }}>
@@ -132,10 +132,11 @@ const FinalSection = () => {
         </p>
 
         <p className="font-heading text-gradient-gold" style={{
-          fontSize: 'clamp(18px, 5vw, 26px)',
-          letterSpacing: '3px',
-          marginBottom: 'clamp(20px, 4vh, 40px)',
-          fontWeight: '600'
+          fontSize: 'clamp(18px, 4.5vw, 24px)',
+          letterSpacing: '4px',
+          marginBottom: '35px',
+          fontWeight: '600',
+          textTransform: 'uppercase'
         }}>
           #ShivyamKaSangam
         </p>
@@ -146,14 +147,46 @@ const FinalSection = () => {
           whileHover={{ scale: 1.08 }}
           transition={{ type: 'spring', stiffness: 300, damping: 15 }}
           style={{
-            width: '100px',
-            height: '100px',
+            width: '120px',
+            height: '120px',
             objectFit: 'contain',
             margin: '0 auto',
             filter: 'drop-shadow(0 0 12px rgba(212, 175, 55, 0.5))',
             cursor: 'pointer'
           }} 
         />
+
+        {/* Date and Day addition as requested to fill the space */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', margin: '25px auto 12px', width: '140px' }}>
+          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, var(--c-gold))' }} />
+          <span style={{ color: 'var(--c-gold)', fontSize: '8px' }}>✦</span>
+          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to left, transparent, var(--c-gold))' }} />
+        </div>
+
+        <p className="font-heading" style={{
+          fontSize: 'clamp(13px, 3vw, 15px)',
+          color: 'var(--c-gold)',
+          letterSpacing: '3px',
+          margin: '0 auto 30px',
+          fontWeight: '600',
+          textTransform: 'uppercase'
+        }}>
+          {t('date_full')}
+        </p>
+
+        {/* Traditional Compliments info to beautifully fill the space */}
+        <p className="font-secondary" style={{
+          fontSize: 'clamp(11.5px, 2.8vw, 13.5px)',
+          color: 'rgba(255, 255, 240, 0.75)',
+          letterSpacing: '1.5px',
+          margin: '0 auto',
+          fontWeight: '400',
+          lineHeight: '1.6',
+          whiteSpace: 'pre-line',
+          maxWidth: '450px'
+        }}>
+          {t('compliments')}
+        </p>
       </motion.div>
 
       <div style={{

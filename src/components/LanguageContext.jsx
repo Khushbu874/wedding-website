@@ -267,7 +267,8 @@ export const LanguageProvider = ({ children }) => {
         wish_msg_3: "Congratulations Shivangi and Satyam! Let the celebrations begin. #ShivyamKaSangam",
 
         // Final
-        final_msg: "\"We can't wait to celebrate the beginning of our new life with all our loved ones.\""
+        final_msg: "\"We can't wait to celebrate the beginning of our new life with all our loved ones.\"",
+        compliments: "With Best Compliments & Warm Regards From:\nAgrawal, Jindal & Madiniya Families"
       },
       hi: {
         open_invitation: "निमंत्रण खोलें",
@@ -516,7 +517,8 @@ export const LanguageProvider = ({ children }) => {
         wish_msg_3: "शिवांगी और सत्यम को बधाई! चलिए जश्न शुरू करते हैं। #ShivyamKaSangam",
 
         // Final
-        final_msg: "\"हम अपने सभी प्रियजनों के साथ अपने नए जीवन की शुरुआत का जश्न मनाने के लिए उत्सुक हैं।\""
+        final_msg: "\"हम अपने सभी प्रियजनों के साथ अपने नए जीवन की शुरुआत का जश्न मनाने के लिए उत्सुक हैं।\"",
+        compliments: "सस्नेह निमंत्रक एवं दर्शनाभिलाषी:\nअग्रवाल, जिंदल एवं मदिनिया परिवार"
       }
     };
     return translations[language][key] || key;
