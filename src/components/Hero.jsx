@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import { ChevronDown } from 'lucide-react';
@@ -9,6 +9,21 @@ const Hero = () => {
   const opacity = useTransform(scrollY, [0, 600], [1, 0]);
   const scale = useTransform(scrollY, [0, 600], [1, 1.1]);
   const yText = useTransform(scrollY, [0, 600], [0, 150]);
+
+  const [isInView, setIsInView] = useState(true);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    }, { threshold: 0.05 });
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   // Target date: July 1, 2026
   const targetDate = new Date('2026-07-01T00:00:00').getTime();
@@ -67,15 +82,17 @@ const Hero = () => {
     });
   };
 
-  // Generate some random floating particles
-  const particles = Array.from({ length: 15 }).map((_, i) => ({
-    id: i,
-    size: Math.random() * 6 + 2,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    duration: Math.random() * 20 + 10,
-    delay: Math.random() * 5
-  }));
+  // Generate some random floating particles once
+  const particles = useMemo(() => {
+    return Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      size: Math.random() * 6 + 2,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      duration: Math.random() * 20 + 10,
+      delay: Math.random() * 5
+    }));
+  }, []);
 
   const handleScrollDown = () => {
     window.scrollTo({
@@ -86,6 +103,7 @@ const Hero = () => {
 
   return (
     <section 
+      ref={containerRef}
       style={{
         position: 'relative',
         height: '100vh',
@@ -121,34 +139,36 @@ const Hero = () => {
       }} />
  
       {/* Floating Gold Particles */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 2, overflow: 'hidden' }}>
-        {particles.map(p => (
-          <motion.div
-            key={p.id}
-            animate={{ 
-              y: ['0vh', '-100vh'],
-              x: [0, Math.sin(p.id) * 50, 0],
-              opacity: [0, 0.8, 0]
-            }}
-            transition={{
-              duration: p.duration,
-              delay: p.delay,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            style={{
-              position: 'absolute',
-              left: `${p.x}%`,
-              bottom: '-5%',
-              width: `${p.size}px`,
-              height: `${p.size}px`,
-              backgroundColor: 'var(--c-gold)',
-              borderRadius: '50%',
-              boxShadow: '0 0 10px 2px rgba(212, 175, 55, 0.6)'
-            }}
-          />
-        ))}
-      </div>
+      {isInView && (
+        <div style={{ position: 'absolute', inset: 0, zIndex: 2, overflow: 'hidden' }}>
+          {particles.map(p => (
+            <motion.div
+              key={p.id}
+              animate={{ 
+                y: ['0vh', '-100vh'],
+                x: [0, Math.sin(p.id) * 50, 0],
+                opacity: [0, 0.8, 0]
+              }}
+              transition={{
+                duration: p.duration,
+                delay: p.delay,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              style={{
+                position: 'absolute',
+                left: `${p.x}%`,
+                bottom: '-5%',
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+                backgroundColor: 'var(--c-gold)',
+                borderRadius: '50%',
+                boxShadow: '0 0 10px 2px rgba(212, 175, 55, 0.6)'
+              }}
+            />
+          ))}
+        </div>
+      )}
  
       <motion.div 
         style={{ zIndex: 10, textAlign: 'center', opacity, y: yText }}

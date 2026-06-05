@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 // Use new profile images from `src/assets/real/`
@@ -7,6 +7,20 @@ const groomProfile = new URL('../assets/real/Satyam.jpeg', import.meta.url).href
 
 const LoveStory = () => {
   const { t } = useLanguage();
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    }, { threshold: 0.05 });
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const fadeIn = (delay = 0) => ({
     initial: { opacity: 0, y: 22 },
@@ -89,11 +103,12 @@ const LoveStory = () => {
 
   return (
     <section
+      ref={containerRef}
       className="section-padding"
       style={{ background: 'var(--c-bg-primary)', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden', padding: '60px 16px 80px' }}
     >
       {/* Floating hearts */}
-      {[
+      {isInView && [
         { left: '6%',  top: '22%', size: '14px', delay: 0   },
         { right: '5%', top: '44%', size: '18px', delay: 1.2 },
         { left: '4%',  top: '66%', size: '13px', delay: 2.1 },

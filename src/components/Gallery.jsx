@@ -35,46 +35,186 @@ const Gallery = () => {
   const rotationRef = useRef(0);
   const isHoveredRef = useRef(false);
   const isTransitioningRef = useRef(false);
+  // Pre-decode all images when component mounts to prevent layout/decoding glitches during 3D carousel rotation
+  useEffect(() => {
+    const activeImages = [];
+    images.forEach((src) => {
+      const img = new Image();
+      img.onload = () => {
+        if (img.decode) {
+          img.decode()
+            .then(() => {
+              // Successfully decoded, release reference to let GC reclaim memory
+              const index = activeImages.indexOf(img);
+              if (index > -1) activeImages.splice(index, 1);
+            })
+            .catch((err) => {
+              console.warn(`[Gallery Image Pre-decoder] Error decoding ${src}:`, err);
+              const index = activeImages.indexOf(img);
+              if (index > -1) activeImages.splice(index, 1);
+            });
+        }
+      };
+      img.onerror = (err) => {
+        console.warn(`[Gallery Image Pre-decoder] Failed to load image: ${src}`, err);
+        const index = activeImages.indexOf(img);
+        if (index > -1) activeImages.splice(index, 1);
+      };
+      img.src = src;
+      activeImages.push(img); // Keep reference alive to prevent GC garbage collection during async phase
+    });
 
-  // High performance auto-rotation using requestAnimationFrame
+    return () => {
+      // Release all references if component unmounts
+      activeImages.length = 0;
+    };
+  }, []);
+
+  // High performance auto-rotation using requestAnimationFrame (paused when off-screen)
   useEffect(() => {
     let animationFrameId;
-    const lastTimeRef = { value: null };
+    let lastTime = performance.now();
     const rotationSpeedDegPerSec = 7.2; // degrees per second (smooth speed)
+    let isInView = false;
+    let observer;
+    let frameCount = 0;
+    let isFirstFrame = true;
 
     const animate = (time) => {
-      if (lastTimeRef.value == null) lastTimeRef.value = time;
-      const deltaMs = time - lastTimeRef.value;
-      lastTimeRef.value = time;
+      if (isFirstFrame) {
+        lastTime = time;
+        isFirstFrame = false;
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
+      const deltaMs = time - lastTime;
+      lastTime = time;
+
+      frameCount++;
 
       if (!isHoveredRef.current && !isFullScreen && !isTransitioningRef.current) {
-        // Use time-based rotation for consistent smoothness
-        const deltaSec = Math.max(0, deltaMs) / 1000;
+        // Use time-based rotation for consistent smoothness, cap at 0.1s to prevent giant jumps
+        const deltaSec = Math.min(0.1, Math.max(0, deltaMs) / 1000);
         rotationRef.current -= rotationSpeedDegPerSec * deltaSec;
+
+        if (frameCount % 60 === 0) {
+          console.log(
+            `%c[Gallery Loop Tracker]%c Active | Rotation: %c${rotationRef.current.toFixed(2)}deg%c | Frame Time: %c${deltaMs.toFixed(1)}ms (${(1000 / deltaMs).toFixed(0)} FPS)%c | Status: Rotating`,
+            'color: #d4af37; font-weight: bold;',
+            'color: #eae2d5; background: #5a0000; padding: 2px 5px; border-radius: 3px;',
+            'color: #00ff00; font-weight: bold;',
+            'color: #fff;',
+            'color: #00ffff; font-weight: bold;',
+            'color: #fff;'
+          );
+        }
+
+        // Log frame drops to track movement jitters in browser console (24ms = ~40fps, threshold for visual stutter)
+        if (deltaMs > 24) {
+          console.warn(
+            `[Gallery Jitter Tracker] ⚠️ Frame drop: ${deltaMs.toFixed(1)}ms (${(1000/deltaMs).toFixed(1)} fps) | Rotation: ${rotationRef.current.toFixed(2)}deg`
+          );
+        }
+
         if (ringRef.current) {
           // apply transform using requestAnimationFrame-driven updates
           ringRef.current.style.transform = `rotateY(${rotationRef.current}deg)`;
+        }
+      } else {
+        // Log status even when auto-rotation is paused due to hover/fullscreen/transition
+        if (frameCount % 60 === 0) {
+          const statusStr = isFullScreen ? 'Fullscreen Lightbox' : isTransitioningRef.current ? 'Manual Transitioning' : 'Hovered (Paused)';
+          console.log(
+            `%c[Gallery Loop Tracker]%c Active | Rotation: %c${rotationRef.current.toFixed(2)}deg%c | Frame Time: %c${deltaMs.toFixed(1)}ms (${(1000 / deltaMs).toFixed(0)} FPS)%c | Status: ${statusStr}`,
+            'color: #d4af37; font-weight: bold;',
+            'color: #eae2d5; background: #5a0000; padding: 2px 5px; border-radius: 3px;',
+            'color: #ffaa00; font-weight: bold;',
+            'color: #fff;',
+            'color: #00ffff; font-weight: bold;',
+            'color: #fff;'
+          );
+        }
+      }
+
+      // Optimize: Hide back-facing cards to reduce GPU/compositing load of heavy images
+      if (ringRef.current) {
+        const cards = ringRef.current.children;
+        const numCards = cards.length;
+        
+        if (isTransitioningRef.current) {
+          // Keep all cards visible during manual transition to prevent clipping/flashing
+          for (let i = 0; i < numCards; i++) {
+            if (cards[i] && cards[i].style.visibility !== 'visible') {
+              cards[i].style.visibility = 'visible';
+            }
+          }
+        } else {
+          const stepAngle = 360 / numCards;
+          for (let i = 0; i < numCards; i++) {
+            const cardAngle = i * stepAngle;
+            // Calculate absolute angle of the card relative to front view
+            const absAngle = (rotationRef.current + cardAngle) % 360;
+            // Normalize to [-180, 180]
+            const normalizedAngle = ((absAngle + 180) % 360 + 360) % 360 - 180;
+            
+            // Cards on front half (within -95deg and 95deg) are visible. Back half are hidden.
+            const isVisible = Math.abs(normalizedAngle) <= 95;
+            const newVisibility = isVisible ? 'visible' : 'hidden';
+            if (cards[i] && cards[i].style.visibility !== newVisibility) {
+              cards[i].style.visibility = newVisibility;
+            }
+          }
         }
       }
 
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    animationFrameId = requestAnimationFrame(animate);
+    if (ringRef.current) {
+      observer = new IntersectionObserver(([entry]) => {
+        const wasInView = isInView;
+        isInView = entry.isIntersecting;
+        console.log(`%c[Gallery Visibility]%c Section is ${isInView ? 'IN' : 'OUT OF'} viewport`, 'color: #d4af37; font-weight: bold;', isInView ? 'color: #00ff00;' : 'color: #ff3333;');
+        
+        if (isInView && !wasInView) {
+          // Start the loop only when entering viewport
+          isFirstFrame = true;
+          lastTime = performance.now();
+          animationFrameId = requestAnimationFrame(animate);
+        } else if (!isInView && wasInView) {
+          // Pause and cancel the loop when leaving viewport
+          cancelAnimationFrame(animationFrameId);
+        }
+      }, { threshold: 0.05 });
+      observer.observe(ringRef.current);
+    }
+
     return () => {
       cancelAnimationFrame(animationFrameId);
+      if (observer) {
+        observer.disconnect();
+      }
     };
   }, [isFullScreen]);
 
   // Fullscreen Navigation
   const nextImage = useCallback(() => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => {
+      const nextIdx = prev === images.length - 1 ? 0 : prev + 1;
+      console.log(`%c[Gallery Lightbox]%c Navigate Next | Image index: ${nextIdx}`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
+      return nextIdx;
+    });
   }, []);
 
   const prevImage = useCallback(() => {
     setDirection(-1);
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setCurrentIndex((prev) => {
+      const nextIdx = prev === 0 ? images.length - 1 : prev - 1;
+      console.log(`%c[Gallery Lightbox]%c Navigate Prev | Image index: ${nextIdx}`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
+      return nextIdx;
+    });
   }, []);
 
   // Keyboard navigation for full screen
@@ -83,7 +223,10 @@ const Gallery = () => {
       if (!isFullScreen) return;
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();
-      if (e.key === 'Escape') setIsFullScreen(false);
+      if (e.key === 'Escape') {
+        console.log(`%c[Gallery Lightbox]%c Escape key pressed, closing lightbox`, 'color: #d4af37; font-weight: bold;', 'color: #ff00ff;');
+        setIsFullScreen(false);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -94,38 +237,48 @@ const Gallery = () => {
     if (!ringRef.current || isTransitioningRef.current) return;
 
     isTransitioningRef.current = true;
-    ringRef.current.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+    console.log(`%c[Gallery User Action]%c Manual Rotate Prev (Left Click) | Current Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
 
-    // Round to nearest 30deg (since 360/12 = 30deg) and rotate counter-clockwise
-    const target = Math.round(rotationRef.current / 30) * 30 + 30;
-    rotationRef.current = target;
-    ringRef.current.style.transform = `rotateY(${target}deg)`;
-
-    setTimeout(() => {
+    const onTransitionEnd = () => {
       if (ringRef.current) {
         ringRef.current.style.transition = 'none';
       }
       isTransitioningRef.current = false;
-    }, 800);
+      console.log(`%c[Gallery Transition End]%c Manual Rotate Finished | Final Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ff00;');
+      ringRef.current.removeEventListener('transitionend', onTransitionEnd);
+    };
+    ringRef.current.addEventListener('transitionend', onTransitionEnd);
+
+    ringRef.current.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+
+    const stepAngle = 360 / images.length;
+    const target = Math.round(rotationRef.current / stepAngle) * stepAngle + stepAngle;
+    rotationRef.current = target;
+    ringRef.current.style.transform = `rotateY(${target}deg)`;
   };
 
   const handleNextRotate = () => {
     if (!ringRef.current || isTransitioningRef.current) return;
 
     isTransitioningRef.current = true;
-    ringRef.current.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+    console.log(`%c[Gallery User Action]%c Manual Rotate Next (Right Click) | Current Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
 
-    // Round to nearest 30deg and rotate clockwise
-    const target = Math.round(rotationRef.current / 30) * 30 - 30;
-    rotationRef.current = target;
-    ringRef.current.style.transform = `rotateY(${target}deg)`;
-
-    setTimeout(() => {
+    const onTransitionEnd = () => {
       if (ringRef.current) {
         ringRef.current.style.transition = 'none';
       }
       isTransitioningRef.current = false;
-    }, 800);
+      console.log(`%c[Gallery Transition End]%c Manual Rotate Finished | Final Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ff00;');
+      ringRef.current.removeEventListener('transitionend', onTransitionEnd);
+    };
+    ringRef.current.addEventListener('transitionend', onTransitionEnd);
+
+    ringRef.current.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+
+    const stepAngle = 360 / images.length;
+    const target = Math.round(rotationRef.current / stepAngle) * stepAngle - stepAngle;
+    rotationRef.current = target;
+    ringRef.current.style.transform = `rotateY(${target}deg)`;
   };
 
   // Lightbox transition variants
@@ -209,12 +362,13 @@ const Gallery = () => {
                       transform: `rotateY(${angle}deg) translateZ(var(--cylinder-radius))`
                     }}
                     onClick={() => {
+                      console.log(`%c[Gallery User Action]%c Clicked card to open lightbox | Image index: ${idx}`, 'color: #d4af37; font-weight: bold;', 'color: #ff00ff;');
                       setCurrentIndex(idx);
                       setIsFullScreen(true);
                     }}
                   >
                     <div className="carousel-card-inner">
-                      <img src={img} alt={`Memory ${idx + 1}`} loading="lazy" />
+                      <img src={img} alt={`Memory ${idx + 1}`} decoding="async" />
                       <div className="carousel-card-overlay" />
                     </div>
                   </div>
@@ -256,7 +410,10 @@ const Gallery = () => {
           >
             {/* Close Button */}
             <button
-              onClick={() => setIsFullScreen(false)}
+              onClick={() => {
+                console.log(`%c[Gallery User Action]%c Closed lightbox`, 'color: #d4af37; font-weight: bold;', 'color: #ff00ff;');
+                setIsFullScreen(false);
+              }}
               style={{
                 position: 'absolute',
                 top: '30px',
@@ -384,7 +541,7 @@ const Gallery = () => {
           /* Increased gap: larger cylinder radius and slightly larger cards for better spacing */
           --card-width: 240px;
           --card-height: 380px; /* increased card height */
-          --cylinder-radius: 460px; /* slightly increased radius to add more gap between cards */
+          --cylinder-radius: 630px; /* mathematically aligned radius for 16 cards (width 240px) to prevent overlapping */
         }
 
         .carousel-3d-ring {
@@ -404,6 +561,7 @@ const Gallery = () => {
           backface-visibility: hidden;
           -webkit-backface-visibility: hidden;
           cursor: pointer;
+          will-change: transform;
         }
 
         .carousel-card-inner {
@@ -417,12 +575,16 @@ const Gallery = () => {
           transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
                       border-color 0.4s ease,
                       box-shadow 0.4s ease;
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .carousel-card-inner img {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          will-change: transform;
+          transform: translate3d(0, 0, 0);
         }
 
         .carousel-card-overlay {
@@ -499,7 +661,7 @@ const Gallery = () => {
         /* Responsive Breakpoints matching ratios for perfect curved layouts */
         @media (max-width: 1200px) {
           .carousel-3d-container {
-            --cylinder-radius: 500px;
+            --cylinder-radius: 530px; /* aligned for 200px wide cards */
             --card-width: 200px;
             --card-height: 300px;
           }
@@ -529,7 +691,7 @@ const Gallery = () => {
             perspective: 800px;
             --card-width: 140px;
             --card-height: 220px;
-            --cylinder-radius: 400px;
+            --cylinder-radius: 380px; /* aligned for 140px wide cards */
           }
           .carousel-edge-fade {
             width: 15%;

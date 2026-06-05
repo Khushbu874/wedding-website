@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Plane, Download, Share2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { useLanguage } from './LanguageContext';
-import ssLogo from '../assets/S&S.png';
+import ssLogo from '../assets/SVS.png';
 
 const BoardingPass = () => {
   const { t } = useLanguage();

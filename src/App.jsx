@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import IntroScreen from './components/IntroScreen';
 import MusicPlayer from './components/MusicPlayer';
 import Navbar from './components/Navbar';
@@ -19,6 +19,20 @@ function App() {
   const [introFinished, setIntroFinished] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
+
+  const particles = useMemo(() => {
+    return [...Array(8)].map((_, i) => ({
+      id: i,
+      initialX: Math.random() * (window.innerWidth || 1200),
+      initialY: Math.random() * (window.innerHeight || 800),
+      scale: Math.random() * 0.5 + 0.5,
+      targetY: Math.random() * -300 - 100,
+      targetX: Math.random() * 200 - 100,
+      duration: Math.random() * 15 + 15,
+      delay: Math.random() * 10,
+      size: Math.random() * 10 + 5
+    }));
+  }, []);
 
   const handleOpenInvitation = () => {
     setIntroFinished(true);
@@ -49,7 +63,7 @@ function App() {
         src={`${import.meta.env.BASE_URL}wedding_song.mp3`} 
         loop 
       />
-
+ 
       <AnimatePresence mode="wait">
         {!introFinished ? (
           <IntroScreen key="intro" onComplete={handleOpenInvitation} />
@@ -63,34 +77,36 @@ function App() {
           >
             {/* Global Animated Background Effect */}
             <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-              {[...Array(15)].map((_, i) => (
+              {particles.map((p) => (
                 <motion.div
-                  key={`bg-particle-${i}`}
+                  key={`bg-particle-${p.id}`}
                   initial={{ 
                     opacity: 0, 
-                    y: Math.random() * window.innerHeight, 
-                    x: Math.random() * window.innerWidth,
-                    scale: Math.random() * 0.5 + 0.5
+                    y: p.initialY, 
+                    x: p.initialX,
+                    scale: p.scale
                   }}
                   animate={{ 
                     opacity: [0, 0.3, 0], 
-                    y: [null, Math.random() * -300 - 100], 
-                    x: [null, Math.random() * 200 - 100] 
+                    y: [p.initialY, p.initialY + p.targetY], 
+                    x: [p.initialX, p.initialX + p.targetX] 
                   }}
                   transition={{ 
-                    duration: Math.random() * 15 + 15, 
+                    duration: p.duration, 
                     repeat: Infinity, 
                     ease: "linear",
-                    delay: Math.random() * 10
+                    delay: p.delay
                   }}
                   style={{
                     position: 'absolute',
-                    width: `${Math.random() * 10 + 5}px`,
-                    height: `${Math.random() * 10 + 5}px`,
+                    width: `${p.size}px`,
+                    height: `${p.size}px`,
                     borderRadius: '50%',
                     backgroundColor: 'var(--c-gold)',
                     filter: 'blur(3px)',
-                    boxShadow: '0 0 15px var(--c-gold)'
+                    boxShadow: '0 0 15px var(--c-gold)',
+                    willChange: 'transform, opacity',
+                    backfaceVisibility: 'hidden'
                   }}
                 />
               ))}

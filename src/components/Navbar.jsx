@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import { useTheme } from './ThemeContext';
-import { Menu, X, Moon, Sun, Globe } from 'lucide-react';
-import ssLogo from '../assets/S&S.png';
+import { Menu, X, Moon, Sun, Globe, Phone } from 'lucide-react';
+import ssLogo from '../assets/SVS.png';
 
 const Navbar = () => {
   const { t, language, toggleLanguage } = useLanguage();
@@ -20,7 +20,7 @@ const Navbar = () => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     const handleResize = () => setIsMobile(window.innerWidth < 1100);
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);
     
     // Countdown Timer
@@ -214,6 +214,37 @@ const Navbar = () => {
                     {item.label}
                   </motion.a>
                 ))}
+              </div>
+
+              <div style={{ flex: 1, minHeight: '30px' }}></div>
+
+              <div style={{ 
+                textAlign: 'center', 
+                fontSize: '12px', 
+                fontFamily: 'var(--font-secondary)', 
+                color: 'var(--c-text-secondary)',
+                lineHeight: '1.6',
+                borderTop: '1px solid rgba(212,175,55,0.15)',
+                paddingTop: '15px'
+              }}>
+                Invite Created by Podflix Media Company. <br />
+                <a 
+                  href="tel:9399798350" 
+                  style={{ 
+                    color: 'var(--c-gold)', 
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    whiteSpace: 'nowrap',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    marginTop: '5px',
+                    fontFamily: 'system-ui, -apple-system, sans-serif'
+                  }}
+                >
+                  <Phone size={12} style={{ strokeWidth: 2.5 }} />
+                  93997-98350
+                </a>
               </div>
             </motion.div>
           </>

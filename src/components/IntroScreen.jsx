@@ -1,12 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import floralCorner from '../assets/floral_corner.png';
-import ssLogo from '../assets/S&S.png';
+import ssLogo from '../assets/SVS.png';
 
 const IntroScreen = ({ onComplete }) => {
   const { t, setLanguage } = useLanguage();
   const [showLangPopup, setShowLangPopup] = useState(false);
+
+  const particles = useMemo(() => {
+    return [...Array(20)].map((_, i) => ({
+      id: i,
+      initialX: Math.random() * (window.innerWidth || 1200),
+      initialY: Math.random() * (window.innerHeight || 800),
+      targetY: Math.random() * -200,
+      targetX: Math.random() * 100 - 50,
+      duration: Math.random() * 5 + 5,
+      delay: Math.random() * 5,
+      size: Math.random() * 6 + 2
+    }));
+  }, []);
 
   useEffect(() => {
     // Hide body scroll and scrollbar track space during intro phase
@@ -169,29 +182,29 @@ const IntroScreen = ({ onComplete }) => {
 
       {/* Floating particles background effect */}
       <div style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, pointerEvents: 'none' }}>
-        {[...Array(20)].map((_, i) => (
+        {particles.map((p) => (
           <motion.div
-            key={i}
+            key={`intro-particle-${p.id}`}
             initial={{ 
               opacity: 0, 
-              y: Math.random() * window.innerHeight, 
-              x: Math.random() * window.innerWidth 
+              y: p.initialY, 
+              x: p.initialX 
             }}
             animate={{ 
               opacity: [0, 0.5, 0], 
-              y: [null, Math.random() * -200], 
-              x: [null, Math.random() * 100 - 50] 
+              y: [p.initialY, p.initialY + p.targetY], 
+              x: [p.initialX, p.initialX + p.targetX] 
             }}
             transition={{ 
-              duration: Math.random() * 5 + 5, 
+              duration: p.duration, 
               repeat: Infinity, 
               ease: "linear",
-              delay: Math.random() * 5
+              delay: p.delay
             }}
             style={{
               position: 'absolute',
-              width: `${Math.random() * 6 + 2}px`,
-              height: `${Math.random() * 6 + 2}px`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
               borderRadius: '50%',
               backgroundColor: 'var(--c-gold)',
               boxShadow: '0 0 10px var(--c-gold)'

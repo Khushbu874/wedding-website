@@ -26,9 +26,9 @@ const Family = () => {
       members: [
         { name: t('bride_gparents'), relation: t('relation_grandparents'), relKey: 'grandparents' },
         { name: t('bride_parents'), relation: t('relation_parents'), relKey: 'parents' },
-        { name: t('bride_couple_1'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
-        { name: t('bride_couple_2'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
-        { name: t('bride_couple_3'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' }
+        { name: t('bride_couple_1'), relation: t('relation_taiji_tauji'), relKey: 'taiji_tauji' },
+        { name: t('bride_couple_2'), relation: t('relation_taiji_tauji'), relKey: 'taiji_tauji' },
+        { name: t('bride_couple_3'), relation: t('relation_taiji_tauji'), relKey: 'taiji_tauji' }
       ]
     },
     groom: {
@@ -36,8 +36,8 @@ const Family = () => {
       members: [
         { name: t('groom_gparents'), relation: t('relation_grandparents'), relKey: 'grandparents' },
         { name: t('groom_parents'), relation: t('relation_parents'), relKey: 'parents' },
-        { name: t('groom_couple_1'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
-        { name: t('groom_couple_2'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
+        { name: t('groom_couple_1'), relation: t('relation_taiji_tauji'), relKey: 'taiji_tauji' },
+        { name: t('groom_couple_2'), relation: t('relation_taiji_tauji'), relKey: 'taiji_tauji' },
         { name: t('groom_couple_3'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' },
         { name: t('groom_couple_4'), relation: t('relation_aunt_uncle'), relKey: 'aunt_uncle' }
       ]

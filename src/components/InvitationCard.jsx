@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import floralCorner from '../assets/floral_corner.png';
-import ssLogo from '../assets/S&S.png';
+import ssLogo from '../assets/SVS.png';
 
 const InvitationCard = () => {
   const [isOpen, setIsOpen] = useState(false);
