@@ -14,8 +14,8 @@ import avatarSingleFemale from '../assets/avatar_single_female.png';
 
 const Family = () => {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState('bride');
-  const [displayTab, setDisplayTab] = useState('bride');
+  const [activeTab, setActiveTab] = useState('groom');
+  const [displayTab, setDisplayTab] = useState('groom');
   const [isFlipped, setIsFlipped] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
   const [popupCard, setPopupCard] = useState(null);
@@ -370,7 +370,7 @@ const Family = () => {
             backdropFilter: 'blur(12px)',
             WebkitBackdropFilter: 'blur(12px)'
           }}>
-            {['bride', 'groom'].map(tab => (
+            {['groom', 'bride'].map(tab => (
               <button
                 key={tab}
                 onClick={() => handleTabChange(tab)}

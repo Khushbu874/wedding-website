@@ -60,6 +60,17 @@ const getRelativeTime = (timestamp, language) => {
   }
 };
 
+// Helper function to shuffle array items randomly (Fisher-Yates) if items > 2
+const shuffleWishes = (array) => {
+  if (!array || array.length <= 2) return array;
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
 // WishCard Component rendered in the marquee
 const WishCard = ({ wish, language, onClick, isClickRef }) => {
   return (
@@ -128,18 +139,19 @@ const WishCard = ({ wish, language, onClick, isClickRef }) => {
 const WishesWall = () => {
   const { t, language } = useLanguage();
 
-  const initialWishes = [
-    { id: 1, name: t('wish_name_1'), message: t('wish_msg_1'), timestamp: t('time_2_days') },
-    { id: 2, name: t('wish_name_2'), message: t('wish_msg_2'), timestamp: t('time_1_week') },
-    { id: 3, name: t('wish_name_3'), message: t('wish_msg_3'), timestamp: t('time_2_weeks') },
-    { id: 4, name: "Priya & Amit", message: "May your love grow stronger with each passing year! Happy married life.", timestamp: "3 days ago" },
-    { id: 5, name: "Dr. Pradeep Agrawal", message: "Lots of love to the most beautiful couple. May God bless your union!", timestamp: "4 days ago" },
-    { id: 6, name: "Saurabh", message: "Super excited for the wedding of the year! Congrats guys! #ShivyamKaSangam", timestamp: "5 days ago" },
-    { id: 7, name: "Ritu", message: "Wishing you both a journey of love, friendship, and endless laughter.", timestamp: "1 week ago" },
-    { id: 8, name: "Aunt & Uncle", message: "May your home be filled with laughter and your hearts with love. Congratulations!", timestamp: "2 weeks ago" }
-  ];
-
-  const [allWishes, setAllWishes] = useState(initialWishes);
+  const [allWishes, setAllWishes] = useState(() => {
+    const initial = [
+      { id: 1, name: t('wish_name_1'), message: t('wish_msg_1'), timestamp: t('time_2_days') },
+      { id: 2, name: t('wish_name_2'), message: t('wish_msg_2'), timestamp: t('time_1_week') },
+      { id: 3, name: t('wish_name_3'), message: t('wish_msg_3'), timestamp: t('time_2_weeks') },
+      { id: 4, name: "Priya & Amit", message: "May your love grow stronger with each passing year! Happy married life.", timestamp: "3 days ago" },
+      { id: 5, name: "Dr. Pradeep Agrawal", message: "Lots of love to the most beautiful couple. May God bless your union!", timestamp: "4 days ago" },
+      { id: 6, name: "Saurabh", message: "Super excited for the wedding of the year! Congrats guys! #ShivyamKaSangam", timestamp: "5 days ago" },
+      { id: 7, name: "Ritu", message: "Wishing you both a journey of love, friendship, and endless laughter.", timestamp: "1 week ago" },
+      { id: 8, name: "Aunt & Uncle", message: "May your home be filled with laughter and your hearts with love. Congratulations!", timestamp: "2 weeks ago" }
+    ];
+    return shuffleWishes(initial);
+  });
   const [selectedWish, setSelectedWish] = useState(null);
   const [newName, setNewName] = useState('');
   const [newMessage, setNewMessage] = useState('');
@@ -167,7 +179,7 @@ const WishesWall = () => {
       const res = await fetch(`${SCRIPT_URL}?action=wishes`);
       const result = await res.json();
       if (result.status === 'success' && Array.isArray(result.data)) {
-        setAllWishes(result.data);
+        setAllWishes(shuffleWishes(result.data));
       } else {
         console.warn("Spreadsheet backend returned non-success:", result.message);
       }

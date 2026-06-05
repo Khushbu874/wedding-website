@@ -5,7 +5,7 @@ import floralCorner from '../assets/floral_corner.png';
 import ssLogo from '../assets/SVS.png';
 
 const InvitationCard = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const { t } = useLanguage();
 
   return (
