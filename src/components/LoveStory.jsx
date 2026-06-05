@@ -22,6 +22,14 @@ const LoveStory = () => {
     };
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const fadeIn = (delay = 0) => ({
     initial: { opacity: 0, y: 22 },
     whileInView: { opacity: 1, y: 0 },
@@ -108,7 +116,7 @@ const LoveStory = () => {
       style={{ background: 'var(--c-bg-primary)', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden', padding: '60px 16px 80px' }}
     >
       {/* Floating hearts */}
-      {isInView && [
+      {isInView && !isMobile && [
         { left: '6%',  top: '22%', size: '14px', delay: 0   },
         { right: '5%', top: '44%', size: '18px', delay: 1.2 },
         { left: '4%',  top: '66%', size: '13px', delay: 2.1 },

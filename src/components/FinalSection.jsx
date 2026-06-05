@@ -22,7 +22,9 @@ const FinalSection = () => {
   }, []);
 
   const stars = useMemo(() => {
-    return [...Array(50)].map((_, i) => ({
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+    const count = isMobileDevice ? 20 : 50;
+    return [...Array(count)].map((_, i) => ({
       id: i,
       top: Math.random() * 100,
       left: Math.random() * 100,
@@ -33,7 +35,9 @@ const FinalSection = () => {
   }, []);
 
   const lanterns = useMemo(() => {
-    return [...Array(10)].map((_, i) => ({
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+    const count = isMobileDevice ? 4 : 10;
+    return [...Array(count)].map((_, i) => ({
       id: i,
       initialX: Math.random() * 100,
       duration: Math.random() * 10 + 15,

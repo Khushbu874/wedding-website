@@ -6,10 +6,11 @@ import ssLogo from '../assets/SVS.png';
 
 const IntroScreen = ({ onComplete }) => {
   const { t, setLanguage } = useLanguage();
-  const [showLangPopup, setShowLangPopup] = useState(false);
 
   const particles = useMemo(() => {
-    return [...Array(20)].map((_, i) => ({
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+    const count = isMobileDevice ? 8 : 20;
+    return [...Array(count)].map((_, i) => ({
       id: i,
       initialX: Math.random() * (window.innerWidth || 1200),
       initialY: Math.random() * (window.innerHeight || 800),
@@ -327,7 +328,10 @@ const IntroScreen = ({ onComplete }) => {
           className="open-invitation-btn"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => setShowLangPopup(true)}
+          onClick={() => {
+            setLanguage('en');
+            onComplete();
+          }}
           onMouseOver={(e) => {
             e.target.style.backgroundColor = 'var(--c-gold)';
             e.target.style.color = '#5a0000';
@@ -389,109 +393,7 @@ const IntroScreen = ({ onComplete }) => {
       `}</style>
       </motion.div>
 
-      {/* Language Selection Popup Modal overlay */}
-      <AnimatePresence>
-        {showLangPopup && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.75)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 100,
-              padding: '20px'
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              className="glass-panel"
-              style={{
-                padding: 'clamp(20px, 5vw, 40px)',
-                background: 'rgba(30, 0, 0, 0.95)',
-                border: '2px solid var(--c-gold)',
-                boxShadow: '0 0 50px rgba(212, 175, 55, 0.35)',
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '20px',
-                maxWidth: '420px',
-                width: '100%',
-                borderRadius: '16px',
-                position: 'relative'
-              }}
-            >
-              {/* Gold Ornament icon */}
-              <div style={{ color: 'var(--c-gold)', fontSize: '24px' }}>⚜</div>
-              
-              <h3 className="font-heading text-gradient-gold" style={{ fontSize: 'clamp(20px, 5vw, 24px)', letterSpacing: '2px', fontWeight: '500' }}>
-                CHOOSE LANGUAGE
-              </h3>
-              <h3 className="font-heading text-gradient-gold" style={{ fontSize: 'clamp(18px, 4.5vw, 22px)', fontFamily: "'Rozha One', serif", letterSpacing: '0px' }}>
-                भाषा चुनें
-              </h3>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '100%', marginTop: '10px' }}>
-                <motion.button
-                  className="open-invitation-btn"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => {
-                    setLanguage('en');
-                    onComplete();
-                  }}
-                  onMouseOver={(e) => {
-                    e.target.style.backgroundColor = 'var(--c-gold)';
-                    e.target.style.color = '#5a0000';
-                    e.target.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.6)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.target.style.backgroundColor = 'transparent';
-                    e.target.style.color = 'var(--c-gold)';
-                    e.target.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
-                  }}
-                  style={{ width: '100%' }}
-                >
-                  ENGLISH
-                </motion.button>
 
-                <motion.button
-                  className="open-invitation-btn"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => {
-                    setLanguage('hi');
-                    onComplete();
-                  }}
-                  onMouseOver={(e) => {
-                    e.target.style.backgroundColor = 'var(--c-gold)';
-                    e.target.style.color = '#5a0000';
-                    e.target.style.boxShadow = '0 0 35px rgba(212, 175, 55, 0.6)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.target.style.backgroundColor = 'transparent';
-                    e.target.style.color = 'var(--c-gold)';
-                    e.target.style.boxShadow = '0 0 25px rgba(212, 175, 55, 0.35)';
-                  }}
-                  style={{ fontFamily: "'Rozha One', serif", fontSize: '16px', letterSpacing: '1px', width: '100%' }}
-                >
-                  हिंदी
-                </motion.button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 };

@@ -25,6 +25,14 @@ const Hero = () => {
     };
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Target date: July 1, 2026
   const targetDate = new Date('2026-07-01T00:00:00').getTime();
   const [timeLeft, setTimeLeft] = useState({
@@ -118,17 +126,25 @@ const Hero = () => {
     >
       {/* Slow-zooming background image (Ken Burns Effect) */}
       <motion.div 
-        animate={{ scale: [1, 1.15] }}
-        transition={{ duration: 30, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
         style={{
           position: 'absolute',
-          inset: '-10%',
-          backgroundImage: `url('${new URL('../assets/real/IMG_7675.WEBP', import.meta.url).href}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 35%', /* shifted up so face aligns with Save the date */
-          scale: scale
+          inset: 0,
+          scale: scale,
+          overflow: 'hidden'
         }}
-      />
+      >
+        <div 
+          className="ken-burns-bg"
+          style={{
+            position: 'absolute',
+            inset: '-10%',
+            backgroundImage: `url('${new URL('../assets/real/IMG_7675.WEBP', import.meta.url).href}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 35%', /* shifted up so face aligns with Save the date */
+            willChange: 'transform'
+          }}
+        />
+      </motion.div>
  
       {/* Cinematic dark overlay */}
       <div style={{
@@ -139,7 +155,7 @@ const Hero = () => {
       }} />
  
       {/* Floating Gold Particles */}
-      {isInView && (
+      {isInView && !isMobile && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 2, overflow: 'hidden' }}>
           {particles.map(p => (
             <motion.div

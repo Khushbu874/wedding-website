@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageContext';
 import { useTheme } from './ThemeContext';
-import { Menu, X, Moon, Sun, Globe, Phone } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import ssLogo from '../assets/SVS.png';
 
 const Navbar = () => {
   const { t, language, toggleLanguage } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
   
+
   // Countdown Logic
   const targetDate = new Date('2026-07-01T00:00:00').getTime();
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
@@ -113,20 +114,43 @@ const Navbar = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexShrink: 0, paddingLeft: '20px' }}>
           {/* Controls */}
           <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-            <button 
-              onClick={toggleTheme} 
-              className="icon-btn"
-              style={{ background: 'none', border: 'none', color: 'var(--c-gold)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: isMobile ? '28px' : '35px', height: isMobile ? '28px' : '35px', borderRadius: '50%', border: '1px solid var(--c-gold)' }}
-            >
-              {theme === 'light' ? <Moon size={isMobile ? 14 : 18} /> : <Sun size={isMobile ? 14 : 18} />}
-            </button>
-            <button 
-              onClick={toggleLanguage} 
-              className="icon-btn"
-              style={{ background: 'none', color: 'var(--c-gold)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontFamily: 'var(--font-heading)', fontSize: isMobile ? '11px' : '13px', width: 'auto', padding: isMobile ? '0 8px' : '0 12px', height: isMobile ? '28px' : '35px', borderRadius: '20px', border: '1px solid var(--c-gold)' }}
-            >
-              <Globe size={isMobile ? 14 : 16} /> {language === 'en' ? 'HI' : 'EN'}
-            </button>
+            <div className="checkbox-wrapper-41" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <input 
+                type="checkbox" 
+                id="lang-toggle"
+                checked={language === 'hi'} 
+                onChange={toggleLanguage} 
+              />
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                fontFamily: 'var(--font-heading)',
+                fontSize: isMobile ? '10px' : '12px',
+                fontWeight: 'bold',
+                zIndex: 2
+              }}>
+                <span style={{ 
+                  color: language === 'en' ? '#5a0000' : 'rgba(90, 0, 0, 0.45)',
+                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transform: language === 'en' ? 'scale(1.1)' : 'scale(0.95)',
+                  width: '50%',
+                  textAlign: 'center'
+                }}>EN</span>
+                <span style={{ 
+                  color: language === 'hi' ? '#5a0000' : 'rgba(90, 0, 0, 0.45)',
+                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transform: language === 'hi' ? 'scale(1.1)' : 'scale(0.95)',
+                  width: '50%',
+                  textAlign: 'center'
+                }}>HI</span>
+              </div>
+            </div>
           </div>
 
           {/* Hamburger Menu (Always Visible) */}
@@ -283,6 +307,61 @@ const Navbar = () => {
           color: var(--c-maroon) !important;
           padding-left: 10px;
           border-bottom-color: var(--c-maroon) !important;
+        }
+
+        /* Custom Royal Language Toggle styling */
+        .checkbox-wrapper-41 {
+          --size: 70px;
+          display: inline-block;
+          position: relative;
+          vertical-align: middle;
+        }
+        @media (max-width: 1100px) {
+          .checkbox-wrapper-41 {
+            --size: 56px;
+          }
+        }
+
+        .checkbox-wrapper-41 input[type="checkbox"] {
+          -webkit-appearance: none;
+          width: var(--size);
+          height: calc(var(--size) / 2);
+          background-color: #fdfbf7;
+          border: 2px solid var(--c-gold);
+          border-radius: calc(var(--size) * 0.3) var(--size) var(--size) var(--size);
+          box-shadow: 0 3px 8px rgba(90, 0, 0, 0.15);
+          outline: none;
+          cursor: pointer;
+          position: relative;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          margin: 0;
+          display: block;
+        }
+
+        .checkbox-wrapper-41 input[type="checkbox"]::before {
+          content: "";
+          position: absolute;
+          width: calc(var(--size) / 2);
+          height: calc(var(--size) / 2);
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%) scale(0.72);
+          border: 1px solid var(--c-gold);
+          border-radius: calc(var(--size) * 0.3) var(--size) var(--size) var(--size);
+          background-color: var(--c-gold);
+          box-sizing: border-box;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .checkbox-wrapper-41 input[type="checkbox"]:checked {
+          background-color: #fdfbf7;
+          border-radius: var(--size) var(--size) calc(var(--size) * 0.3) var(--size);
+        }
+
+        .checkbox-wrapper-41 input[type="checkbox"]:checked::before {
+          left: 50%;
+          background-color: var(--c-gold);
+          border-radius: var(--size) var(--size) calc(var(--size) * 0.3) var(--size);
         }
       `}</style>
     </>

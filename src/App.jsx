@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import IntroScreen from './components/IntroScreen';
 import MusicPlayer from './components/MusicPlayer';
 import Navbar from './components/Navbar';
@@ -19,6 +19,15 @@ function App() {
   const [introFinished, setIntroFinished] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
+  
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const particles = useMemo(() => {
     return [...Array(8)].map((_, i) => ({
@@ -76,39 +85,41 @@ function App() {
             style={{ position: 'relative', width: '100%', overflowX: 'hidden' }}
           >
             {/* Global Animated Background Effect */}
-            <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-              {particles.map((p) => (
-                <motion.div
-                  key={`bg-particle-${p.id}`}
-                  initial={{ 
-                    opacity: 0, 
-                    y: p.initialY, 
-                    x: p.initialX,
-                    scale: p.scale
-                  }}
-                  animate={{ 
-                    opacity: [0, 0.3, 0], 
-                    y: [p.initialY, p.initialY + p.targetY], 
-                    x: [p.initialX, p.initialX + p.targetX] 
-                  }}
-                  transition={{ 
-                    duration: p.duration, 
-                    repeat: Infinity, 
-                    ease: "linear",
-                    delay: p.delay
-                  }}
-                  style={{
-                    position: 'absolute',
-                    width: `${p.size * 2}px`,
-                    height: `${p.size * 2}px`,
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle, var(--c-gold) 0%, rgba(212, 175, 55, 0) 70%)',
-                    willChange: 'transform, opacity',
-                    backfaceVisibility: 'hidden'
-                  }}
-                />
-              ))}
-            </div>
+            {!isMobile && (
+              <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+                {particles.map((p) => (
+                  <motion.div
+                    key={`bg-particle-${p.id}`}
+                    initial={{ 
+                      opacity: 0, 
+                      y: p.initialY, 
+                      x: p.initialX,
+                      scale: p.scale
+                    }}
+                    animate={{ 
+                      opacity: [0, 0.3, 0], 
+                      y: [p.initialY, p.initialY + p.targetY], 
+                      x: [p.initialX, p.initialX + p.targetX] 
+                    }}
+                    transition={{ 
+                      duration: p.duration, 
+                      repeat: Infinity, 
+                      ease: "linear",
+                      delay: p.delay
+                    }}
+                    style={{
+                      position: 'absolute',
+                      width: `${p.size * 2}px`,
+                      height: `${p.size * 2}px`,
+                      borderRadius: '50%',
+                      background: 'radial-gradient(circle, var(--c-gold) 0%, rgba(212, 175, 55, 0) 70%)',
+                      willChange: 'transform, opacity',
+                      backfaceVisibility: 'hidden'
+                    }}
+                  />
+                ))}
+              </div>
+            )}
 
             <div style={{ position: 'relative', zIndex: 1, width: '100%', overflowX: 'hidden' }}>
               <Navbar />

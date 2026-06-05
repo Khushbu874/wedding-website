@@ -180,23 +180,24 @@ const WishesWall = () => {
     fetchWishes();
   }, []);
 
-  // Update cached scrollWidth safely
-  const updateScrollWidth = () => {
-    if (scrollRef.current) {
-      scrollWidthRef.current = scrollRef.current.scrollWidth;
-    }
-  };
-
+  // Update cached scrollWidth dynamically using ResizeObserver to prevent layout thrashing
   useEffect(() => {
-    const timer = setTimeout(updateScrollWidth, 150);
-    window.addEventListener('resize', updateScrollWidth);
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        scrollWidthRef.current = entry.target.scrollWidth;
+      }
+    });
+    resizeObserver.observe(el);
+
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', updateScrollWidth);
+      resizeObserver.disconnect();
     };
   }, [allWishes]);
 
-  // Ultra-smooth, hardware-accelerated GPU translate3d auto-scroll track with inertia drag (paused when off-screen)
+  // High performance, lag-free marquee loop using IntersectionObserver and ResizeObserver (no layout thrashing)
   useEffect(() => {
     const el = scrollRef.current;
     if (!el || allWishes.length === 0) return;
@@ -212,9 +213,10 @@ const WishesWall = () => {
     el.style.willChange = 'transform';
     currentXRef.current = 0;
 
-    let frameCount = 0;
     let isFirstFrame = true;
     const step = (timestamp) => {
+      if (!isInView) return;
+
       if (isFirstFrame) {
         lastTime = timestamp;
         isFirstFrame = false;
@@ -222,43 +224,12 @@ const WishesWall = () => {
         return;
       }
       const elapsed = (timestamp - lastTime) / 1000;
-      const deltaMs = timestamp - lastTime;
       lastTime = timestamp;
 
-      frameCount++;
-
-      const isThrashing = !scrollWidthRef.current;
-      const halfWidth = scrollWidthRef.current / 2 || el.scrollWidth / 2;
-
-      if (frameCount % 60 === 0) {
-        const statusStr = isDraggingRef.current ? 'Dragging' : Math.abs(inertiaVelocityRef.current) > 15 ? 'Inertia Glide' : 'Auto Scrolling';
-        console.log(
-          `%c[WishesWall Loop Tracker]%c Active | TranslateX: %c${currentXRef.current.toFixed(1)}px%c | Frame Time: %c${deltaMs.toFixed(1)}ms (${(1000 / deltaMs).toFixed(0)} FPS)%c | Status: ${statusStr}${isThrashing ? ' | ⚠️ DOM Thrashing' : ''}`,
-          'color: #00ff00; font-weight: bold;',
-          'color: #fff; background: #333; padding: 2px 5px; border-radius: 3px;',
-          'color: #00ff00; font-weight: bold;',
-          'color: #fff;',
-          'color: #00ffff; font-weight: bold;',
-          'color: #fff;'
-        );
-      }
-
-      // Log frame drops to track movement jitters in browser console (22ms = ~45fps, threshold for visual stutter)
-      if (deltaMs > 22) {
-        const statusStr = isDraggingRef.current ? 'Dragging' : Math.abs(inertiaVelocityRef.current) > 15 ? 'Inertia Glide' : 'Auto Scrolling';
-        console.warn(
-          `%c[WishesWall Jitter Tracker] ⚠️ Frame drop detected!%c deltaMs: ${deltaMs.toFixed(1)}ms (${(1000/deltaMs).toFixed(1)} fps) | TranslateX: ${currentXRef.current.toFixed(1)}px | Status: ${statusStr}`,
-          'color: #ff3333; font-weight: bold;',
-          'color: #ff9999;'
-        );
-      }
-
-      if (isThrashing && frameCount % 180 === 0) {
-        console.warn(
-          `%c[WishesWall Loop Tracker] ⚠️ LAYOUT THRASHING WARNING!%c scrollWidthRef.current is 0 or unmeasured. Reading el.scrollWidth from DOM inside rAF loop which triggers style recalculations. Please check why layout dimensions aren't cached.`,
-          'color: #ff9900; font-weight: bold;',
-          'color: #ffcc66;'
-        );
+      const halfWidth = scrollWidthRef.current / 2;
+      if (halfWidth <= 0) {
+        animationFrameId = requestAnimationFrame(step);
+        return;
       }
 
       if (!isDraggingRef.current) {
@@ -269,12 +240,10 @@ const WishesWall = () => {
           inertiaVelocityRef.current *= Math.pow(0.93, elapsed * 60);
 
           // Handle loop boundaries
-          if (halfWidth > 0) {
-            if (currentXRef.current > 0) {
-              currentXRef.current -= halfWidth;
-            } else if (currentXRef.current <= -halfWidth) {
-              currentXRef.current += halfWidth;
-            }
+          if (currentXRef.current > 0) {
+            currentXRef.current -= halfWidth;
+          } else if (currentXRef.current <= -halfWidth) {
+            currentXRef.current += halfWidth;
           }
         } else {
           inertiaVelocityRef.current = 0;
@@ -282,7 +251,7 @@ const WishesWall = () => {
           if (Date.now() - lastInteractionTimeRef.current >= 2500) {
             currentXRef.current -= scrollSpeed * elapsed;
 
-            if (halfWidth > 0 && currentXRef.current <= -halfWidth) {
+            if (currentXRef.current <= -halfWidth) {
               currentXRef.current += halfWidth;
             }
           }
@@ -305,7 +274,6 @@ const WishesWall = () => {
       velocityRef.current = 0;
       lastMoveTimeRef.current = performance.now();
       lastMoveXRef.current = startX;
-      console.log(`%c[WishesWall Interaction]%c Touch Drag Started | Current TranslateX: ${currentXRef.current.toFixed(1)}px`, 'color: #00ff00; font-weight: bold;', 'color: #00ffff;');
     };
 
     const onTouchMove = (e) => {
@@ -322,7 +290,6 @@ const WishesWall = () => {
       const dt = now - lastMoveTimeRef.current;
       if (dt > 0) {
         const dx = x - lastMoveXRef.current;
-        // Low-pass filter for smooth velocity tracking
         velocityRef.current = velocityRef.current * 0.4 + (dx / dt) * 0.6;
       }
       lastMoveTimeRef.current = now;
@@ -331,7 +298,7 @@ const WishesWall = () => {
       currentXRef.current = deltaX;
 
       // Handle loop boundary during dragging
-      const halfWidth = scrollWidthRef.current / 2 || el.scrollWidth / 2;
+      const halfWidth = scrollWidthRef.current / 2;
       if (halfWidth > 0) {
         if (currentXRef.current > 0) {
           currentXRef.current -= halfWidth;
@@ -360,7 +327,6 @@ const WishesWall = () => {
           inertiaVelocityRef.current = 0;
         }
         
-        console.log(`%c[WishesWall Interaction]%c Touch Drag Ended | TranslateX: ${currentXRef.current.toFixed(1)}px | Released with velocity: ${inertiaVelocityRef.current.toFixed(1)}px/s`, 'color: #00ff00; font-weight: bold;', 'color: #00ffff;');
         lastInteractionTimeRef.current = Date.now();
         lastTime = performance.now();
       }
@@ -378,7 +344,6 @@ const WishesWall = () => {
       lastMoveTimeRef.current = performance.now();
       lastMoveXRef.current = startX;
       el.style.cursor = 'grabbing';
-      console.log(`%c[WishesWall Interaction]%c Mouse Drag Started | Current TranslateX: ${currentXRef.current.toFixed(1)}px`, 'color: #00ff00; font-weight: bold;', 'color: #00ffff;');
     };
 
     const onMouseMove = (e) => {
@@ -401,7 +366,7 @@ const WishesWall = () => {
 
       currentXRef.current = deltaX;
 
-      const halfWidth = scrollWidthRef.current / 2 || el.scrollWidth / 2;
+      const halfWidth = scrollWidthRef.current / 2;
       if (halfWidth > 0) {
         if (currentXRef.current > 0) {
           currentXRef.current -= halfWidth;
@@ -430,7 +395,6 @@ const WishesWall = () => {
           inertiaVelocityRef.current = 0;
         }
 
-        console.log(`%c[WishesWall Interaction]%c Mouse Drag Ended | TranslateX: ${currentXRef.current.toFixed(1)}px | Released with velocity: ${inertiaVelocityRef.current.toFixed(1)}px/s`, 'color: #00ff00; font-weight: bold;', 'color: #00ffff;');
         lastInteractionTimeRef.current = Date.now();
         lastTime = performance.now();
         el.style.cursor = 'grab';
@@ -450,15 +414,13 @@ const WishesWall = () => {
       observer = new IntersectionObserver(([entry]) => {
         const wasInView = isInView;
         isInView = entry.isIntersecting;
-        console.log(`%c[WishesWall Visibility]%c Section is ${isInView ? 'IN' : 'OUT OF'} viewport`, 'color: #00ff00; font-weight: bold;', isInView ? 'color: #00ff00;' : 'color: #ff3333;');
         
         if (isInView && !wasInView) {
-          // Start the loop only when entering viewport
           isFirstFrame = true;
           lastTime = performance.now();
+          cancelAnimationFrame(animationFrameId);
           animationFrameId = requestAnimationFrame(step);
         } else if (!isInView && wasInView) {
-          // Pause and cancel the loop when leaving viewport
           cancelAnimationFrame(animationFrameId);
         }
       }, { threshold: 0.05 });

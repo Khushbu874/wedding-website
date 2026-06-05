@@ -40,32 +40,23 @@ const Gallery = () => {
     const activeImages = [];
     images.forEach((src) => {
       const img = new Image();
-      img.onload = () => {
-        if (img.decode) {
-          img.decode()
-            .then(() => {
-              // Successfully decoded, release reference to let GC reclaim memory
-              const index = activeImages.indexOf(img);
-              if (index > -1) activeImages.splice(index, 1);
-            })
-            .catch((err) => {
-              console.warn(`[Gallery Image Pre-decoder] Error decoding ${src}:`, err);
-              const index = activeImages.indexOf(img);
-              if (index > -1) activeImages.splice(index, 1);
-            });
-        }
-      };
-      img.onerror = (err) => {
-        console.warn(`[Gallery Image Pre-decoder] Failed to load image: ${src}`, err);
-        const index = activeImages.indexOf(img);
-        if (index > -1) activeImages.splice(index, 1);
-      };
-      img.src = src;
       activeImages.push(img); // Keep reference alive to prevent GC garbage collection during async phase
+      
+      img.src = src;
+      if (img.decode) {
+        img.decode()
+          .then(() => {
+            const index = activeImages.indexOf(img);
+            if (index > -1) activeImages.splice(index, 1);
+          })
+          .catch(() => {
+            const index = activeImages.indexOf(img);
+            if (index > -1) activeImages.splice(index, 1);
+          });
+      }
     });
 
     return () => {
-      // Release all references if component unmounts
       activeImages.length = 0;
     };
   }, []);
@@ -77,10 +68,11 @@ const Gallery = () => {
     const rotationSpeedDegPerSec = 7.2; // degrees per second (smooth speed)
     let isInView = false;
     let observer;
-    let frameCount = 0;
     let isFirstFrame = true;
 
     const animate = (time) => {
+      if (!isInView) return;
+
       if (isFirstFrame) {
         lastTime = time;
         isFirstFrame = false;
@@ -91,49 +83,13 @@ const Gallery = () => {
       const deltaMs = time - lastTime;
       lastTime = time;
 
-      frameCount++;
-
       if (!isHoveredRef.current && !isFullScreen && !isTransitioningRef.current) {
         // Use time-based rotation for consistent smoothness, cap at 0.1s to prevent giant jumps
         const deltaSec = Math.min(0.1, Math.max(0, deltaMs) / 1000);
         rotationRef.current -= rotationSpeedDegPerSec * deltaSec;
 
-        if (frameCount % 60 === 0) {
-          console.log(
-            `%c[Gallery Loop Tracker]%c Active | Rotation: %c${rotationRef.current.toFixed(2)}deg%c | Frame Time: %c${deltaMs.toFixed(1)}ms (${(1000 / deltaMs).toFixed(0)} FPS)%c | Status: Rotating`,
-            'color: #d4af37; font-weight: bold;',
-            'color: #eae2d5; background: #5a0000; padding: 2px 5px; border-radius: 3px;',
-            'color: #00ff00; font-weight: bold;',
-            'color: #fff;',
-            'color: #00ffff; font-weight: bold;',
-            'color: #fff;'
-          );
-        }
-
-        // Log frame drops to track movement jitters in browser console (24ms = ~40fps, threshold for visual stutter)
-        if (deltaMs > 24) {
-          console.warn(
-            `[Gallery Jitter Tracker] ⚠️ Frame drop: ${deltaMs.toFixed(1)}ms (${(1000/deltaMs).toFixed(1)} fps) | Rotation: ${rotationRef.current.toFixed(2)}deg`
-          );
-        }
-
         if (ringRef.current) {
-          // apply transform using requestAnimationFrame-driven updates
           ringRef.current.style.transform = `rotateY(${rotationRef.current}deg)`;
-        }
-      } else {
-        // Log status even when auto-rotation is paused due to hover/fullscreen/transition
-        if (frameCount % 60 === 0) {
-          const statusStr = isFullScreen ? 'Fullscreen Lightbox' : isTransitioningRef.current ? 'Manual Transitioning' : 'Hovered (Paused)';
-          console.log(
-            `%c[Gallery Loop Tracker]%c Active | Rotation: %c${rotationRef.current.toFixed(2)}deg%c | Frame Time: %c${deltaMs.toFixed(1)}ms (${(1000 / deltaMs).toFixed(0)} FPS)%c | Status: ${statusStr}`,
-            'color: #d4af37; font-weight: bold;',
-            'color: #eae2d5; background: #5a0000; padding: 2px 5px; border-radius: 3px;',
-            'color: #ffaa00; font-weight: bold;',
-            'color: #fff;',
-            'color: #00ffff; font-weight: bold;',
-            'color: #fff;'
-          );
         }
       }
 
@@ -175,12 +131,12 @@ const Gallery = () => {
       observer = new IntersectionObserver(([entry]) => {
         const wasInView = isInView;
         isInView = entry.isIntersecting;
-        console.log(`%c[Gallery Visibility]%c Section is ${isInView ? 'IN' : 'OUT OF'} viewport`, 'color: #d4af37; font-weight: bold;', isInView ? 'color: #00ff00;' : 'color: #ff3333;');
         
         if (isInView && !wasInView) {
           // Start the loop only when entering viewport
           isFirstFrame = true;
           lastTime = performance.now();
+          cancelAnimationFrame(animationFrameId);
           animationFrameId = requestAnimationFrame(animate);
         } else if (!isInView && wasInView) {
           // Pause and cancel the loop when leaving viewport
@@ -202,18 +158,14 @@ const Gallery = () => {
   const nextImage = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prev) => {
-      const nextIdx = prev === images.length - 1 ? 0 : prev + 1;
-      console.log(`%c[Gallery Lightbox]%c Navigate Next | Image index: ${nextIdx}`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
-      return nextIdx;
+      return prev === images.length - 1 ? 0 : prev + 1;
     });
   }, []);
 
   const prevImage = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prev) => {
-      const nextIdx = prev === 0 ? images.length - 1 : prev - 1;
-      console.log(`%c[Gallery Lightbox]%c Navigate Prev | Image index: ${nextIdx}`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
-      return nextIdx;
+      return prev === 0 ? images.length - 1 : prev - 1;
     });
   }, []);
 
@@ -224,7 +176,6 @@ const Gallery = () => {
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();
       if (e.key === 'Escape') {
-        console.log(`%c[Gallery Lightbox]%c Escape key pressed, closing lightbox`, 'color: #d4af37; font-weight: bold;', 'color: #ff00ff;');
         setIsFullScreen(false);
       }
     };
@@ -237,14 +188,12 @@ const Gallery = () => {
     if (!ringRef.current || isTransitioningRef.current) return;
 
     isTransitioningRef.current = true;
-    console.log(`%c[Gallery User Action]%c Manual Rotate Prev (Left Click) | Current Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
 
     const onTransitionEnd = () => {
       if (ringRef.current) {
         ringRef.current.style.transition = 'none';
       }
       isTransitioningRef.current = false;
-      console.log(`%c[Gallery Transition End]%c Manual Rotate Finished | Final Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ff00;');
       ringRef.current.removeEventListener('transitionend', onTransitionEnd);
     };
     ringRef.current.addEventListener('transitionend', onTransitionEnd);
@@ -261,14 +210,12 @@ const Gallery = () => {
     if (!ringRef.current || isTransitioningRef.current) return;
 
     isTransitioningRef.current = true;
-    console.log(`%c[Gallery User Action]%c Manual Rotate Next (Right Click) | Current Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ffff;');
 
     const onTransitionEnd = () => {
       if (ringRef.current) {
         ringRef.current.style.transition = 'none';
       }
       isTransitioningRef.current = false;
-      console.log(`%c[Gallery Transition End]%c Manual Rotate Finished | Final Rotation: ${rotationRef.current.toFixed(2)}deg`, 'color: #d4af37; font-weight: bold;', 'color: #00ff00;');
       ringRef.current.removeEventListener('transitionend', onTransitionEnd);
     };
     ringRef.current.addEventListener('transitionend', onTransitionEnd);
