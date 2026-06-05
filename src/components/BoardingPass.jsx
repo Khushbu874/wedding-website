@@ -77,7 +77,7 @@ const BoardingPass = () => {
   };
 
   return (
-    <section id="boarding-pass" className="section-padding" style={{ backgroundColor: 'var(--c-bg-secondary)', filter: 'brightness(0.94)', paddingTop: 'clamp(20px, 4vw, 40px)' }}>
+    <section id="boarding-pass" className="section-padding" style={{ backgroundColor: 'var(--c-bg-tertiary)', paddingTop: 'clamp(20px, 4vw, 40px)' }}>
       {/* Elegant Gold Divider */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', width: '80%', maxWidth: '400px', margin: '0 auto clamp(15px, 3vh, 25px) auto', position: 'relative', zIndex: 10 }}>
         <div style={{ flex: 1, height: '1px', background: 'linear-gradient(to right, transparent, rgba(212, 175, 55, 0.6))' }} />

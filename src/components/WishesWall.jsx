@@ -554,12 +554,16 @@ const WishesWall = () => {
     <section id="wishes" className="section-padding" style={{ backgroundColor: 'var(--c-bg-primary)' }}>
       <style>{`
         .wish-card-item {
-          transition: transform 0.3s ease, border-color 0.3s ease;
+          background-color: var(--c-bg-secondary) !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.3s ease;
           will-change: transform;
         }
         .wish-card-item:hover {
           transform: translateY(-4px);
           border-color: var(--c-gold) !important;
+          box-shadow: var(--glass-shadow);
         }
       `}</style>
 

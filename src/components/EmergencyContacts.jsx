@@ -24,7 +24,7 @@ const EmergencyContacts = () => {
       id="contacts" 
       className="section-padding" 
       style={{ 
-        backgroundColor: '#eae2d5', 
+        backgroundColor: 'var(--c-bg-contacts)', 
         position: 'relative', 
         overflow: 'hidden',
         paddingTop: 'clamp(50px, 8vw, 80px)',
@@ -96,9 +96,9 @@ const EmergencyContacts = () => {
               className="glass-panel"
               style={{
                 flex: '1 1 min(300px, 100%)',
-                backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
+                backgroundColor: 'var(--glass-bg-solid)',
+                backdropFilter: 'none',
+                WebkitBackdropFilter: 'none',
                 border: '1.5px solid rgba(212, 175, 55, 0.35)',
                 borderRadius: '20px',
                 padding: '30px 25px',

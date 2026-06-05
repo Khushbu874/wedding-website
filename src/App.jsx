@@ -99,12 +99,10 @@ function App() {
                   }}
                   style={{
                     position: 'absolute',
-                    width: `${p.size}px`,
-                    height: `${p.size}px`,
+                    width: `${p.size * 2}px`,
+                    height: `${p.size * 2}px`,
                     borderRadius: '50%',
-                    backgroundColor: 'var(--c-gold)',
-                    filter: 'blur(3px)',
-                    boxShadow: '0 0 15px var(--c-gold)',
+                    background: 'radial-gradient(circle, var(--c-gold) 0%, rgba(212, 175, 55, 0) 70%)',
                     willChange: 'transform, opacity',
                     backfaceVisibility: 'hidden'
                   }}

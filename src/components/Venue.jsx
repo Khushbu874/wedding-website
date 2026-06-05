@@ -7,7 +7,7 @@ const Venue = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="section-padding" style={{ backgroundColor: 'var(--c-bg-secondary)', filter: 'brightness(0.94)', paddingBottom: '0px' }}>
+    <section className="section-padding" style={{ backgroundColor: 'var(--c-bg-tertiary)', paddingBottom: '0px' }}>
       <div className="container">
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}

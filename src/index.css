@@ -29,11 +29,13 @@
   --c-text-inverse: #ffffff;
   
   --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-bg-solid: #ffffff;
   --glass-border: rgba(212, 175, 55, 0.4);
   --glass-shadow: 0 15px 35px rgba(90, 0, 0, 0.08);
   
   --c-soft-black: #111111; /* Used for contrasting sections like Gallery */
   
+  --c-bg-contacts: #eae2d5;
   --gradient-gold: linear-gradient(45deg, #b8860b, #d4af37, #b8860b); /* Rich gold for light theme */
 }
 
@@ -53,11 +55,13 @@
   --c-text-inverse: #121212;
   
   --glass-bg: rgba(20, 20, 20, 0.7);
+  --glass-bg-solid: #1a1a1a;
   --glass-border: rgba(212, 175, 55, 0.25);
   --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
   
   --c-soft-black: #050505;
 
+  --c-bg-contacts: var(--c-bg-tertiary);
   --gradient-gold: linear-gradient(45deg, var(--c-gold), #fff, var(--c-gold)); /* Shiny white-gold for dark theme */
 }
 
@@ -130,7 +134,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--glass-shadow);
   border-radius: 16px;
   color: var(--c-text-primary);
-  transition: all 0.5s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Gradients */

@@ -129,8 +129,7 @@ const EventTimeline = () => {
 
   return (
     <section className="section-padding" style={{ 
-      backgroundColor: 'var(--c-bg-secondary)', 
-      filter: 'brightness(0.94)',
+      backgroundColor: 'var(--c-bg-tertiary)', 
       color: 'var(--c-text-primary)',
       position: 'relative',
       overflow: 'hidden',
@@ -163,9 +162,9 @@ const EventTimeline = () => {
               transition={{ duration: 0.8, delay: dayIdx * 0.2 }}
               className="glass-panel"
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
+                backgroundColor: 'var(--glass-bg-solid)',
+                backdropFilter: 'none',
+                WebkitBackdropFilter: 'none',
                 border: '1.5px solid rgba(212, 175, 55, 0.35)',
                 borderRadius: '28px',
                 padding: 'clamp(25px, 4vw, 40px)',
@@ -241,7 +240,7 @@ const EventTimeline = () => {
                       whileHover={{ y: -5, scale: 1.015 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                       style={{
-                        backgroundColor: isHovered ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.7)',
+                        backgroundColor: isHovered ? 'rgba(212, 175, 55, 0.08)' : 'var(--c-bg-primary)',
                         border: isHovered ? '1.5px solid rgba(212, 175, 55, 0.5)' : '1.5px solid rgba(212, 175, 55, 0.18)',
                         borderRadius: '20px',
                         padding: '18px 20px',
