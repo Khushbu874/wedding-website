@@ -268,7 +268,6 @@ export const LanguageProvider = ({ children }) => {
 
         // Final
         final_msg: "\"We can't wait to celebrate the beginning of our new life with all our loved ones.\"",
-        compliments: "With Best Compliments & Warm Regards From:\nAgrawal, Jindal & Madiniya Families"
       },
       hi: {
         open_invitation: "निमंत्रण खोलें",
