@@ -143,7 +143,7 @@ const FinalSection = () => {
 
         <motion.img 
           src={logo} 
-          alt="Shivangi & Satyam Logo" 
+          alt="Satyam & Shivangi Logo" 
           whileHover={{ scale: 1.08 }}
           transition={{ type: 'spring', stiffness: 300, damping: 15 }}
           style={{

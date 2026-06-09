@@ -270,7 +270,7 @@ const IntroScreen = ({ onComplete }) => {
         {/* Couple Initials Logo */}
         <img 
           src={ssLogo} 
-          alt="Shivangi & Satyam Logo" 
+          alt="Satyam & Shivangi Logo" 
           style={{
             width: 'clamp(180px, 45vw, 290px)',
             height: 'auto',
@@ -297,7 +297,7 @@ const IntroScreen = ({ onComplete }) => {
           marginBottom: '5px',
           textShadow: '0 2px 10px rgba(0,0,0,0.5)'
         }}>
-          {t('bride_full')} & {t('groom_full')}
+          {t('groom_full')} & {t('bride_full')}
         </h2>
 
         <p 

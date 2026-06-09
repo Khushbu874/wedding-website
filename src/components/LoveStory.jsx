@@ -149,18 +149,8 @@ const LoveStory = () => {
 
         {/* ── Profiles row ── */}
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          {/* Bride */}
-          <motion.div {...fadeIn(0.2)} style={{ width: '44%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={makeCircle({ borderRadius: '48% 52% 47% 53% / 53% 47% 53% 47%' })}>
-              <img src={brideProfile} alt="Bride" style={imgStyle} />
-            </div>
-            <span style={{ fontSize: '10px', color: '#ff758f', marginTop: '3px' }}>👑</span>
-            <span className="font-heading" style={{ fontSize: 'clamp(12px, 3.5vw, 15px)', color: 'var(--c-maroon)', fontWeight: 'bold', marginTop: '1px' }}>{t('story_bride_title')}</span>
-            <span className="font-secondary" style={{ fontSize: 'clamp(9px, 2.5vw, 11px)', color: 'var(--c-text-secondary)', fontStyle: 'italic' }}>{t('story_bride_subtitle')}</span>
-          </motion.div>
-
           {/* Groom */}
-          <motion.div {...fadeIn(0.4)} style={{ width: '44%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <motion.div {...fadeIn(0.2)} style={{ width: '44%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={makeCircle({ borderRadius: '53% 47% 52% 48% / 47% 53% 47% 53%' })}>
               <img src={groomProfile} alt="Groom" style={imgStyle} />
             </div>
@@ -171,6 +161,16 @@ const LoveStory = () => {
             </div>
             <span className="font-heading" style={{ fontSize: 'clamp(12px, 3.5vw, 15px)', color: 'var(--c-maroon)', fontWeight: 'bold', marginTop: '1px' }}>{t('story_groom_title')}</span>
             <span className="font-secondary" style={{ fontSize: 'clamp(9px, 2.5vw, 11px)', color: 'var(--c-text-secondary)', fontStyle: 'italic' }}>{t('story_groom_subtitle')}</span>
+          </motion.div>
+
+          {/* Bride */}
+          <motion.div {...fadeIn(0.4)} style={{ width: '44%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={makeCircle({ borderRadius: '48% 52% 47% 53% / 53% 47% 53% 47%' })}>
+              <img src={brideProfile} alt="Bride" style={imgStyle} />
+            </div>
+            <span style={{ fontSize: '10px', color: '#ff758f', marginTop: '3px' }}>👑</span>
+            <span className="font-heading" style={{ fontSize: 'clamp(12px, 3.5vw, 15px)', color: 'var(--c-maroon)', fontWeight: 'bold', marginTop: '1px' }}>{t('story_bride_title')}</span>
+            <span className="font-secondary" style={{ fontSize: 'clamp(9px, 2.5vw, 11px)', color: 'var(--c-text-secondary)', fontStyle: 'italic' }}>{t('story_bride_subtitle')}</span>
           </motion.div>
         </div>
 
