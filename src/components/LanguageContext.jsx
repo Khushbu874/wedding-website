@@ -152,7 +152,7 @@ export const LanguageProvider = ({ children }) => {
 
         groom_gparents: "Late Shrimati Sharbati Devi & Late Shri Tarachand Agrawal",
         groom_parents: "Shrimati Kaushal & Shri Laxmi Narayan Agrawal",
-        groom_couple_1: "Shrimati Savita & Mahabir",
+        groom_couple_1: "Shrimati Savita & Shri Mahabir Agrawal",
         groom_couple_2: "Shrimati Pushpa & Shri Brijmohan Agrawal",
         groom_couple_3: "Shrimati Sunita & Shri Anand Agrawal",
         groom_couple_4: "Shrimati Sarita & Shri Ashok Agrawal",
@@ -401,7 +401,7 @@ export const LanguageProvider = ({ children }) => {
 
         groom_gparents: "स्व. श्रीमती शर्बती देवी एवं स्व. ताराचंद अग्रवाल",
         groom_parents: "श्रीमती कौशल एवं श्री लक्ष्मी नारायण अग्रवाल",
-        groom_couple_1: "श्रीमती सविता एवं महाबीर",
+        groom_couple_1: "श्रीमती सविता एवं श्री महाबीर अग्रवाल",
         groom_couple_2: "श्रीमती पुष्पा एवं श्री बृजमोहन अग्रवाल",
         groom_couple_3: "श्रीमती सुनीता एवं श्री आनंद अग्रवाल",
         groom_couple_4: "श्रीमती सरिता एवं श्री अशोक अग्रवाल",
