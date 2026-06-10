@@ -44,14 +44,14 @@ export const LanguageProvider = ({ children }) => {
         seconds: "Seconds",
         date_full: "Wednesday, 1st July, 2026",
         keep_scrolling: "Keep Scrolling",
-        
+
         // Invitation Card
         tap_open: "TAP TO OPEN",
         invitation_shloka: "॥ श्री गणेशाय नमः ॥\nवक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥",
         together_families: "TOGETHER WITH THEIR FAMILIES",
         joyfully_invite: "Joyfully invite you to share in their happiness as they unite in marriage.",
         date_time: "WEDNESDAY, JULY 1, 2026",
-        palace_location: "Rosebay Resort, Raipur, Chhattisgarh",
+        palace_location: "Rosebey Resort, Raipur, Chhattisgarh",
         scroll_down: "SCROLL DOWN",
 
         // Love Story
@@ -122,7 +122,7 @@ export const LanguageProvider = ({ children }) => {
         dress_reception: "Black Tie / Elegant Gowns",
         dress_varmala: "Royal Wedding Wear",
         dress_phere: "Sacred Traditional Wedding Couture",
-        
+
         desc_welcome: "A warm traditional welcome to all our guests. Join us for morning tea and greetings as we kick off the beautiful celebrations!",
         desc_carnival: "Get ready for a high-energy festive Carnival! Packed with fun games, live food counters, vibrant photo booths, and beautiful memories.",
         desc_sangeet: "Dance, music, and endless joy! Our family members present choreographed routines, followed by an open dance floor with live DJ beats.",
@@ -131,7 +131,7 @@ export const LanguageProvider = ({ children }) => {
         desc_reception: "A formal grand gala to celebrate the newlywed couple. Join us for a beautiful dinner party, musical performances, and toasts.",
         desc_varmala: "The beautiful exchange of floral garlands under the fireworks sky, representing the union of our souls.",
         desc_phere: "Taking the sacred seven vows around the holy fire in the auspicious night muhurat to unite us for seven lifetimes.",
-        
+
         // Gallery
         memories: "Memories",
 
@@ -143,16 +143,16 @@ export const LanguageProvider = ({ children }) => {
         relation_bua_fufa: "Aunt & Uncle",
         bride_family_title: "Shivangi's Family",
         groom_family_title: "Satyam's Family",
-        
+
         bride_gparents: "Shrimati Murti Devi & Late Shri Omprakash Madiniya",
         bride_parents: "Shrimati Prachi & Late Shri Bajrang Jindal",
         bride_couple_1: "Shrimati Kaushalya & Shri Ashok Jindal",
         bride_couple_2: "Shrimati Anuradha & Shri Subhash Jindal",
         bride_couple_3: "Shrimati Sunita & Shri Rajesh Jindal",
-        
+
         groom_gparents: "Late Shrimati Sharbati Devi & Late Shri Tarachand Agrawal",
         groom_parents: "Shrimati Kaushal & Shri Laxmi Narayan Agrawal",
-        groom_couple_1: "Shrimati Savita & Shri Mahavir Agrawal",
+        groom_couple_1: "Shrimati Savita & Mahabir",
         groom_couple_2: "Shrimati Pushpa & Shri Brijmohan Agrawal",
         groom_couple_3: "Shrimati Sunita & Shri Anand Agrawal",
         groom_couple_4: "Shrimati Sarita & Shri Ashok Agrawal",
@@ -175,9 +175,9 @@ export const LanguageProvider = ({ children }) => {
           "Gaurav"
         ],
         groom_awaiting: [
-          "Riti & Dr. Pradeep Agrawal",
+          "Reeti & Dr. Pradeep Agrawal",
           "Preeti & Sandeep Agrawal",
-          "Poorvi & Shubham Agrawal",
+          "Purvi & Shubham Agrawal",
           "Seema & Ritesh Ji",
           "Neetu & Ashok Ji",
           "Mamta & Abhishek Ji",
@@ -211,7 +211,7 @@ export const LanguageProvider = ({ children }) => {
         form_submit: "SEND RSVP",
 
         // Venue
-        venue_title: "Rosebay Resort",
+        venue_title: "Rosebey Resort",
         venue_address: "Raipur, Chhattisgarh, India",
         get_directions: "GET DIRECTIONS",
         travel: "Travel",
@@ -293,7 +293,7 @@ export const LanguageProvider = ({ children }) => {
         seconds: "सेकंड",
         date_full: "बुधवार, १ जुलाई, २०२६",
         keep_scrolling: "नीचे स्क्रॉल करें",
-        
+
         // Invitation Card
         tap_open: "खोलने के लिए टैप करें",
         invitation_shloka: "॥ श्री गणेशाय नमः ॥\nवक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥",
@@ -380,7 +380,7 @@ export const LanguageProvider = ({ children }) => {
         desc_reception: "नवविवाहित जोड़े के सम्मान में एक शानदार शाम। लजीज भोजन, सुमधुर संगीत और शुभकामनाओं के साथ जश्न में शामिल हों.",
         desc_varmala: "आतिशबाज़ी से सजे आसमान के नीचे वरमाला का आदान-प्रदान, जो हमारी आत्माओं के मिलन का प्रतीक है.",
         desc_phere: "सात जन्मों के अटूट बंधन में बंधने के लिए शुभ रात्रिकालीन मुहूर्त में पवित्र अग्नि के फेरे और सात प्रतिज्ञाएं.",
-        
+
         // Gallery
         memories: "यादें",
 
@@ -392,16 +392,16 @@ export const LanguageProvider = ({ children }) => {
         relation_bua_fufa: "बुआ - फूफा",
         bride_family_title: "शिवांगी का परिवार",
         groom_family_title: "सत्यम का परिवार",
-        
+
         bride_gparents: "श्रीमती मूर्ति देवी एवं स्व. ओमप्रकाश मदीनिया",
         bride_parents: "श्रीमती प्राची एवं स्व. बजरंग जिंदल",
         bride_couple_1: "श्रीमती कौशल्या एवं श्री अशोक जिंदल",
         bride_couple_2: "श्रीमती अनुराधा एवं श्री सुभाष जिंदल",
         bride_couple_3: "श्रीमती सुनीता एवं श्री राजेश जिंदल",
-        
+
         groom_gparents: "स्व. श्रीमती शर्बती देवी एवं स्व. ताराचंद अग्रवाल",
         groom_parents: "श्रीमती कौशल एवं श्री लक्ष्मी नारायण अग्रवाल",
-        groom_couple_1: "श्रीमती सविता एवं श्री महावीर अग्रवाल",
+        groom_couple_1: "श्रीमती सविता एवं महाबीर",
         groom_couple_2: "श्रीमती पुष्पा एवं श्री बृजमोहन अग्रवाल",
         groom_couple_3: "श्रीमती सुनीता एवं श्री आनंद अग्रवाल",
         groom_couple_4: "श्रीमती सरिता एवं श्री अशोक अग्रवाल",
